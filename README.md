@@ -1,2 +1,12 @@
 # DiplomaWeb
 web for diploma
+
+https://github.com/Viktor24500/DiplomaSystemDataService - System Data Service for diploma
+
+https://github.com/Viktor24500/DiplomaSystemAuthService - User service for diploma
+
+https://github.com/Viktor24500/DiplomaDataBase - DataBase for diploma
+
+https://github.com/Viktor24500/DiplomaBFF - BFF for diploma
+
+https://github.com/Viktor24500/DiplomaInventoryService - Inventory service for diploma
