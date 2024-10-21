@@ -1,0 +1,29 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@*@{
+} *@
+
+<div class="newUserForm">
+    <form action="/users" method="post">
+        <label for="username">Username </label>
+        <input type="text" class="UserInput" id="username" name="username" value="" placeholder="login" required><br>
+        <label for="password">Password </label>
+        <input type="text" class="UserInput" id="password" name="password" value="" placeholder="password" required><br><br>
+        <label for="email">Email </label>
+        <input type="text" class="UserInput" id="email" name="email" value="" placeholder="Email" required><br><br>
+        <label for="firstName">First Name </label>
+        <input type="text" class="UserInput" id="firstName" name="firstName" value="" placeholder="firstName" required><br><br>
+        <label for="lastName">Last Name </label>
+        <input type="text" class="UserInput" id="lastName" name="lastName" value="" placeholder="lastName" required><br><br>
+        <label for="fatherName">Father Name </label>
+        <input type="text" class="UserInput" id="fatherName" name="fatherName" value="" placeholder="fatherName"><br><br>
+        <label for="role">Role </label>
+        <select name="roles" id="roles">
+            <option value="1">Option 1</option>
+            <option value="2">Option 2</option>
+            <option value="3">Option 3</option>
+        </select><br><br>
+        <input type="submit" class="formButton" id="submit" value="Submit">
+    </form>
+</div>

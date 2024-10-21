@@ -1,0 +1,24 @@
+﻿@using DiplomaWebService.Models;
+@model List<Item>
+@{
+}
+
+<table>
+	<tr>
+		<th class="hidden">itemId</th>
+		<th>Name</th>
+		<th>Inventory Number</th>
+		<th class="hidden">sectorId</th>
+		<th>Sector Name</th>
+	<tr>
+    @for (int i = 0; i < Model.Count(); i++)
+    {
+        <tr>
+            <td id="itemId" class="hidden">@Model[i].ItemId</td>
+            <td id="Name">@Model[i].ItemName</td>
+            <td id="InventoryNumber">@Model[i].InventoryNumber</td>
+            <td id="sectorId" class="hidden">@Model[i].Sector.Name</td>
+            <td id="SectorName">@Model[i].Sector.Id</td>
+        </tr>
+    }
+</table>

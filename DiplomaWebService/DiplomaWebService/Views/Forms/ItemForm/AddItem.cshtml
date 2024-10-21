@@ -1,0 +1,18 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="newItemForm">
+    <form action="/items" method="post">
+        <label for="itemId" class="hidden">Id </label>
+        <input type="text" class="hidden" id="itemId" name="Id" value="" placeholder="Id" required><br>
+        <label for="itemName">Name </label>
+        <input type="text" class="ItemInput" id="itemName" name="name" value="" placeholder="name" required><br><br>
+        <label for="inventoryNumber">Name </label>
+        <input type="text" class="ItemInput" id="inventoryNumber" name="name" value="" placeholder="name" required><br><br>
+        <label for="sectorId">Name </label>
+        <input type="text" class="ItemInput" id="sectorId" name="name" value="" placeholder="name" required><br><br>
+        <input type="submit" class="formButton" id="submit" value="Submit">
+    </form>
+</div>

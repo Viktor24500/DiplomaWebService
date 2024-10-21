@@ -1,0 +1,16 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="newContragentForm">
+    <form action="/contragent" method="post">
+        <label for="contragentId" class="hidden">Id </label>
+        <input type="text" class="hidden" id="contragentId" name="Id" value="" placeholder="contragnetId" required><br>
+        <label for="contragentName">Name </label>
+        <input type="text" class="ContragentInput" id="contragentName" name="name" value="" placeholder="name" required><br><br>
+        <label for="parentId">Name </label>
+        <input type="text" class="ContragentInput" id="parentId" name="parentId" value="" placeholder="parent Id"><br><br>
+        <input type="submit" class="formButton" id="submit" value="Submit">
+    </form>
+</div>
