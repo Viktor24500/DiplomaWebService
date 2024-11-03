@@ -3,9 +3,11 @@
 *@
 @*@{
 } *@
+@using DiplomaWebService.Models;
+@model List<Role>
 
 <div class="newUserForm">
-    <form action="/users" method="post">
+    <form action="/users" method="post" id="addUser">
         <label for="username">Username </label>
         <input type="text" class="UserInput" id="username" name="username" value="" placeholder="login" required><br>
         <label for="password">Password </label>
@@ -19,10 +21,11 @@
         <label for="fatherName">Father Name </label>
         <input type="text" class="UserInput" id="fatherName" name="fatherName" value="" placeholder="fatherName"><br><br>
         <label for="role">Role </label>
-        <select name="roles" id="roles">
-            <option value="1">Option 1</option>
-            <option value="2">Option 2</option>
-            <option value="3">Option 3</option>
+        <select name="roles" id="roles" form="addUser">
+            @for (int i = 0; i < @Model.Count(); i++)
+            {
+                <option value="@Model[i].Id"> @Model[i].Name</option>
+            }
         </select><br><br>
         <input type="submit" class="formButton" id="submit" value="Submit">
     </form>

@@ -2,6 +2,7 @@
 using DiplomaWebService.Common.Results;
 using DiplomaWebService.Constants;
 using DiplomaWebService.Models;
+using DiplomaWebService.Parametrs.Login;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DiplomaWebService.Controllers
@@ -32,8 +33,8 @@ namespace DiplomaWebService.Controllers
             string url = _connectionString + "users/login";
             using (HttpClient client = new HttpClient())
             {
-                var requestBody = new { Username = username, Password = password };
-                JsonContent content = JsonContent.Create(requestBody);
+                LoginParametrs loginParam = new LoginParametrs(username, password);
+                JsonContent content = JsonContent.Create(loginParam);
 
                 HttpResponseMessage responseMessage = await client.PostAsync(url, content);
                 if (responseMessage.IsSuccessStatusCode)

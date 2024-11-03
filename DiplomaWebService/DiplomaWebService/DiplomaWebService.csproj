@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Dictionaries\Invoice\" />
+    <Folder Include="Views\Invoice\" />
     <Folder Include="Views\Forms\InvoiceForm\" />
   </ItemGroup>
 

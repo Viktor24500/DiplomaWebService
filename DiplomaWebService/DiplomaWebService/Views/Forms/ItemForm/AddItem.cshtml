@@ -3,8 +3,11 @@
 *@
 @{
 }
+@using DiplomaWebService.Models;
+@model List<Sector>
+
 <div class="newItemForm">
-    <form action="/items" method="post">
+    <form action="/items" method="post" id="addItem">
         <label for="itemId" class="hidden">Id </label>
         <input type="text" class="hidden" id="itemId" name="Id" value="" placeholder="Id" required><br>
         <label for="itemName">Name </label>
@@ -12,7 +15,13 @@
         <label for="inventoryNumber">Name </label>
         <input type="text" class="ItemInput" id="inventoryNumber" name="name" value="" placeholder="name" required><br><br>
         <label for="sectorId">Name </label>
-        <input type="text" class="ItemInput" id="sectorId" name="name" value="" placeholder="name" required><br><br>
+        <select form="addItem">
+            @for (int i = 0; i < @Model.Count(); i++)
+            {
+                <option value="@Model[i].Id"> @Model[i].Name</option>
+            }
+        </select>
+        @* <input type="text" class="ItemInput" id="sectorId" name="name" value="" placeholder="name" required><br><br> *@
         <input type="submit" class="formButton" id="submit" value="Submit">
     </form>
 </div>

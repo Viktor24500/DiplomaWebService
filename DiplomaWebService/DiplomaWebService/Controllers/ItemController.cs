@@ -79,7 +79,7 @@ namespace DiplomaWebService.Controllers
                     _logger.LogError(result.ErrorMessage);
                 }
 
-                //return View(result.Data);
+                return View(result.Data);
             }
         }
 
@@ -117,7 +117,7 @@ namespace DiplomaWebService.Controllers
                     _logger.LogError(result.ErrorMessage);
                 }
 
-                //return View(result.Data);
+                return View(result.Data);
             }
         }
 

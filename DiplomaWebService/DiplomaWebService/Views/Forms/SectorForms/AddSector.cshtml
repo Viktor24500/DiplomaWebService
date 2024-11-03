@@ -4,11 +4,11 @@
 @{
 }
 <div class="newSectorForm">
-    <form action="/sectors" method="post">
+    <form action="/sectors" method="post" id="addSector">
         <label for="sectorId" class="hidden">Id </label>
         <input type="text" class="hidden" id="sectorId" name="Id" value="" placeholder="Id" required><br>
         <label for="sectorName">Name </label>
-        <input type="text" class="SectorInput" id="sectorName" name="name" value="" placeholder="name" required><br><br>
+        @* <input type="text" class="SectorInput" id="sectorName" name="name" value="" placeholder="name" required><br><br> *@
         <input type="submit" class="formButton" id="submit" value="Submit">
     </form>
 </div>

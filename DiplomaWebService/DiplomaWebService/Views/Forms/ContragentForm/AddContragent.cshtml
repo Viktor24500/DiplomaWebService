@@ -3,14 +3,23 @@
 *@
 @{
 }
+@using DiplomaWebService.Models;
+@model List<Contragent>
+
 <div class="newContragentForm">
-    <form action="/contragent" method="post">
+    <form action="/contragent" method="post" id="addContragent">
         <label for="contragentId" class="hidden">Id </label>
         <input type="text" class="hidden" id="contragentId" name="Id" value="" placeholder="contragnetId" required><br>
         <label for="contragentName">Name </label>
         <input type="text" class="ContragentInput" id="contragentName" name="name" value="" placeholder="name" required><br><br>
         <label for="parentId">Name </label>
-        <input type="text" class="ContragentInput" id="parentId" name="parentId" value="" placeholder="parent Id"><br><br>
+        <select form="addContragent">
+            @for (int i = 0; i < @Model.Count(); i++)
+            {
+              <option  value="@Model[i].ContragentId"> @Model[i].ContragentName</option>
+            }
+        </select>
+        @* <input type="text" class="ContragentInput" id="parentId" name="parentId" value="" placeholder="parent Id"><br><br> *@
         <input type="submit" class="formButton" id="submit" value="Submit">
     </form>
 </div>

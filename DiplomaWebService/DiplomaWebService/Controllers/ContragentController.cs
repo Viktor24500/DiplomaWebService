@@ -73,10 +73,9 @@ namespace DiplomaWebService.Controllers
                 result.ErrorCode = (int)ErrorCodes.BadRequest;
                 result.ErrorMessage = "";
                 _logger.LogError(result.ErrorMessage);
-                return result;
             }
 
-            //return result;
+            return View(result.Data);
         }
 
         [HttpPut]
@@ -107,7 +106,7 @@ namespace DiplomaWebService.Controllers
                     _logger.LogError(result.ErrorMessage);
                 }
 
-                //return View(result.Data);
+                return View(result.Data);
             }
         }
         [HttpGet]
