@@ -9,15 +9,15 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["DiplomaWebService/DiplomaWebService.csproj", "DiplomaWebService/"]
-RUN dotnet restore "./DiplomaWebService/./DiplomaWebService.csproj"
+COPY ["DiplomaWebService/DiplomaWebService/DiplomaWebService.csproj", "DiplomaWebService/"]
+RUN dotnet restore "./DiplomaWebService/DiplomaWebService.csproj"
 COPY . .
 WORKDIR "/src/DiplomaWebService"
-RUN dotnet build "./DiplomaWebService.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./DiplomaWebService/DiplomaWebService.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./DiplomaWebService.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./DiplomaWebService/DiplomaWebService.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app

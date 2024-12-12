@@ -1,8 +1,8 @@
 ﻿namespace DiplomaWebService.Models
 {
-    public class Role
+    public class Unit
     {
-        public Role(int id, string name)
+        public Unit(int id, string name)
         {
             Id = id;
             Name = name;

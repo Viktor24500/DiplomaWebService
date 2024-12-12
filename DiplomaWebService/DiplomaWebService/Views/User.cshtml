@@ -6,3 +6,47 @@
 @using DiplomaWebService.Models;
 @model List<User>
 
+<div class="app-content">
+	<div class="main-header">
+		<div class="top-header">
+			<h2>Користувачі</h2>
+		</div>
+		<div class="btn-header">
+			<button type="button" class="btn btn-header btn-header-disable" disabled>Зберегти</button>
+		</div>
+	</div>
+	<nav class="nav">
+		<button type="add-user" class="btn btn-add-user" onclick="openModalForm('addUserForm')">
+			<img src="img/admin.svg">Додати
+		</button>
+		<div class="right-actions">
+			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук...">
+			<img src="img/filtr.svg">
+		</div>
+	</nav>
+</div>
+<div class="users-table-content">
+	<table>
+		<tr>
+			<th class="hidden">Id</th>
+			<th>User Name</th>
+			<th>First Name</th>
+			<th>Last Name</th>
+			<th>Father Name</th>
+			<th>Is Active</th>
+			<th>Role Name</th>
+		</tr>
+		@for (int i = 0; i < Model.Count(); i++)
+		{
+			<tr>
+				<td class="hidden">@Model[i].Id</td>
+				<td>@Model[i].UserName</td>
+				<td>@Model[i].FirstName</td>
+				<td>@Model[i].LastName</td>
+				<td>@Model[i].FatherName</td>
+				<td>@Model[i].IsActive</td>
+				<td>@Model[i].RoleName</td>
+			</tr>
+		}
+	</table>
+</div>

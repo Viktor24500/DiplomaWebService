@@ -6,12 +6,12 @@
 		{
 			Id = id;
 			Name = name;
-			ShortName = shortSectorName;
+			ShortSectorName = shortSectorName;
 
 		}
 		public int Id { get; set; }
 		public string Name { get; set; }
 
-		public string ShortName { get; set; }
+		public string ShortSectorName { get; set; }
 	}
 }

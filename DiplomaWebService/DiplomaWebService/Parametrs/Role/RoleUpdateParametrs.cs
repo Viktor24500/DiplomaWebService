@@ -1,8 +1,8 @@
-﻿namespace DiplomaWebService.Models
+﻿namespace DiplomaWebService.Parametrs.Role
 {
-    public class Role
+    public class RoleUpdateParametrs
     {
-        public Role(int id, string name)
+        public RoleUpdateParametrs(int id, string name)
         {
             Id = id;
             Name = name;

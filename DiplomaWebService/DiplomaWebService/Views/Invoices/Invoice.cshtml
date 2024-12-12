@@ -1,0 +1,100 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@using DiplomaWebService.Models;
+@using DiplomaWebService.Models.Invoice
+@model List<Invoice>
+<div class="app-content">
+	<div class="main-header">
+		<div class="top-header">
+			<h2>Користувачі</h2>
+		</div>
+		<div class="btn-header">
+			<button type="button" class="btn btn-header btn-header-disable" disabled>Зберегти</button>
+		</div>
+	</div>
+	<nav class="nav">
+		<button type="add-user" class="btn btn-add-user" onclick="openModalForm()">
+			<img src="img/admin.svg">Додати
+		</button>
+		<div class="right-actions">
+			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук...">
+			<img src="img/filtr.svg">
+		</div>
+	</nav>
+</div>
+<div class="users-table-content">
+    <table>
+        <thead>
+            <tr>
+                <th class="hidden">Invoice ID</th>
+                <th>Invoice Date</th>
+                <th>Number</th>
+                <th class="hidden">Destination ID</th>
+                <th>Destination Name</th>
+                <th class="hidden">Sender ID</th>
+                <th>Sender Name</th>
+                <th class="hidden">Invoice Type ID</th>
+                <th>Invoice Type</th>
+                <th class="hidden">Sector ID</th>
+                <th>Sector</th>
+                <th class="hidden">Document Type ID</th>
+                <th>Document Type</th>
+                <th>Positions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count(); i++)
+            {
+                <tr>
+                    <td class="hidden">@Model[i].Id</td>
+                    <td>@Model[i].InvoiceDate.ToString("yyyy-MM-dd")</td>
+                    <td>@Model[i].Number</td>
+                    <td class="hidden">@Model[i].DestinationId</td>
+                    <td>@Model[i].DestinationName</td>
+                    <td class="hidden">@Model[i].SenderId</td>
+                    <td>@Model[i].SenderName</td>
+                    <td class="hidden">@Model[i].InvoiceType.Id</td>
+                    <td>@Model[i].InvoiceType.Name</td>
+                    <td class="hidden">@Model[i].Sector.Id</td>
+                    <td>@Model[i].Sector.Name</td>
+                    <td class="hidden">@Model[i].DocumentType.Id</td>
+                    <td>@Model[i].DocumentType.Name</td>
+                    <td>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="hidden">Item ID</th>
+                                    <th>Item</th>
+                                    <th>Amount</th>
+                                    <th>Price</th>
+                                    <th class="hidden">Unit ID</th>
+                                    <th>Unit</th>
+                                    <th class="hidden">Category ID</th>
+                                    <th>Category</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var position in Model[i].InvoicePositions)
+                                {
+                                    <tr>
+                                        <td class="hidden">@position.Item.ItemId</td>
+                                        <td>@position.Item.ItemName</td>
+                                        <td>@position.Amount</td>
+                                        <td>@position.Price</td>
+                                        <td class="hidden">@position.Unit.Id</td>
+                                        <td>@position.Unit.Name</td>
+                                        <td class="hidden">@position.Category.Id</td>
+                                        <td>@position.Category.Name</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

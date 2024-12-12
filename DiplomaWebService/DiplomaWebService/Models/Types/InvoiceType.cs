@@ -1,8 +1,8 @@
-﻿namespace DiplomaWebService.Models
+﻿namespace DiplomaWebService.Models.Types
 {
-    public class Role
+    public class InvoiceType
     {
-        public Role(int id, string name)
+        public InvoiceType(int id, string name)
         {
             Id = id;
             Name = name;

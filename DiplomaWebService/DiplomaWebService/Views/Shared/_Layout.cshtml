@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿@* <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -6,8 +6,8 @@
 	<link rel="stylesheet" href="./css/Main.css">
 	<link rel="stylesheet" href="./css/formAddEdit.css">
 	<title></title>
-</head>
-<body>
+</head> *@
+@* <body>
 	<div class="sidenav">
 		<header class="systemName">
 			<p class="systemNameImg">
@@ -61,17 +61,106 @@
 			<p class="systemName">
 				Admin
 			</p>
-		</header>
+		</header> *@
 @* 		<nav>
 			<p>
 				Stock Item
 			</p>
 		</nav> *@
-		@RenderBody()
+@* 		@RenderBody()
 	</div>
 </body>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+</html> *@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title></title>
+
+	<link rel="stylesheet" href="css/styles.css" />
+	<link rel="stylesheet" href="css/normalize.css" />
+</head>
+<body>
+	<div class="sidebar-page">
+		<!--sidebar-->
+		<section class="sidebar-outer">
+			<div class="sidebar-wrapper">
+				<div class="logo-container">
+					<h1>LOGO</h1>
+				</div>
+				<nav>
+					<ul class="nav-wrapper">
+						<li class="nav-ul-item nav-ul-item--active">
+							<a title="Invoice" class="sidebar-link" href="/invoices">
+								<div class="small-icon-container">
+									<img src="img/admin.svg">
+								</div>
+								<div class="sidebar-link-text">Накладні</div>
+							</a>
+						</li>
+						<li class="nav-ul-item nav-ul-item--active">
+							<a title="Depot" class="sidebar-link" href="depot.html">
+								<div class="small-icon-container">
+									<img src="img/admin.svg">
+								</div>
+								<div class="sidebar-link-text">Склад</div>
+							</a>
+						</li>
+						<li class="nav-ul-item nav-ul-item--active">
+							<a title="Reports" class="sidebar-link" href="reports.html">
+								<div class="small-icon-container">
+									<img src="img/admin.svg">
+								</div>
+								<div class="sidebar-link-text">Звіти</div>
+							</a>
+						</li>
+						<li class="accordion-item">
+							<input class="accordion-item-input" type="checkbox" id="accordion-dictionary">
+							<label class="accordion-trigger" for="accordion-dictionary">
+								<img src="img/dictionary.svg">
+								<span class="sidebar-link-text">Довідники</span>
+							</label>
+							<a title="Agents" class="accordion-content sidebar-menu-text" href="/contragents">Контрагенти</a>
+							<a title="Property" class="accordion-content sidebar-menu-text" href="/items">Майно</a>
+							<a title="Units" class="accordion-content sidebar-menu-text" href="/units">Одиниці виміру</a>
+						</li>
+						<li class="nav-ul-item nav-ul-item--active">
+							<a title="Administration" class="sidebar-link" href="admin.html">
+								<div class="small-icon-container">
+									<img src="img/admin.svg">
+								</div>
+								<div class="sidebar-link-text">Адміністрування</div>
+							</a>
+						</li>
+					</ul>
+				</nav>
+				<div class="user-info-wrapper">
+					<div class="user-info"></div>
+					<div class="user-name">Копійка</div>
+				</div>
+			</div>
+		</section>
+		<!--/sidebar-->
+		<!--main-->
+		<section class="section-outer">
+			@RenderBody()
+		</section>
+		<!--/main-->
+
+	</div>
+	<script type="text/javascript">
+		function closeModalForm(formId) {
+			document.getElementById(formId).style.display = "none";
+		}
+		function openModalForm(formId) {
+			document.getElementById(formId).style.display = "block";
+		}
+	</script>
+</body>
 </html>

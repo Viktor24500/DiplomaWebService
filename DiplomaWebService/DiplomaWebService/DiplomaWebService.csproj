@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Invoice\" />
+    <Folder Include="Parametrs\Invoice\" />
     <Folder Include="Views\Forms\InvoiceForm\" />
   </ItemGroup>
 
