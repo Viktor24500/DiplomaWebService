@@ -25,20 +25,20 @@
 <div class="users-table-content">
 	<table>
 		<tr>
-			<th class="hidden">itemId</th>
+			<th hidden>itemId</th>
 			<th>Назва</th>
 			<th>Інвентарний номер</th>
-			<th class="hidden">sectorId</th>
+			<th hidden>sectorId</th>
 			<th>Назва служби</th>
 			<th></th>
 		</tr>
 		@for (int i = 0; i < Model.Count(); i++)
 		{
 			<tr>
-				<td id="itemId" class="hidden">@Model[i].ItemId</td>
+				<td id="itemId" hidden>@Model[i].ItemId</td>
 				<td id="Name">@Model[i].ItemName</td>
 				<td id="InventoryNumber">@Model[i].InventoryNumber</td>
-				<td id="sectorId" class="hidden">@Model[i].Sector.Id</td>
+				<td id="sectorId" hidden>@Model[i].Sector.Id</td>
 				<td id="SectorName">@Model[i].Sector.Name</td>
 			</tr>
 		}

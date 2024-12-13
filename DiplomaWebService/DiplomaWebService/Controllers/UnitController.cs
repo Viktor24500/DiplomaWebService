@@ -7,115 +7,121 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DiplomaWebService.Controllers
 {
-	public class UnitController : Controller
-	{
-		private readonly ILogger<UnitController> _logger;
-		private readonly string? _connectionString;
+    public class UnitController : Controller
+    {
+        private readonly ILogger<UnitController> _logger;
+        private readonly string? _connectionString;
 
-		public UnitController(ILogger<UnitController> logger, IConfiguration configuration)
-		{
-			_logger = logger;
-			_connectionString = configuration.GetConnectionString(Constant.MainConnectionString);
-		}
+        public UnitController(ILogger<UnitController> logger, IConfiguration configuration)
+        {
+            _logger = logger;
+            _connectionString = configuration.GetConnectionString(Constant.MainConnectionString);
+        }
 
-		[HttpGet]
-		[Route("/units")]
-		public async Task<IActionResult> GetAllUnits()
-		{
-			Result<List<Unit>> result = new Result<List<Unit>>();
-			string url = _connectionString + "units";
-			using (HttpClient client = new HttpClient())
-			{
-				HttpResponseMessage responseMessage = await client.GetAsync(url);
-				if (responseMessage.IsSuccessStatusCode)
-				{
-					result.Data = await responseMessage.Content.ReadFromJsonAsync<List<Unit>>();
-				}
-				else
-				{
-					result.ErrorCode = (int)responseMessage.StatusCode;
-					result.ErrorMessage = await responseMessage.Content.ReadAsStringAsync();
-				}
-			}
-			if (result.ErrorCode != (int)ErrorCodes.Success)
-			{
-				result.ErrorCode = (int)ErrorCodes.BadRequest;
-				result.ErrorMessage = "invalid username or password";
-				_logger.LogError(result.ErrorMessage);
-			}
+        [HttpGet]
+        [Route("/units")]
+        public async Task<IActionResult> GetAllUnits()
+        {
+            Result<List<Unit>> result = new Result<List<Unit>>();
+            string url = _connectionString + "units";
+            using (HttpClient client = new HttpClient())
+            {
+                HttpResponseMessage responseMessage = await client.GetAsync(url);
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    result.Data = await responseMessage.Content.ReadFromJsonAsync<List<Unit>>();
+                }
+                else
+                {
+                    result.ErrorCode = (int)responseMessage.StatusCode;
+                    result.ErrorMessage = await responseMessage.Content.ReadAsStringAsync();
+                }
+            }
+            if (result.ErrorCode != (int)ErrorCodes.Success)
+            {
+                _logger.LogError(result.ErrorMessage);
+                result.ErrorCode = (int)ErrorCodes.BadRequest;
+                result.ErrorMessage = "can't get all units";
+                ErrorViewModel errorModel = new ErrorViewModel(result.ErrorCode, result.ErrorMessage);
+                return View("/Views/Error.cshtml", errorModel);
+            }
 
-			return View("/Views/Dictionaries/Units/Unit.cshtml", result.Data);
-		}
+            return View("/Views/Dictionaries/Units/Unit.cshtml", result.Data);
+        }
 
-		[HttpPost]
-		[Route("/unit")]
-		public async Task<IActionResult> CreateUnit(string name)
-		{
-			Result<Unit> result = new Result<Unit>();
-			string url = _connectionString + "units";
-			using (HttpClient client = new HttpClient())
-			{
-				UnitCreateParameters unitCreateParam = new UnitCreateParameters(name);
-				JsonContent content = JsonContent.Create(unitCreateParam);
+        [HttpPost]
+        [Route("/unit")]
+        public async Task<IActionResult> CreateUnit(string name)
+        {
+            Result<Unit> result = new Result<Unit>();
+            string url = _connectionString + "units";
+            using (HttpClient client = new HttpClient())
+            {
+                UnitCreateParameters unitCreateParam = new UnitCreateParameters(name);
+                JsonContent content = JsonContent.Create(unitCreateParam);
 
-				HttpResponseMessage responseMessage = await client.PostAsync(url, content);
-				if (responseMessage.IsSuccessStatusCode)
-				{
-					result.Data = await responseMessage.Content.ReadFromJsonAsync<Unit>();
-				}
-				else
-				{
-					result.ErrorCode = (int)responseMessage.StatusCode;
-					result.ErrorMessage = await responseMessage.Content.ReadAsStringAsync();
-				}
-				if (result.ErrorCode != (int)ErrorCodes.Success)
-				{
-					result.ErrorCode = (int)ErrorCodes.BadRequest;
-					result.ErrorMessage = "";
-					_logger.LogError(result.ErrorMessage);
-				}
+                HttpResponseMessage responseMessage = await client.PostAsync(url, content);
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    result.Data = await responseMessage.Content.ReadFromJsonAsync<Unit>();
+                }
+                else
+                {
+                    result.ErrorCode = (int)responseMessage.StatusCode;
+                    result.ErrorMessage = await responseMessage.Content.ReadAsStringAsync();
+                }
+                if (result.ErrorCode != (int)ErrorCodes.Success)
+                {
+                    _logger.LogError(result.ErrorMessage);
+                    result.ErrorCode = (int)ErrorCodes.BadRequest;
+                    result.ErrorMessage = "";
+                    ErrorViewModel errorModel = new ErrorViewModel(result.ErrorCode, result.ErrorMessage);
+                    return View("/Views/Error.cshtml", errorModel);
+                }
 
-				return View("/Views/Dictionaries/Units/Unit.cshtml", result.Data);
-			}
-		}
+                return View("/Views/Dictionaries/Units/Unit.cshtml", result.Data);
+            }
+        }
 
-		[HttpPut]
-		[Route("/units")]
-		public async Task<IActionResult> UpdateUnit(int id, string name)
-		{
-			Result<Unit> result = new Result<Unit>();
-			string url = _connectionString + $"units/{id}";
-			using (HttpClient client = new HttpClient())
-			{
-				UnitUpdateParameters unitUpdateParam = new UnitUpdateParameters(id, name);
-				JsonContent content = JsonContent.Create(unitUpdateParam);
+        [HttpPut]
+        [Route("/units")]
+        public async Task<IActionResult> UpdateUnit(int id, string name)
+        {
+            Result<Unit> result = new Result<Unit>();
+            string url = _connectionString + $"units/{id}";
+            using (HttpClient client = new HttpClient())
+            {
+                UnitUpdateParameters unitUpdateParam = new UnitUpdateParameters(id, name);
+                JsonContent content = JsonContent.Create(unitUpdateParam);
 
-				HttpResponseMessage responseMessage = await client.PutAsync(url, content);
-				if (responseMessage.IsSuccessStatusCode)
-				{
-					result.Data = await responseMessage.Content.ReadFromJsonAsync<Unit>();
-				}
-				else
-				{
-					result.ErrorCode = (int)responseMessage.StatusCode;
-					result.ErrorMessage = await responseMessage.Content.ReadAsStringAsync();
-				}
-				if (result.ErrorCode != (int)ErrorCodes.Success)
-				{
-					result.ErrorCode = (int)ErrorCodes.BadRequest;
-					result.ErrorMessage = "";
-					_logger.LogError(result.ErrorMessage);
-				}
+                HttpResponseMessage responseMessage = await client.PutAsync(url, content);
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    result.Data = await responseMessage.Content.ReadFromJsonAsync<Unit>();
+                }
+                else
+                {
+                    result.ErrorCode = (int)responseMessage.StatusCode;
+                    result.ErrorMessage = await responseMessage.Content.ReadAsStringAsync();
+                }
+                if (result.ErrorCode != (int)ErrorCodes.Success)
+                {
+                    _logger.LogError(result.ErrorMessage);
+                    result.ErrorCode = (int)ErrorCodes.BadRequest;
+                    result.ErrorMessage = "";
+                    ErrorViewModel errorModel = new ErrorViewModel(result.ErrorCode, result.ErrorMessage);
+                    return View("/Views/Error.cshtml", errorModel);
+                }
 
-				return View("/Views/Dictionaries/Units/Unit.cshtml", result.Data);
-			}
-		}
+                return View("/Views/Dictionaries/Units/Unit.cshtml", result.Data);
+            }
+        }
 
-		[HttpGet]
-		[Route("/unit")]
-		public IActionResult GetCreateSector()
-		{
-			return View("/Views/Forms/UnitForm/AddUnit.cshtml");
-		}
-	}
+        [HttpGet]
+        [Route("/unit")]
+        public IActionResult GetCreateSector()
+        {
+            return View("/Views/Forms/UnitForm/AddUnit.cshtml");
+        }
+    }
 }

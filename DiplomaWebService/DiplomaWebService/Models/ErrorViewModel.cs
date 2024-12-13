@@ -1,9 +1,14 @@
 namespace DiplomaWebService.Models
 {
-    public class ErrorViewModel
-    {
-        public string? RequestId { get; set; }
+	public class ErrorViewModel
+	{
+		public ErrorViewModel(int erorrCode, string errorMsg)
+		{
+			ErrorCode = erorrCode;
+			ErrorMsg = errorMsg;
+		}
+		public int ErrorCode { get; set; }
 
-        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
-    }
+		public string ErrorMsg { get; set; }
+	}
 }

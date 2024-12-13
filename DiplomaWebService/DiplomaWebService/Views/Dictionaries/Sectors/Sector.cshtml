@@ -6,14 +6,14 @@
 
 @* <table>
 	<tr>
-		<th class="hidden">sectorId</th>
+		<th hidden>sectorId</th>
 		<th>Name</th>
 		<th>Short name</th>
 	<tr>
 	@for (int i = 0; i < @Model.Count(); i++)
 	{
 		<tr>
-			<td id="sectorId" class="hidden">@Model[i].Id</td>
+			<td id="sectorId" hidden>@Model[i].Id</td>
 			<td id="Name">@Model[i].Name</td>
 			<td id="Short name">@Model[i].ShortName</td>
 		</tr>
@@ -42,14 +42,14 @@
 <div class="users-table-content">
     <table>
         <tr>
-            <th class="hidden">sectorId</th>
+            <th hidden>sectorId</th>
             <th>Назва</th>
             <th>Скорочена назва</th>
         </tr>
         @for (int i = 0; i < Model.Count(); i++)
         {
             <tr>
-                <td id="sectorId" class="hidden">@Model[i].Id</td>
+                <td id="sectorId" hidden>@Model[i].Id</td>
                 <td id="Name">@Model[i].Name</td>
                 <td id="ShortName">@Model[i].ShortSectorName</td>
             </tr>
