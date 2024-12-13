@@ -1,14 +1,14 @@
 namespace DiplomaWebService.Models
 {
-	public class ErrorViewModel
-	{
-		public ErrorViewModel(int erorrCode, string errorMsg)
-		{
-			ErrorCode = erorrCode;
-			ErrorMsg = errorMsg;
-		}
-		public int ErrorCode { get; set; }
+    public class ErrorViewModel
+    {
+        public ErrorViewModel(string erorrCodeName, string errorMsg)
+        {
+            ErrorCodeName = erorrCodeName;
+            ErrorMsg = errorMsg;
+        }
+        public string ErrorCodeName { get; set; }
 
-		public string ErrorMsg { get; set; }
-	}
+        public string ErrorMsg { get; set; }
+    }
 }

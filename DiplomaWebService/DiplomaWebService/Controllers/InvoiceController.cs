@@ -42,8 +42,9 @@ namespace DiplomaWebService.Controllers
                 _logger.LogError(result.ErrorMessage);
                 result.ErrorCode = (int)ErrorCodes.BadRequest;
                 result.ErrorMessage = "can't get all invoices";
-                ErrorViewModel errorModel = new ErrorViewModel(result.ErrorCode, result.ErrorMessage);
-                return View("/Views/Error.cshtml", errorModel);
+                string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+                ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                return View("/Views/Shared/Error.cshtml", errorModel);
             }
 
             return View("/Views/Invoices/Invoice.cshtml", result.Data);

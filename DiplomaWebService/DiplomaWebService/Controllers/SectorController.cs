@@ -42,8 +42,9 @@ namespace DiplomaWebService.Controllers
                 _logger.LogError(result.ErrorMessage);
                 result.ErrorCode = (int)ErrorCodes.BadRequest;
                 result.ErrorMessage = "ican't get all sectors";
-                ErrorViewModel errorModel = new ErrorViewModel(result.ErrorCode, result.ErrorMessage);
-                return View("/Views/Error.cshtml", result.Data);
+                string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+                ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                return View("/Views/Shared/Error.cshtml", result.Data);
             }
 
             return View("/Views/Dictionaries/Sectors/Sector.cshtml", result.Data);
@@ -75,8 +76,9 @@ namespace DiplomaWebService.Controllers
                     _logger.LogError(result.ErrorMessage);
                     result.ErrorCode = (int)ErrorCodes.BadRequest;
                     result.ErrorMessage = "";
-                    ErrorViewModel errorModel = new ErrorViewModel(result.ErrorCode, result.ErrorMessage);
-                    return View("/Views/Error.cshtml", result.Data);
+                    string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+                    ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                    return View("/Views/Shared/Error.cshtml", result.Data);
                 }
 
                 return View("/Views/Dictionaries/Sectors/Sector.cshtml", result.Data);
@@ -109,8 +111,9 @@ namespace DiplomaWebService.Controllers
                     _logger.LogError(result.ErrorMessage);
                     result.ErrorCode = (int)ErrorCodes.BadRequest;
                     result.ErrorMessage = "";
-                    ErrorViewModel errorModel = new ErrorViewModel(result.ErrorCode, result.ErrorMessage);
-                    return View("/Views/Error.cshtml", result.Data);
+                    string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+                    ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                    return View("/Views/Shared/Error.cshtml", result.Data);
                 }
 
                 return View("/Views/Dictionaries/Sectors/Sector.cshtml", result.Data);
