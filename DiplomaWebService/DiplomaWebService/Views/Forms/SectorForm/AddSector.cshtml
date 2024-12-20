@@ -14,8 +14,8 @@
 </div> *@
 
 <form action="/sectors" method="post" class="modal" id="addSectorForm">
-    <div class="modal-header">
-        <button class="small-icon-container close-btn" onclick="closeModalForm('addSectorForm')">
+    <div class="user-modal-header">
+        <button class="small-icon-container close-btn" onclick="closeModalForm()">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M2.05808 15.59C1.1359 15.59 0.405029 14.8587 0.405029 13.9188C0.405029 13.501 0.579034 13.0832 0.90962 12.7698L5.64237 8.01742L0.90962 3.28238C0.579034 2.96907 0.405029 2.55127 0.405029 2.13348C0.405029 1.19342 1.1359 0.479631 2.05808 0.479631C2.54525 0.479631 2.92799 0.636408 3.24127 0.949721L7.99132 5.68477L12.7588 0.932288C13.1068 0.601542 13.4723 0.444885 13.942 0.444885C14.8642 0.444885 15.595 1.17599 15.595 2.09862C15.595 2.53384 15.421 2.91677 15.0905 3.26495L10.3577 8.01742L15.0905 12.7523C15.4036 13.0832 15.5776 13.4836 15.5776 13.9188C15.5776 14.8587 14.8468 15.59 13.9073 15.59C13.4374 15.59 13.0372 15.4159 12.7067 15.1026L7.99132 10.3849L3.276 15.1026C2.96284 15.4333 2.54525 15.59 2.05808 15.59Z" fill="#768B63" />
             </svg>
@@ -24,22 +24,22 @@
             <h2>Новий сектор</h2>
         </div>
     </div>
-    <div class="modal-content">
-        <div class="modal-block">
-            <div class="modal-label">Id:</div>
+    <div class="user-modal-content">
+        <div class="user-modal-block">
+            <div class="user-modal-label" hidden>Id:</div>
             <div class="input-field-wrapper">
-                <input type="hidden" class="input-field hidden" id="sectorId" name="Id" placeholder="Id" value="" required>
+                <input type="hidden" class="input-field hidden" id="sectorId" name="Id" placeholder="Id" value="" hidden required>
                 <div class="separator"></div>
             </div>
         </div>
-        <div class="modal-block">
-            <div class="modal-label">Назва:</div>
+        <div class="user-modal-block">
+            <div class="user-modal-label">Назва:</div>
             <div class="input-field-wrapper">
                 <input type="text" class="input-field" id="sectorName" name="name" placeholder="Назва" value="" required>
                 <div class="separator"></div>
             </div>
-            <div class="modal-block">
-                <div class="modal-label">Коротка назва:</div>
+            <div class="user-modal-block">
+                <div class="user-modal-label">Коротка назва:</div>
                 <div class="input-field-wrapper">
                     <input type="text" class="input-field" id="shortSectorName" name="name" value="" placeholder="Назва" required>
                     <div class="separator"></div>
@@ -49,6 +49,5 @@
     </div>
     <div class="modal-footer">
         <button type="submit" class="btn btn-modal">Зберегти</button>
-        <button type="button" class="btn btn-cancel" onclick="closeModalForm('addSectorForm')">Скасувати</button>
     </div>
 </form>

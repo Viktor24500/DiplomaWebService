@@ -1,4 +1,6 @@
-﻿namespace DiplomaWebService.Models.Invoice
+﻿using DiplomaWebService.Models.Items;
+
+namespace DiplomaWebService.Models.Invoice
 {
     public class InvoicePosition
     {

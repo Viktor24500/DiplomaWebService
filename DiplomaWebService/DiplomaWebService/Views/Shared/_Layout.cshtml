@@ -1,82 +1,4 @@
-﻿@* <!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="./css/Main.css">
-	<link rel="stylesheet" href="./css/formAddEdit.css">
-	<title></title>
-</head> *@
-@* <body>
-	<div class="sidenav">
-		<header class="systemName">
-			<p class="systemNameImg">
-				<img src="" alt="logo">
-			</p>
-		</header>
-		<p>
-			<a href="StockItem.html" class="sideNavLink">
-				<img src="" alt="logo" class="sideNavImg">
-				Склад
-			</a>
-			<div class="dictionaries">
-				<a href="#" class="dictionariesLink">
-					<img src="" alt="logo" class="sideNavImg">
-					Dictionaries
-				</a>
-				<div class="dictionariesLinkWrapper">
-					<div class="dictionariesList">
-						<ul>
-							<li>
-								<a href="#">Contragents</a>
-							</li>
-							<li>
-								<a href="#">Items</a>
-							</li>
-							<li>
-								<a href="#">Units</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<a href="Administration.html" class="sideNavLink">
-				<img src="" alt="logo" class="sideNavImg">
-				Administration
-			</a>
-		</p>
-		<footer class="sideNavFooter">
-			<div class="sideNavFooterLogo">
-				<div class="sideNavFooterLogoText">
-					K
-				</div>
-			</div>
-			<div class="sideNavFooterText">
-				Копійка
-			</div>
-		</footer>
-	</div>
-	<div class="main">
-		<header class="systemName">
-			<p class="systemName">
-				Admin
-			</p>
-		</header> *@
-@* 		<nav>
-			<p>
-				Stock Item
-			</p>
-		</nav> *@
-@* 		@RenderBody()
-	</div>
-</body>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-</html> *@
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
@@ -131,7 +53,7 @@
 							<a title="Units" class="accordion-content sidebar-menu-text" href="/units">Одиниці виміру</a>
 						</li>
 						<li class="nav-ul-item nav-ul-item--active">
-							<a title="Administration" class="sidebar-link" href="admin.html">
+							<a title="Administration" class="sidebar-link" href="/users">
 								<div class="small-icon-container">
 									<img src="img/admin.svg">
 								</div>
@@ -155,11 +77,11 @@
 
 	</div>
 	<script type="text/javascript">
-		function closeModalForm(formId) {
-			document.getElementById(formId).style.display = "none";
+		function closeModalForm() {
+			document.getElementsByClassName('modal')[0].style.display = "none";
 		}
-		function openModalForm(formId) {
-			document.getElementById(formId).style.display = "block";
+		function openModalForm() {
+			document.getElementsByClassName('modal')[0].style.display = "block";
 		}
 	</script>
 </body>

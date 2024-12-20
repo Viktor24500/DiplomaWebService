@@ -1,5 +1,5 @@
-﻿@using DiplomaWebService.Models;
-@model List<Item>
+﻿@using DiplomaWebService.Models.Items
+@model ItemViewModel
 @{
 }
 
@@ -32,15 +32,16 @@
 			<th>Назва служби</th>
 			<th></th>
 		</tr>
-		@for (int i = 0; i < Model.Count(); i++)
+		@for (int i = 0; i < Model.Items.Count(); i++)
 		{
 			<tr>
-				<td id="itemId" hidden>@Model[i].ItemId</td>
-				<td id="Name">@Model[i].ItemName</td>
-				<td id="InventoryNumber">@Model[i].InventoryNumber</td>
-				<td id="sectorId" hidden>@Model[i].Sector.Id</td>
-				<td id="SectorName">@Model[i].Sector.Name</td>
+				<td id="itemId" hidden>@Model.Items[i].ItemId</td>
+				<td id="Name">@Model.Items[i].ItemName</td>
+				<td id="InventoryNumber">@Model.Items[i].InventoryNumber</td>
+				<td id="sectorId" hidden>@Model.Items[i].Sector.Id</td>
+				<td id="SectorName">@Model.Items[i].Sector.Name</td>
 			</tr>
 		}
 	</table>
 </div>
+@Html.Partial("/Views/Forms/ItemForm/AddItem.cshtml", @Model.Sectors)

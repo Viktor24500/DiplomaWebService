@@ -16,7 +16,7 @@
 		</div>
 	</div>
 	<nav class="nav">
-		<button type="add-user" class="btn btn-add-user" onclick="openModalForm('addUserForm')">
+		<button type="button" class="btn btn-add-user" onclick="openModalForm()">
 			<img src="img/admin.svg">Додати
 		</button>
 		<div class="right-actions">
@@ -50,3 +50,4 @@
 		}
 	</table>
 </div>
+@Html.Partial("/Views/Forms/UserForm/AddUserForm.cshtml", new List<Role>())

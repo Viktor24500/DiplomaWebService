@@ -5445,7 +5445,7 @@ textarea.form-control-lg {
 .modal-dialog-scrollable {
   height: calc(100% - 1rem);
 }
-.modal-dialog-scrollable .modal-content {
+.modal-dialog-scrollable .user-modal-content {
   max-height: 100%;
   overflow: hidden;
 }
@@ -5459,7 +5459,7 @@ textarea.form-control-lg {
   min-height: calc(100% - 1rem);
 }
 
-.modal-content {
+.user-modal-content {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -5488,7 +5488,7 @@ textarea.form-control-lg {
   opacity: 0.5;
 }
 
-.modal-header {
+.user-modal-header {
   display: flex;
   flex-shrink: 0;
   align-items: center;
@@ -5498,7 +5498,7 @@ textarea.form-control-lg {
   border-top-left-radius: calc(0.3rem - 1px);
   border-top-right-radius: calc(0.3rem - 1px);
 }
-.modal-header .btn-close {
+.user-modal-header .btn-close {
   padding: 0.5rem 0.5rem;
   margin: -0.5rem -0.5rem -0.5rem auto;
 }
@@ -5564,12 +5564,12 @@ textarea.form-control-lg {
   height: 100%;
   margin: 0;
 }
-.modal-fullscreen .modal-content {
+.modal-fullscreen .user-modal-content {
   height: 100%;
   border: 0;
   border-radius: 0;
 }
-.modal-fullscreen .modal-header {
+.modal-fullscreen .user-modal-header {
   border-radius: 0;
 }
 .modal-fullscreen .modal-body {
@@ -5586,12 +5586,12 @@ textarea.form-control-lg {
     height: 100%;
     margin: 0;
   }
-  .modal-fullscreen-sm-down .modal-content {
+  .modal-fullscreen-sm-down .user-modal-content {
     height: 100%;
     border: 0;
     border-radius: 0;
   }
-  .modal-fullscreen-sm-down .modal-header {
+  .modal-fullscreen-sm-down .user-modal-header {
     border-radius: 0;
   }
   .modal-fullscreen-sm-down .modal-body {
@@ -5608,12 +5608,12 @@ textarea.form-control-lg {
     height: 100%;
     margin: 0;
   }
-  .modal-fullscreen-md-down .modal-content {
+  .modal-fullscreen-md-down .user-modal-content {
     height: 100%;
     border: 0;
     border-radius: 0;
   }
-  .modal-fullscreen-md-down .modal-header {
+  .modal-fullscreen-md-down .user-modal-header {
     border-radius: 0;
   }
   .modal-fullscreen-md-down .modal-body {
@@ -5630,12 +5630,12 @@ textarea.form-control-lg {
     height: 100%;
     margin: 0;
   }
-  .modal-fullscreen-lg-down .modal-content {
+  .modal-fullscreen-lg-down .user-modal-content {
     height: 100%;
     border: 0;
     border-radius: 0;
   }
-  .modal-fullscreen-lg-down .modal-header {
+  .modal-fullscreen-lg-down .user-modal-header {
     border-radius: 0;
   }
   .modal-fullscreen-lg-down .modal-body {
@@ -5652,12 +5652,12 @@ textarea.form-control-lg {
     height: 100%;
     margin: 0;
   }
-  .modal-fullscreen-xl-down .modal-content {
+  .modal-fullscreen-xl-down .user-modal-content {
     height: 100%;
     border: 0;
     border-radius: 0;
   }
-  .modal-fullscreen-xl-down .modal-header {
+  .modal-fullscreen-xl-down .user-modal-header {
     border-radius: 0;
   }
   .modal-fullscreen-xl-down .modal-body {
@@ -5674,12 +5674,12 @@ textarea.form-control-lg {
     height: 100%;
     margin: 0;
   }
-  .modal-fullscreen-xxl-down .modal-content {
+  .modal-fullscreen-xxl-down .user-modal-content {
     height: 100%;
     border: 0;
     border-radius: 0;
   }
-  .modal-fullscreen-xxl-down .modal-header {
+  .modal-fullscreen-xxl-down .user-modal-header {
     border-radius: 0;
   }
   .modal-fullscreen-xxl-down .modal-body {
