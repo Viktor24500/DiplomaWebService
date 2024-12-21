@@ -31,7 +31,7 @@
     </form>
 </div> *@
 
-<form action="/users" method="post" class="modal" id="addUserForm">
+<form action="/user" method="post" class="modal" id="addUserForm">
 	<div class="user-modal-header">
 		<button class="small-icon-container close-btn" onclick="closeModalForm()">
 			<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -46,21 +46,21 @@
 		<div class="user-modal-block">
 			<div class="user-modal-label" hidden>Id:</div>
 			<div class="input-field-wrapper">
-				<input type="text" class="input-field hidden" id="userId" value="" name="Id" placeholder="Id" hidden required>
+				<input type="text" class="input-field hidden" id="userId" value="" name="Id" placeholder="Id" hidden>
 				<div class="separator"></div>
 			</div>
 		</div>
 		<div class="user-modal-block">
 			<div class="user-modal-label">Прізвище:</div>
 			<div class="input-field-wrapper">
-				<input type="text" class="input-field" name="last-name" id="last-name" value="" placeholder="Прізвище">
+				<input type="text" class="input-field" name="last-name" id="last-name" value="" placeholder="Прізвище" required>
 				<div class="separator"></div>
 			</div>
 		</div>
 		<div class="user-modal-block">
 			<div class="user-modal-label">Ім'я:</div>
 			<div class="input-field-wrapper">
-				<input type="text" class="input-field" name="first-name" id="first-name" value="" placeholder="Ім'я">
+				<input type="text" class="input-field" name="first-name" id="first-name" value="" placeholder="Ім'я" required>
 				<div class="separator"></div>
 			</div>
 		</div>
@@ -74,14 +74,14 @@
 		<div class="user-modal-block">
 			<div class="user-modal-label">Логін:</div>
 			<div class="input-field-wrapper">
-				<input type="text" class="input-field" name="login" id="login" value="" placeholder="Логін">
+				<input type="text" class="input-field" name="login" id="login" value="" placeholder="Логін" required>
 				<div class="separator"></div>
 			</div>
 		</div>
 		<div class="user-modal-block">
 			<div class="user-modal-label">Пароль:</div>
 			<div class="input-field-wrapper">
-				<input type="text" class="input-field" name="password" id="password" value="" placeholder="Пароль">
+				<input type="text" class="input-field" name="password" id="password" value="" placeholder="Пароль" required>
 				<div class="separator"></div>
 			</div>
 		</div>

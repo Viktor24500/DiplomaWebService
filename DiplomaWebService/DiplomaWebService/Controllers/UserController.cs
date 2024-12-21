@@ -31,7 +31,7 @@ namespace DiplomaWebService.Controllers
 		public async Task<Result<string>> Login(string username, string password)
 		{
 			Result<string> result = new Result<string>();
-			string url = _connectionString + "users/login";
+			string url = _connectionString + "user/login";
 			using (HttpClient client = new HttpClient())
 			{
 				LoginParametrs loginParam = new LoginParametrs(username, password);
@@ -105,7 +105,7 @@ namespace DiplomaWebService.Controllers
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 
-			return View("/Views/User.cshtml", result.Data);
+			return RedirectToAction("GetAllUsers");
 		}
 
 		[HttpGet]

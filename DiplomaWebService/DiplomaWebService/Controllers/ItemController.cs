@@ -54,11 +54,11 @@ namespace DiplomaWebService.Controllers
 		}
 
 		[HttpPost]
-		[Route("/items")]
-		public async Task<IActionResult> CreateItem(string name, int inventoryNumber, int sectorId)
+		[Route("/item")]
+		public async Task<IActionResult> CreateItem(string name, int? inventoryNumber, int sectorId)
 		{
 			Result<Item> result = new Result<Item>();
-			string url = _connectionString + "items";
+			string url = _connectionString + "item";
 			using (HttpClient client = new HttpClient())
 			{
 				ItemCreateParameters itemCreateParam = new ItemCreateParameters(name, sectorId, inventoryNumber);
@@ -84,16 +84,16 @@ namespace DiplomaWebService.Controllers
 					return View("/Views/Shared/Error.cshtml", errorModel);
 				}
 
-				return View("/Views/Dictionaries/Items/Item.cshtml", result.Data);
+				return RedirectToAction("GetAllItems");
 			}
 		}
 
 		[HttpPut]
-		[Route("/items")]
+		[Route("/item/{id}")]
 		public async Task<IActionResult> UpdateItem(int id, string name, int inventoryNumber, int sectorId)
 		{
 			Result<Item> result = new Result<Item>();
-			string url = _connectionString + $"/items/{id}";
+			string url = _connectionString + $"/item/{id}";
 			using (HttpClient client = new HttpClient())
 			{
 				ItemUpdateParameters itemUpdateParam = new ItemUpdateParameters(id, name, sectorId, inventoryNumber);
@@ -118,7 +118,7 @@ namespace DiplomaWebService.Controllers
 					ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
 					return View("/Views/Shared/Error.cshtml", errorModel);
 				}
-				return View("/Views/Dictionaries/Items/Item.cshtml", result.Data);
+				return RedirectToAction("GetAllItems");
 			}
 		}
 

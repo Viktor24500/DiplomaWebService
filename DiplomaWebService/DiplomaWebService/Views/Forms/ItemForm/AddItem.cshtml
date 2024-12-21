@@ -26,7 +26,7 @@
     </form>
 </div> *@
 
-<form action="/items" method="post" class="modal" id="addItemForm">
+<form action="/item" method="post" class="modal" id="addItemForm">
     <div class="user-modal-header">
         <button class="small-icon-container close-btn" onclick="closeModalForm('addItemForm')">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -41,7 +41,7 @@
         <div class="user-modal-block">
             <div class="user-modal-label" hidden>Id:</div>
             <div class="input-field-wrapper">
-                <input type="text" class="input-field hidden" id="itemId" name="Id" placeholder="Id" hidden required>
+                <input type="text" class="input-field hidden" id="itemId" name="Id" placeholder="Id" hidden>
                 <div class="separator"></div>
             </div>
         </div>
@@ -55,7 +55,7 @@
         <div class="user-modal-block">
             <div class="user-modal-label">Інвентарний номер:</div>
             <div class="input-field-wrapper">
-                <input type="text" class="input-field" id="inventoryNumber" name="inventoryNumber" placeholder="Інвентарний номер" value="" required>
+                <input type="text" class="input-field" id="inventoryNumber" name="inventoryNumber" placeholder="Інвентарний номер" value="">
                 <div class="separator"></div>
             </div>
         </div>

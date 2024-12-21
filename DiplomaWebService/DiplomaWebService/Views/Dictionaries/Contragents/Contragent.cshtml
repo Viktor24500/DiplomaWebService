@@ -35,13 +35,13 @@
 		@for (int i = 0; i < @Model.Count(); i++)
 		{
 			<tr>
-				<td id="contragentId" hidden>@Model[i].ContragentId</td>
-				<td id="contragentName">@Model[i].ContragentName</td>
-				<td id="parentId" hidden>@Model[i].ParentId</td>
-				<td id="parentName">@Model[i].ParentName</td>
-				<td id="IsActive">@Model[i].IsActive</td>
+				<td id="contragentIdInTable" hidden>@Model[i].ContragentId</td>
+				<td id="contragentNameInTable">@Model[i].ContragentName</td>
+				<td id="parentIdInTable" hidden>@Model[i].ParentId</td>
+				<td id="parentNameInTable">@Model[i].ParentName</td>
+				<td id="IsActiveInTable">@Model[i].IsActive</td>
 			</tr>
 		}
 	</table>
 </div>
-@Html.Partial("/Views/Forms/ContragentForm/AddContragent.cshtml", "/contragents")
+@Html.Partial("/Views/Forms/ContragentForm/AddContragent.cshtml", ViewData["/contragents"])

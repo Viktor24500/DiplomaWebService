@@ -83,6 +83,21 @@
 		function openModalForm() {
 			document.getElementsByClassName('modal')[0].style.display = "block";
 		}
+		function showParentOrganization() {
+			// Get the checkbox
+			var checkBox = document.getElementById("isParentOrganizationExist");
+			// Get the output text
+			var parentId = document.getElementById("parentId");
+
+			// If the checkbox is checked, display the output text
+			if (checkBox.checked == true) {
+				parentId.style.display = "block";
+				parentId.removeAttribute("disabled");
+			} else {
+				parentId.style.display = "none";
+				parentId.setAttribute("disabled", "true");
+			}
+		}
 	</script>
 </body>
 </html>
