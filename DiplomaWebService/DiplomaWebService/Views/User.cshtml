@@ -1,10 +1,10 @@
-﻿@*
+﻿@using DiplomaWebService.Models.Users
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
-@using DiplomaWebService.Models;
-@model List<User>
+@model UserViewModel
 
 <div class="app-content">
 	<div class="main-header">
@@ -36,18 +36,18 @@
 			<th>Is Active</th>
 			<th>Role Name</th>
 		</tr>
-		@for (int i = 0; i < Model.Count(); i++)
+		@for (int i = 0; i < Model.Users.Count(); i++)
 		{
 			<tr>
-				<td hidden>@Model[i].Id</td>
-				<td>@Model[i].UserName</td>
-				<td>@Model[i].FirstName</td>
-				<td>@Model[i].LastName</td>
-				<td>@Model[i].FatherName</td>
-				<td>@Model[i].IsActive</td>
-				<td>@Model[i].RoleName</td>
+				<td hidden>@Model.Users[i].Id</td>
+				<td>@Model.Users[i].UserName</td>
+				<td>@Model.Users[i].FirstName</td>
+				<td>@Model.Users[i].LastName</td>
+				<td>@Model.Users[i].FatherName</td>
+				<td>@Model.Users[i].IsActive</td>
+				<td>@Model.Users[i].RoleName</td>
 			</tr>
 		}
 	</table>
 </div>
-@Html.Partial("/Views/Forms/UserForm/AddUserForm.cshtml", new List<Role>())
+@Html.Partial("/Views/Forms/UserForm/AddUserForm.cshtml", Model.Roles)

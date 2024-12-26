@@ -9,8 +9,8 @@ namespace DiplomaWebService.Controllers
 {
 	public class SectorController : Controller
 	{
-		private readonly ILogger<SectorController> _logger;
-		private readonly string? _connectionString;
+		private ILogger<SectorController> _logger;
+		private string? _connectionString;
 
 		public SectorController(ILogger<SectorController> logger, IConfiguration configuration)
 		{

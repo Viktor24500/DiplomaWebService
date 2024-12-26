@@ -9,8 +9,8 @@ namespace DiplomaWebService.Controllers
 {
 	public class UnitController : Controller
 	{
-		private readonly ILogger<UnitController> _logger;
-		private readonly string? _connectionString;
+		private ILogger<UnitController> _logger;
+		private string? _connectionString;
 
 		public UnitController(ILogger<UnitController> logger, IConfiguration configuration)
 		{

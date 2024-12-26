@@ -9,8 +9,8 @@ namespace DiplomaWebService.Controllers
 {
 	public class ContragentController : Controller
 	{
-		private readonly ILogger<ContragentController> _logger;
-		private readonly string? _connectionString;
+		private ILogger<ContragentController> _logger;
+		private string? _connectionString;
 
 		public ContragentController(ILogger<ContragentController> logger, IConfiguration configuration)
 		{

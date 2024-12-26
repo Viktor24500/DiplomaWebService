@@ -2,6 +2,7 @@
 using DiplomaWebService.Common.Results;
 using DiplomaWebService.Constants;
 using DiplomaWebService.Models;
+using DiplomaWebService.Models.Users;
 using DiplomaWebService.Parametrs.Login;
 using DiplomaWebService.Parametrs.User;
 using Microsoft.AspNetCore.Mvc;
@@ -10,8 +11,8 @@ namespace DiplomaWebService.Controllers
 {
 	public class UserController : Controller
 	{
-		private readonly ILogger<UserController> _logger;
-		private readonly string? _connectionString;
+		private ILogger<UserController> _logger;
+		private string? _connectionString;
 
 		public UserController(ILogger<UserController> logger, IConfiguration configuration)
 		{
@@ -71,10 +72,10 @@ namespace DiplomaWebService.Controllers
 
 		[Route("/user")]
 		[HttpPost]
-		public async Task<IActionResult> CreateUser(string username, string userPassword, string email,
-					   string firstName, string lastName, string? fatherName, int roleId)
+		public async Task<IActionResult> CreateUser(string lastName, string firstName, string? fatherName,
+									string username, string userPassword, string email, int roleId, bool isActive)
 		{
-			bool isActive = true;
+			isActive = true;
 			Result<User> result = new Result<User>();
 			string url = _connectionString + "user";
 			using (HttpClient client = new HttpClient())
@@ -136,8 +137,36 @@ namespace DiplomaWebService.Controllers
 				ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
+			//get roles
+			Result<List<Role>> resultRole = new Result<List<Role>>();
+			string urlRole = _connectionString + "roles";
+			using (HttpClient client = new HttpClient())
+			{
+				HttpResponseMessage responseMessage = await client.GetAsync(urlRole);
+				if (responseMessage.IsSuccessStatusCode)
+				{
+					resultRole.Data = await responseMessage.Content.ReadFromJsonAsync<List<Role>>();
+				}
+				else
+				{
+					resultRole.ErrorCode = (int)responseMessage.StatusCode;
+					resultRole.ErrorMessage = await responseMessage.Content.ReadAsStringAsync();
+				}
+			}
+			if (resultRole.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(result.ErrorMessage);
+				result.ErrorCode = (int)ErrorCodes.BadRequest;
+				result.ErrorMessage = "invalid username or password";
+				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
 
-			return View("/Views/User.cshtml", result.Data);
+			UserViewModel userViewModel = new UserViewModel();
+			userViewModel.Users = result.Data;
+			userViewModel.Roles = resultRole.Data;
+			return View("/Views/User.cshtml", userViewModel);
 		}
 	}
 }

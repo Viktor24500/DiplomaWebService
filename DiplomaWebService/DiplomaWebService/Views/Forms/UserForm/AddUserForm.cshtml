@@ -53,42 +53,49 @@
 		<div class="user-modal-block">
 			<div class="user-modal-label">Прізвище:</div>
 			<div class="input-field-wrapper">
-				<input type="text" class="input-field" name="last-name" id="last-name" value="" placeholder="Прізвище" required>
+				<input type="text" class="input-field" name="lastName" id="lastName" value="" placeholder="Прізвище" required>
 				<div class="separator"></div>
 			</div>
 		</div>
 		<div class="user-modal-block">
 			<div class="user-modal-label">Ім'я:</div>
 			<div class="input-field-wrapper">
-				<input type="text" class="input-field" name="first-name" id="first-name" value="" placeholder="Ім'я" required>
+				<input type="text" class="input-field" name="firstName" id="firstName" value="" placeholder="Ім'я" required>
 				<div class="separator"></div>
 			</div>
 		</div>
 		<div class="user-modal-block">
 			<div class="user-modal-label">По батькові:</div>
 			<div class="input-field-wrapper">
-				<input type="text" class="input-field" name="middle-name" id="middle-name" value="" placeholder="По батькові">
+				<input type="text" class="input-field" name="fatherName" id="fatherName" value="" placeholder="По батькові">
 				<div class="separator"></div>
 			</div>
 		</div>
 		<div class="user-modal-block">
 			<div class="user-modal-label">Логін:</div>
 			<div class="input-field-wrapper">
-				<input type="text" class="input-field" name="login" id="login" value="" placeholder="Логін" required>
+				<input type="text" class="input-field" name="username" id="username" value="" placeholder="Логін" required>
 				<div class="separator"></div>
 			</div>
 		</div>
 		<div class="user-modal-block">
 			<div class="user-modal-label">Пароль:</div>
 			<div class="input-field-wrapper">
-				<input type="text" class="input-field" name="password" id="password" value="" placeholder="Пароль" required>
+				<input type="text" class="input-field" name="userPassword" id="userPassword" value="" placeholder="Пароль" required>
+				<div class="separator"></div>
+			</div>
+		</div>
+		<div class="user-modal-block">
+			<div class="user-modal-label">Пошта:</div>
+			<div class="input-field-wrapper">
+				<input type="text" class="input-field" name="email" id="email" value="" placeholder="Пошта" required>
 				<div class="separator"></div>
 			</div>
 		</div>
 		<div class="user-modal-block">
 			<div class="user-modal-label">Роль:</div>
 			<div class="input-field-wrapper">
-				<select class="input-field dropdown" name="role" id="role">
+				<select class="input-field dropdown" name="roleId" id="roleId">
 					@for (int i = 0; i < @Model.Count(); i++)
 					{
 						<option value="@Model[i].Id"> @Model[i].Name</option>
@@ -100,7 +107,7 @@
 		<div class="user-modal-block">
 			<div class="user-modal-label">Статус:</div>
 			<div class="input-field-wrapper">
-				<select class="input-field dropdown" name="role" id="role">
+				<select class="input-field dropdown" name="isActive" id="isActive">
 					<option value="true"> Активний</option>
 					<option value="false"> Неактивний</option>
 				</select>
@@ -109,6 +116,6 @@
 		</div>
 	</div>
 	<div class="user-modal-footer">
-		<button type="submit" class="btn btn-modal" form="" value="Submit" onclick="closeModalForm()">Зберегти</button>
+		<button type="submit" class="btn btn-modal">Зберегти</button>
 	</div>
 </form>

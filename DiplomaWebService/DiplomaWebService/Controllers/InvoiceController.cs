@@ -9,8 +9,8 @@ namespace DiplomaWebService.Controllers
 {
 	public class InvoiceController : Controller
 	{
-		private readonly ILogger<InvoiceController> _logger;
-		private readonly string? _connectionString;
+		private ILogger<InvoiceController> _logger;
+		private string? _connectionString;
 
 		public InvoiceController(ILogger<InvoiceController> logger, IConfiguration configuration)
 		{

@@ -10,8 +10,8 @@ namespace DiplomaWebService.Controllers
 {
 	public class ItemController : Controller
 	{
-		private readonly ILogger<ItemController> _logger;
-		private readonly string? _connectionString;
+		private ILogger<ItemController> _logger;
+		private string? _connectionString;
 
 		public ItemController(ILogger<ItemController> logger, IConfiguration configuration)
 		{
@@ -48,8 +48,35 @@ namespace DiplomaWebService.Controllers
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 
+			//get list sector
+			string sectorUrl = _connectionString + "sectors";
+			Result<List<Sector>> resultSector = new Result<List<Sector>>();
+			using (HttpClient client = new HttpClient())
+			{
+				HttpResponseMessage responseMessage = await client.GetAsync(sectorUrl);
+				if (responseMessage.IsSuccessStatusCode)
+				{
+					resultSector.Data = await responseMessage.Content.ReadFromJsonAsync<List<Sector>>();
+				}
+				else
+				{
+					resultSector.ErrorCode = (int)responseMessage.StatusCode;
+					resultSector.ErrorMessage = await responseMessage.Content.ReadAsStringAsync();
+				}
+			}
+			if (resultSector.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(result.ErrorMessage);
+				result.ErrorCode = (int)ErrorCodes.BadRequest;
+				result.ErrorMessage = "can't get all sectors";
+				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+
 			ItemViewModel itemViewModel = new ItemViewModel();
 			itemViewModel.Items = result.Data;
+			itemViewModel.Sectors = resultSector.Data;
 			return View("/Views/Dictionaries/Items/Item.cshtml", itemViewModel);
 		}
 
