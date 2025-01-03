@@ -82,22 +82,7 @@
 		}
 		function openModalForm() {
 			document.getElementsByClassName('modal')[0].style.display = "block";
-		}
-		function showParentOrganization() {
-			// Get the checkbox
-			var checkBox = document.getElementById("isParentOrganizationExist");
-			// Get the output text
-			var parentId = document.getElementById("parentId");
-
-			// If the checkbox is checked, display the output text
-			if (checkBox.checked == true) {
-				parentId.style.display = "block";
-				parentId.removeAttribute("disabled");
-			} else {
-				parentId.style.display = "none";
-				parentId.setAttribute("disabled", "true");
-			}
-		}
+		}		
 		function ReassessmentWithCoeff() {
 			// Get the checkbox
 			var checkBox = document.getElementById("hasCoeff");
@@ -116,12 +101,14 @@
 				coeff.setAttribute("disabled", "true");
 				newPrice.style.display = "block";
 				newPrice.removeAttribute("disabled");
+
 			}
-			function submitForm(actionUrl) {
-				const form = document.getElementById('reassessmentForm');
-				form.action = actionUrl;
-				form.submit();
-			}
+		}
+		function submitForm(actionUrl) {
+			const form = document.getElementById('reassessmentForm');
+			form.action = actionUrl;
+			form.submit();
+		}
 	</script>
 </body>
 </html>

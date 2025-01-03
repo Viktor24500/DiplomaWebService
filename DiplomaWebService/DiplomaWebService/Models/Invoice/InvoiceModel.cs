@@ -5,6 +5,7 @@ namespace DiplomaWebService.Models.Invoice
 {
     public class InvoiceModel
     {
+        public List<Invoice> Invoices { get; set; }
 
         public List<Sector> Sectors { get; set; }
         public List<DocumentType> DocumentTypes { get; set; }

@@ -1,11 +1,10 @@
-﻿@*
+﻿@using DiplomaWebService.Models.Invoice
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
-@using DiplomaWebService.Models;
-@using DiplomaWebService.Models.Invoice
-@model List<Invoice>
+@model InvoiceModel
 <div class="app-content">
 	<div class="main-header">
 		<div class="top-header">
@@ -46,22 +45,22 @@
             </tr>
         </thead>
         <tbody>
-            @for (int i = 0; i < Model.Count(); i++)
+            @for (int i = 0; i < Model.Invoices.Count(); i++)
             {
                 <tr>
-                    <td hidden>@Model[i].Id</td>
-                    <td>@Model[i].InvoiceDate.ToString("yyyy-MM-dd")</td>
-                    <td>@Model[i].Number</td>
-                    <td hidden>@Model[i].DestinationId</td>
-                    <td>@Model[i].DestinationName</td>
-                    <td hidden>@Model[i].SenderId</td>
-                    <td>@Model[i].SenderName</td>
-                    <td hidden>@Model[i].InvoiceType.Id</td>
-                    <td>@Model[i].InvoiceType.Name</td>
-                    <td hidden>@Model[i].Sector.Id</td>
-                    <td>@Model[i].Sector.Name</td>
-                    <td hidden>@Model[i].DocumentType.Id</td>
-                    <td>@Model[i].DocumentType.Name</td>
+                    <td hidden>@Model.Invoices[i].Id</td>
+                    <td>@Model.Invoices[i].InvoiceDate.ToString("yyyy-MM-dd")</td>
+                    <td>@Model.Invoices[i].Number</td>
+                    <td hidden>@Model.Invoices[i].DestinationId</td>
+                    <td>@Model.Invoices[i].DestinationName</td>
+                    <td hidden>@Model.Invoices[i].SenderId</td>
+                    <td>@Model.Invoices[i].SenderName</td>
+                    <td hidden>@Model.Invoices[i].InvoiceType.Id</td>
+                    <td>@Model.Invoices[i].InvoiceType.Name</td>
+                    <td hidden>@Model.Invoices[i].Sector.Id</td>
+                    <td>@Model.Invoices[i].Sector.Name</td>
+                    <td hidden>@Model.Invoices[i].DocumentType.Id</td>
+                    <td>@Model.Invoices[i].DocumentType.Name</td>
                     <td>
                         <table>
                             <thead>
@@ -77,7 +76,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var position in Model[i].InvoicePositions)
+                                @foreach (var position in Model.Invoices[i].InvoicePositions)
                                 {
                                     <tr>
                                         <td hidden>@position.Item.ItemId</td>
