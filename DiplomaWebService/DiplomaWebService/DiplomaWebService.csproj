@@ -17,8 +17,4 @@
     <ProjectReference Include="..\DiplomaWebService.Common\DiplomaWebService.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Parametrs\Invoice\" />
-  </ItemGroup>
-
 </Project>

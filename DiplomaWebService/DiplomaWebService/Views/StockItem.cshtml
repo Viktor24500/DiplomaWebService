@@ -3,6 +3,7 @@
 *@
 @{
 }
+@model List<StockItem>
 <div class="app-content">
 	<div class="main-header">
 		<div class="top-header">
@@ -35,17 +36,20 @@
 			<th>Unit name</th>
 			<th>Price name</th>
 		<tr>
-				@* @for (int i = 0; i < @Model.StockItem.Count(); i++) *@
-		<tr>
-			<td id="stockItemId" hidden><label>stockItemId</label></td>
-			<td id="Amount"><label>Amount</label></td>
-			<td id="ItemId" hidden><label>ItemId</label></td>
-			<td id="ItemName"><label>Item name</label></td>
-			<td id="CategoryId" hidden><label>CategoryId</label></td>
-			<td id="CategoryName"><label>Category name</label></td>
-			<td id="UnitId" hidden><label>UnitId</label></td>
-			<td id="UnitName"><label>Unit name</label></td>
-			<td id="Price"><label>Price</label></td>
-		</tr>
+		@for (int i = 0; i < @Model.Count(); i++)
+		{
+			<tr>
+				<td id="stockItemId" hidden>@Model[i].StockItemId</td>
+				<td id="Amount">@Model[i].AllAmount</td>
+				<td id="ItemId" hidden><label>@Model[i].Item.ItemId</label></td>
+				<td id="ItemName">@Model[i].Item.ItemName</td>
+				<td id="CategoryId" hidden>@Model[i].Category.Id</td>
+				<td id="CategoryName">@Model[i].Category.Name</td>
+				<td id="UnitId" hidden>@Model[i].Unit.Id</td>
+				<td id="UnitName">@Model[i].Unit.Name</td>
+				<td id="Price">@Model[i].Price</td>
+			</tr>
+		}				
 	</table>
 </div>
+@Html.Partial("/Views/Forms/StockItemForm/ReassessmentForm.cshtml")

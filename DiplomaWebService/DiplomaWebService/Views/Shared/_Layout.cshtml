@@ -27,7 +27,7 @@
 							</a>
 						</li>
 						<li class="nav-ul-item nav-ul-item--active">
-							<a title="Depot" class="sidebar-link" href="depot.html">
+							<a title="Depot" class="sidebar-link" href="/stockItems">
 								<div class="small-icon-container">
 									<img src="img/admin.svg">
 								</div>
@@ -98,6 +98,30 @@
 				parentId.setAttribute("disabled", "true");
 			}
 		}
+		function ReassessmentWithCoeff() {
+			// Get the checkbox
+			var checkBox = document.getElementById("hasCoeff");
+			// Get the output text
+			var coeff = document.getElementById("coeff");
+			var newPrice = document.getElementById("newPrice");
+
+			// If the checkbox is checked, display the output text
+			if (checkBox.checked == true) {
+				coeff.style.display = "block";
+				coeff.removeAttribute("disabled");
+				newPrice.style.display = "none";
+				newPrice.setAttribute("disabled", "true");
+			} else {
+				coeff.style.display = "none";
+				coeff.setAttribute("disabled", "true");
+				newPrice.style.display = "block";
+				newPrice.removeAttribute("disabled");
+			}
+			function submitForm(actionUrl) {
+				const form = document.getElementById('reassessmentForm');
+				form.action = actionUrl;
+				form.submit();
+			}
 	</script>
 </body>
 </html>
