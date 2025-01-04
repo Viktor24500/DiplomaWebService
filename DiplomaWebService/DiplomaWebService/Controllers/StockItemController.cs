@@ -52,9 +52,11 @@ namespace DiplomaWebService.Controllers
 
         [HttpPost]
         [Route("/stockItemsReassessWithoutCoeff")]
-        public async Task<ActionResult> ReassessWithoutCoeff(decimal oldPrice, decimal newPrice)
+        public async Task<ActionResult> ReassessWithoutCoeff(string stockItemId, decimal newPrice, string documentNumber,
+            DateTime documentDate, DateTime operationDate)
         {
-            ReassessmentWithoutCoeffParameters param = new ReassessmentWithoutCoeffParameters(oldPrice, newPrice);
+            ReassessmentWithoutCoeffParameters param = new ReassessmentWithoutCoeffParameters(stockItemId, newPrice, documentNumber,
+                documentDate, operationDate);
             Result<List<StockItem>> result = new Result<List<StockItem>>();
             string url = _connectionString + "stockItemsReassessWithoutCoeff";
             using (HttpClient client = new HttpClient())
@@ -87,9 +89,11 @@ namespace DiplomaWebService.Controllers
 
         [HttpPost]
         [Route("/stockItemsReassessWithCoeff")]
-        public async Task<ActionResult> ReassessWithCoeff(decimal oldPrice, decimal coeff)
+        public async Task<ActionResult> ReassessWithCoeff(string stockItemId, decimal coeff, string documentNumber,
+            DateTime documentDate, DateTime operationDate)
         {
-            ReassessmentWithCoeffParameters param = new ReassessmentWithCoeffParameters(oldPrice, coeff);
+            ReassessmentWithCoeffParameters param = new ReassessmentWithCoeffParameters(stockItemId, coeff, documentNumber,
+                documentDate, operationDate);
             Result<List<StockItem>> result = new Result<List<StockItem>>();
             string url = _connectionString + "stockItemsReassessWithCoeff";
             using (HttpClient client = new HttpClient())

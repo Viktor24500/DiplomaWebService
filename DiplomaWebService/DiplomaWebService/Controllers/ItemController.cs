@@ -130,6 +130,7 @@ namespace DiplomaWebService.Controllers
         {
             Result<ItemViewModel> result = new Result<ItemViewModel>();
             result.Data = new ItemViewModel();
+
             //get list sector
             string sectorUrl = _connectionString + "sectors";
             Result<List<Sector>> resultSector = new Result<List<Sector>>();

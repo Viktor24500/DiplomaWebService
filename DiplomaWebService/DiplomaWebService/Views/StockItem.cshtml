@@ -14,8 +14,11 @@
 		</div>
 	</div>
 	<nav class="nav">
-		<button type="add-user" class="btn btn-add-user" onclick="openModalForm()">
-			<img src="img/admin.svg">Переоцінка
+		<button type="add-user" class="btn btn-add-user" onclick="ReassessmentWithCoeffOpen()">
+			<img src="img/admin.svg">Переоцінка з коефіцієнтом
+		</button>
+		<button type="add-user" class="btn btn-add-user" onclick="ReassessmentWithoutCoeffOpen()">
+			<img src="img/admin.svg">Переоцінка без коефіцієнта
 		</button>
 		<div class="right-actions">
 			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук...">
@@ -52,4 +55,4 @@
 		}				
 	</table>
 </div>
-@Html.Partial("/Views/Forms/StockItemForm/ReassessmentForm.cshtml")
+@Html.Partial("/Views/Forms/StockItemForm/ReassessmentWithCoefForm.cshtml", @Model)

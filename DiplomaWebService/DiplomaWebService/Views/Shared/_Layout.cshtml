@@ -83,31 +83,23 @@
 		function openModalForm() {
 			document.getElementsByClassName('modal')[0].style.display = "block";
 		}		
-		function ReassessmentWithCoeff() {
-			// Get the checkbox
-			var checkBox = document.getElementById("hasCoeff");
-			// Get the output text
-			var coeff = document.getElementById("coeff");
-			var newPrice = document.getElementById("newPrice");
-
-			// If the checkbox is checked, display the output text
-			if (checkBox.checked == true) {
-				coeff.style.display = "block";
-				coeff.removeAttribute("disabled");
-				newPrice.style.display = "none";
-				newPrice.setAttribute("disabled", "true");
-			} else {
-				coeff.style.display = "none";
-				coeff.setAttribute("disabled", "true");
-				newPrice.style.display = "block";
-				newPrice.removeAttribute("disabled");
-
-			}
+		function ReassessmentWithCoeffOpen() {
+			document.getElementById('reassessmentWithCoefForm').style.display = "block";
 		}
-		function submitForm(actionUrl) {
-			const form = document.getElementById('reassessmentForm');
-			form.action = actionUrl;
-			form.submit();
+		function ReassessmentWithCoeffClose() {
+			document.getElementById('reassessmentWithCoefForm').style.display = "none";
+		}
+		function ReassessmentWithoutCoeffOpen() {
+			document.getElementById('reassessmentWithoutCoefForm').style.display = "block";
+		}
+		function ReassessmentWithoutCoeffClose() {
+			document.getElementById('reassessmentWithoutCoefForm').style.display = "none";
+		}
+		function OpenInvoiceInForm() {
+			document.getElementById('addInvoiceInForm').style.display = "block";
+		}
+		function CloseInvoiceInForm() {
+			document.getElementById('addInvoiceInForm').style.display = "none";
 		}
 	</script>
 </body>
