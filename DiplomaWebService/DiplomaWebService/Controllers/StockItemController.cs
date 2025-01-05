@@ -57,7 +57,7 @@ namespace DiplomaWebService.Controllers
         {
             ReassessmentWithoutCoeffParameters param = new ReassessmentWithoutCoeffParameters(stockItemId, newPrice, documentNumber,
                 documentDate, operationDate);
-            Result<List<StockItem>> result = new Result<List<StockItem>>();
+            Result<StockItem> result = new Result<StockItem>();
             string url = _connectionString + "stockItemsReassessWithoutCoeff";
             using (HttpClient client = new HttpClient())
             {
@@ -66,7 +66,7 @@ namespace DiplomaWebService.Controllers
                 HttpResponseMessage responseMessage = await client.PostAsync(url, content);
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    result.Data = await responseMessage.Content.ReadFromJsonAsync<List<StockItem>>();
+                    result.Data = await responseMessage.Content.ReadFromJsonAsync<StockItem>();
                 }
                 else
                 {
@@ -94,7 +94,7 @@ namespace DiplomaWebService.Controllers
         {
             ReassessmentWithCoeffParameters param = new ReassessmentWithCoeffParameters(stockItemId, coeff, documentNumber,
                 documentDate, operationDate);
-            Result<List<StockItem>> result = new Result<List<StockItem>>();
+            Result<StockItem> result = new Result<StockItem>();
             string url = _connectionString + "stockItemsReassessWithCoeff";
             using (HttpClient client = new HttpClient())
             {
@@ -103,7 +103,7 @@ namespace DiplomaWebService.Controllers
                 HttpResponseMessage responseMessage = await client.PostAsync(url, content);
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    result.Data = await responseMessage.Content.ReadFromJsonAsync<List<StockItem>>();
+                    result.Data = await responseMessage.Content.ReadFromJsonAsync<StockItem>();
                 }
                 else
                 {
