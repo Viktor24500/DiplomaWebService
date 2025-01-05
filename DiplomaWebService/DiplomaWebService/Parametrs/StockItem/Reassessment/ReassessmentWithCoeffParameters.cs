@@ -2,7 +2,7 @@
 {
     public class ReassessmentWithCoeffParameters
     {
-        public ReassessmentWithCoeffParameters(string stockItemId, decimal coeff, string documentNumber,
+        public ReassessmentWithCoeffParameters(int stockItemId, decimal coeff, string documentNumber,
             DateTime documentDate, DateTime operationDate)
         {
             StockItemId = stockItemId;
@@ -12,7 +12,7 @@
             OperationDate = operationDate;
         }
 
-        public string StockItemId { get; set; }
+        public int StockItemId { get; set; }
         public decimal Coeff { get; set; }
         public string DocumentNumber { get; set; }
         public DateTime DocumentDate { get; set; }

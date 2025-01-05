@@ -52,7 +52,7 @@ namespace DiplomaWebService.Controllers
 
         [HttpPost]
         [Route("/stockItemsReassessWithoutCoeff")]
-        public async Task<ActionResult> ReassessWithoutCoeff(string stockItemId, decimal newPrice, string documentNumber,
+        public async Task<ActionResult> ReassessWithoutCoeff(int stockItemId, decimal newPrice, string documentNumber,
             DateTime documentDate, DateTime operationDate)
         {
             ReassessmentWithoutCoeffParameters param = new ReassessmentWithoutCoeffParameters(stockItemId, newPrice, documentNumber,
@@ -89,7 +89,7 @@ namespace DiplomaWebService.Controllers
 
         [HttpPost]
         [Route("/stockItemsReassessWithCoeff")]
-        public async Task<ActionResult> ReassessWithCoeff(string stockItemId, decimal coeff, string documentNumber,
+        public async Task<ActionResult> ReassessWithCoeff(int stockItemId, decimal coeff, string documentNumber,
             DateTime documentDate, DateTime operationDate)
         {
             ReassessmentWithCoeffParameters param = new ReassessmentWithCoeffParameters(stockItemId, coeff, documentNumber,
