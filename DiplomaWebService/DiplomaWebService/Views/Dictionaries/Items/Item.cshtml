@@ -1,0 +1,47 @@
+﻿@using DiplomaWebService.Models.Items
+@model ItemViewModel
+@{
+}
+
+<div class="app-content">
+	<div class="main-header">
+		<div class="top-header">
+			<h2>Майно</h2>
+		</div>
+		<div class="btn-header">
+			<button type="button" class="btn btn-header btn-header-disable" disabled>Зберегти</button>
+		</div>
+	</div>
+	<nav class="nav">
+		<button type="add-user" class="btn btn-add-user" onclick="openModalForm('addItemForm')">
+			<img src="img/admin.svg">Додати
+		</button>
+		<div class="right-actions">
+			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук...">
+			<img src="img/filtr.svg">
+		</div>
+	</nav>
+</div>
+<div class="users-table-content">
+	<table>
+		<tr>
+			<th hidden>itemId</th>
+			<th>Назва</th>
+			<th>Інвентарний номер</th>
+			<th hidden>sectorId</th>
+			<th>Назва служби</th>
+			<th></th>
+		</tr>
+		@for (int i = 0; i < Model.Items.Count(); i++)
+		{
+			<tr>
+				<td id="itemId" hidden>@Model.Items[i].ItemId</td>
+				<td id="Name">@Model.Items[i].ItemName</td>
+				<td id="InventoryNumber">@Model.Items[i].InventoryNumber</td>
+				<td id="sectorId" hidden>@Model.Items[i].Sector.Id</td>
+				<td id="SectorName">@Model.Items[i].Sector.Name</td>
+			</tr>
+		}
+	</table>
+</div>
+@Html.Partial("/Views/Forms/ItemForm/AddItem.cshtml", @Model.Sectors)

@@ -1,0 +1,58 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<StockItem>
+<div class="app-content">
+	<div class="main-header">
+		<div class="top-header">
+			<h2>Склад</h2>
+		</div>
+		<div class="btn-header">
+			<button type="button" class="btn btn-header btn-header-disable" disabled>Зберегти</button>
+		</div>
+	</div>
+	<nav class="nav">
+		<button type="add-user" class="btn btn-add-user" onclick="ReassessmentWithCoeffOpen()">
+			<img src="img/admin.svg">Переоцінка з коефіцієнтом
+		</button>
+		<button type="add-user" class="btn btn-add-user" onclick="ReassessmentWithoutCoeffOpen()">
+			<img src="img/admin.svg">Переоцінка без коефіцієнта
+		</button>
+		<div class="right-actions">
+			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук...">
+			<img src="img/filtr.svg">
+		</div>
+	</nav>
+</div>
+<div class="users-table-content">
+	<table>
+		<tr>
+			<th hidden>stockItemId</th>
+			<th>Amount</th>
+			<th hidden>ItemId</th>
+			<th>Item name</th>
+			<th hidden>CategoryId</th>
+			<th>Category name</th>
+			<th hidden>UnitId</th>
+			<th>Unit name</th>
+			<th>Price name</th>
+		<tr>
+		@for (int i = 0; i < @Model.Count(); i++)
+		{
+			<tr>
+				<td id="stockItemId" hidden>@Model[i].StockItemId</td>
+				<td id="Amount">@Model[i].AllAmount</td>
+				<td id="ItemId" hidden><label>@Model[i].Item.ItemId</label></td>
+				<td id="ItemName">@Model[i].Item.ItemName</td>
+				<td id="CategoryId" hidden>@Model[i].Category.Id</td>
+				<td id="CategoryName">@Model[i].Category.Name</td>
+				<td id="UnitId" hidden>@Model[i].Unit.Id</td>
+				<td id="UnitName">@Model[i].Unit.Name</td>
+				<td id="Price">@Model[i].Price</td>
+			</tr>
+		}				
+	</table>
+</div>
+@Html.Partial("/Views/Forms/StockItemForm/ReassessmentWithCoefForm.cshtml", @Model)

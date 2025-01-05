@@ -1,0 +1,102 @@
+﻿@using DiplomaWebService.Models.Invoice
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model InvoiceModel
+<div class="app-content">
+	<div class="main-header">
+		<div class="top-header">
+			<h2>Накладні</h2>
+		</div>
+		<div class="btn-header">
+			<button type="button" class="btn btn-header btn-header-disable" disabled>Зберегти</button>
+		</div>
+	</div>
+	<nav class="nav">
+        <button type="add-user" class="btn btn-add-user" onclick="OpenInvoiceInForm()">
+			<img src="img/admin.svg">Додати приходну накладну
+		</button>
+        <button type="add-user" class="btn btn-add-user" onclick="OpenInvoiceOutForm()">
+            <img src="img/admin.svg">Додати розхідну накладну
+        </button>
+		<div class="right-actions">
+			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук...">
+			<img src="img/filtr.svg">
+		</div>
+	</nav>
+</div>
+<div class="users-table-content">
+    <table>
+        <thead>
+            <tr>
+                <th hidden>Invoice ID</th>
+                <th>Invoice Date</th>
+                <th>Number</th>
+                <th hidden>Destination ID</th>
+                <th>Destination Name</th>
+                <th hidden>Sender ID</th>
+                <th>Sender Name</th>
+                <th hidden>Invoice Type ID</th>
+                <th>Invoice Type</th>
+                <th hidden>Sector ID</th>
+                <th>Sector</th>
+                <th hidden>Document Type ID</th>
+                <th>Document Type</th>
+                <th>Positions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Invoices.Count(); i++)
+            {
+                <tr>
+                    <td hidden>@Model.Invoices[i].Id</td>
+                    <td>@Model.Invoices[i].InvoiceDate.ToString("yyyy-MM-dd")</td>
+                    <td>@Model.Invoices[i].Number</td>
+                    <td hidden>@Model.Invoices[i].DestinationId</td>
+                    <td>@Model.Invoices[i].DestinationName</td>
+                    <td hidden>@Model.Invoices[i].SenderId</td>
+                    <td>@Model.Invoices[i].SenderName</td>
+                    <td hidden>@Model.Invoices[i].InvoiceType.Id</td>
+                    <td>@Model.Invoices[i].InvoiceType.Name</td>
+                    <td hidden>@Model.Invoices[i].Sector.Id</td>
+                    <td>@Model.Invoices[i].Sector.Name</td>
+                    <td hidden>@Model.Invoices[i].DocumentType.Id</td>
+                    <td>@Model.Invoices[i].DocumentType.Name</td>
+                    <td>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th hidden>Item ID</th>
+                                    <th>Item</th>
+                                    <th>Amount</th>
+                                    <th>Price</th>
+                                    <th hidden>Unit ID</th>
+                                    <th>Unit</th>
+                                    <th hidden>Category ID</th>
+                                    <th>Category</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var position in Model.Invoices[i].InvoicePositions)
+                                {
+                                    <tr>
+                                        <td hidden>@position.Item.ItemId</td>
+                                        <td>@position.Item.ItemName</td>
+                                        <td>@position.Amount</td>
+                                        <td>@position.Price</td>
+                                        <td hidden>@position.Unit.Id</td>
+                                        <td>@position.Unit.Name</td>
+                                        <td hidden>@position.Category.Id</td>
+                                        <td>@position.Category.Name</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,47 @@
+﻿@using DiplomaWebService.Models;
+@model List<Contragent>
+
+@{
+}
+
+<div class="app-content">
+	<div class="main-header">
+		<div class="top-header">
+			<h2>Контрагенти</h2>
+		</div>
+		<div class="btn-header">
+			<button type="button" class="btn btn-header btn-header-disable" disabled>Зберегти</button>
+		</div>
+	</div>
+	<nav class="nav">
+		<button type="add-user" class="btn btn-add-user" onclick="openModalForm('addContragent')">
+			<img src="img/admin.svg">Додати
+		</button>
+		<div class="right-actions">
+			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук...">
+			<img src="img/filtr.svg">
+		</div>
+	</nav>
+</div>
+<div class="users-table-content">
+	<table>
+		<tr>
+			<th hidden>contragentId</th>
+			<th>Назва</th>
+			<th hidden>parentId</th>
+			<th>Назва головної організації</th>
+			<th>Статус</th>
+		</tr>
+		@for (int i = 0; i < @Model.Count(); i++)
+		{
+			<tr>
+				<td id="contragentIdInTable" hidden>@Model[i].ContragentId</td>
+				<td id="contragentNameInTable">@Model[i].ContragentName</td>
+				<td id="parentIdInTable" hidden>@Model[i].ParentId</td>
+				<td id="parentNameInTable">@Model[i].ParentName</td>
+				<td id="IsActiveInTable">@Model[i].IsActive</td>
+			</tr>
+		}
+	</table>
+</div>
+@Html.Partial("/Views/Forms/ContragentForm/AddContragent.cshtml", ViewData["/contragents"])
