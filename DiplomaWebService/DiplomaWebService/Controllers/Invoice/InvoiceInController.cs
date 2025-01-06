@@ -2,36 +2,37 @@
 using DiplomaWebService.Common.Results;
 using DiplomaWebService.Constants;
 using DiplomaWebService.Models;
-using DiplomaWebService.Models.Invoice;
+using DiplomaWebService.Models.Invoice.In;
+using DiplomaWebService.Models.Invoice.ViewModel;
 using DiplomaWebService.Models.Items;
 using DiplomaWebService.Models.Types;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DiplomaWebService.Controllers
+namespace DiplomaWebService.Controllers.Invoice
 {
-    public class InvoiceController : Controller
+    public class InvoiceInController : Controller
     {
-        private ILogger<InvoiceController> _logger;
+        private ILogger<InvoiceInController> _logger;
         private string? _connectionString;
 
-        public InvoiceController(ILogger<InvoiceController> logger, IConfiguration configuration)
+        public InvoiceInController(ILogger<InvoiceInController> logger, IConfiguration configuration)
         {
             _logger = logger;
             _connectionString = configuration.GetConnectionString(Constant.MainConnectionString);
         }
 
         [HttpGet]
-        [Route("/invoices")]
-        public async Task<IActionResult> GetAllInvoices()
+        [Route("/invoicesIn")]
+        public async Task<IActionResult> GetAllInvoicesIn()
         {
-            Result<List<Invoice>> result = new Result<List<Invoice>>();
-            string url = _connectionString + "invoices";
+            Result<List<InvoiceIn>> result = new Result<List<InvoiceIn>>();
+            string url = _connectionString + "invoicesIn";
             using (HttpClient client = new HttpClient())
             {
                 HttpResponseMessage responseMessage = await client.GetAsync(url);
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    result.Data = await responseMessage.Content.ReadFromJsonAsync<List<Invoice>>();
+                    result.Data = await responseMessage.Content.ReadFromJsonAsync<List<InvoiceIn>>();
                 }
                 else
                 {
@@ -48,23 +49,55 @@ namespace DiplomaWebService.Controllers
                 ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
-            Result<InvoiceModel> invoiceModel = await GetInvoiceModel(result.Data);
-
-            return View("/Views/Invoices/Invoice.cshtml", invoiceModel.Data);
+            Result<InvoiceInViewModel> invoiceInModel = await GetInvoiceInModel(result.Data);
+            return View("/Views/Invoices/Invoice.cshtml", invoiceInModel.Data);
         }
+
+        //[HttpPost]
+        //[Route("/invoice")]
+        //public async Task<IActionResult> CreateInvoiceIn()
+        //{
+        //    Result<InvoiceIn> result = new Result<InvoiceIn>();
+        //    string url = _connectionString + "invoicesIn";
+        //    using (HttpClient client = new HttpClient())
+        //    {
+        //        InvoicePositionsInCreateParameters invoicePosCreateParam = new InvoicePositionsInCreateParameters();
+        //        InvoiceInCreateParameters invoiceCreateParam = new InvoiceInCreateParameters();
+        //        JsonContent content = JsonContent.Create(invoiceCreateParam);
+
+        //        HttpResponseMessage responseMessage = await client.PostAsync(url, content);
+        //        if (responseMessage.IsSuccessStatusCode)
+        //        {
+        //            result.Data = await responseMessage.Content.ReadFromJsonAsync<InvoiceIn>();
+        //        }
+        //        else
+        //        {
+        //            result.ErrorCode = (int)responseMessage.StatusCode;
+        //            result.ErrorMessage = await responseMessage.Content.ReadAsStringAsync();
+        //        }
+        //    }
+        //    if (result.ErrorCode != (int)ErrorCodes.Success)
+        //    {
+        //        _logger.LogError(result.ErrorMessage);
+        //        result.ErrorCode = (int)ErrorCodes.BadRequest;
+        //        result.ErrorMessage = "can't get all invoices";
+        //        string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+        //        ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+        //        return View("/Views/Shared/Error.cshtml", errorModel);
+        //    }
+        //    return RedirectToAction("GetAllInvoicesIn");
+        //}
         [HttpGet]
-        [Route("/invoice")]
-        public IActionResult GetCreateInvoice()
+        [Route("/invoiceIn")]
+        public IActionResult GetCreateInvoiceIn()
         {
-            return View("/Views/Forms/InvoiceForm/AddInvoice.cshtml");
+            return View("/Views/Forms/InvoiceForm/AddInvoiceIn.cshtml");
         }
-        private async Task<Result<InvoiceModel>> GetInvoiceModel(List<Invoice> invoices)
+        private async Task<Result<InvoiceInViewModel>> GetInvoiceInModel(List<InvoiceIn> invoices)
         {
-            Result<InvoiceModel> invoiceModel = new Result<InvoiceModel>();
-            invoiceModel.Data = new InvoiceModel();
-            //get invoices
-            invoiceModel.Data.Invoices = invoices;
-
+            Result<InvoiceInViewModel> invoiceModel = new Result<InvoiceInViewModel>();
+            invoiceModel.Data = new InvoiceInViewModel();
+            invoiceModel.Data.InvoicesIn = invoices;
             //get sectors
             string sectorUrl = _connectionString + "sectors";
             Result<List<Sector>> resultSector = new Result<List<Sector>>();

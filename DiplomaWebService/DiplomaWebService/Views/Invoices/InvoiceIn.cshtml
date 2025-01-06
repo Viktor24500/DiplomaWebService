@@ -1,26 +1,23 @@
-﻿@using DiplomaWebService.Models.Invoice
-@*
+﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
-@model InvoiceModel
+@using DiplomaWebService.Models.Invoice.ViewModel;
+@model InvoiceInViewModel
 <div class="app-content">
 	<div class="main-header">
 		<div class="top-header">
-			<h2>Накладні</h2>
+			<h2>Накладні видача</h2>
 		</div>
 		<div class="btn-header">
 			<button type="button" class="btn btn-header btn-header-disable" disabled>Зберегти</button>
 		</div>
 	</div>
 	<nav class="nav">
-        <button type="add-user" class="btn btn-add-user" onclick="OpenInvoiceInForm()">
+        <button type="add-user" class="btn btn-add-user" onclick="openModalForm()">
 			<img src="img/admin.svg">Додати приходну накладну
 		</button>
-        <button type="add-user" class="btn btn-add-user" onclick="OpenInvoiceOutForm()">
-            <img src="img/admin.svg">Додати розхідну накладну
-        </button>
 		<div class="right-actions">
 			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук...">
 			<img src="img/filtr.svg">
@@ -48,22 +45,22 @@
             </tr>
         </thead>
         <tbody>
-            @for (int i = 0; i < Model.Invoices.Count(); i++)
+            @for (int i = 0; i < Model.InvoicesIn.Count(); i++)
             {
                 <tr>
-                    <td hidden>@Model.Invoices[i].Id</td>
-                    <td>@Model.Invoices[i].InvoiceDate.ToString("yyyy-MM-dd")</td>
-                    <td>@Model.Invoices[i].Number</td>
-                    <td hidden>@Model.Invoices[i].DestinationId</td>
-                    <td>@Model.Invoices[i].DestinationName</td>
-                    <td hidden>@Model.Invoices[i].SenderId</td>
-                    <td>@Model.Invoices[i].SenderName</td>
-                    <td hidden>@Model.Invoices[i].InvoiceType.Id</td>
-                    <td>@Model.Invoices[i].InvoiceType.Name</td>
-                    <td hidden>@Model.Invoices[i].Sector.Id</td>
-                    <td>@Model.Invoices[i].Sector.Name</td>
-                    <td hidden>@Model.Invoices[i].DocumentType.Id</td>
-                    <td>@Model.Invoices[i].DocumentType.Name</td>
+                    <td hidden>@Model.InvoicesIn[i].Id</td>
+                    <td>@Model.InvoicesIn[i].InvoiceDate.ToString("yyyy-MM-dd")</td>
+                    <td>@Model.InvoicesIn[i].Number</td>
+                    <td hidden>@Model.InvoicesIn[i].DestinationId</td>
+                    <td>@Model.InvoicesIn[i].DestinationName</td>
+                    <td hidden>@Model.InvoicesIn[i].SenderId</td>
+                    <td>@Model.InvoicesIn[i].SenderName</td>
+                    <td hidden>@Model.InvoicesIn[i].InvoiceType.Id</td>
+                    <td>@Model.InvoicesIn[i].InvoiceType.Name</td>
+                    <td hidden>@Model.InvoicesIn[i].Sector.Id</td>
+                    <td>@Model.InvoicesIn[i].Sector.Name</td>
+                    <td hidden>@Model.InvoicesIn[i].DocumentType.Id</td>
+                    <td>@Model.InvoicesIn[i].DocumentType.Name</td>
                     <td>
                         <table>
                             <thead>
@@ -79,7 +76,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var position in Model.Invoices[i].InvoicePositions)
+                                @foreach (var position in Model.InvoicesIn[i].InvoicePositions)
                                 {
                                     <tr>
                                         <td hidden>@position.Item.ItemId</td>
@@ -100,3 +97,4 @@
         </tbody>
     </table>
 </div>
+@Html.Partial("/Views/Forms/InvoiceForm/AddInvoiceIn.cshtml", Model)

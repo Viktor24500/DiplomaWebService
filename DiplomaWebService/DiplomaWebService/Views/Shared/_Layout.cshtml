@@ -19,11 +19,19 @@
 				<nav>
 					<ul class="nav-wrapper">
 						<li class="nav-ul-item nav-ul-item--active">
-							<a title="Invoice" class="sidebar-link" href="/invoices">
+							<a title="Invoice" class="sidebar-link" href="/invoicesIn">
 								<div class="small-icon-container">
 									<img src="img/admin.svg">
 								</div>
-								<div class="sidebar-link-text">Накладні</div>
+								<div class="sidebar-link-text">Накладні прихід</div>
+							</a>
+						</li>
+						<li class="nav-ul-item nav-ul-item--active">
+							<a title="Invoice" class="sidebar-link" href="/invoicesOut">
+								<div class="small-icon-container">
+									<img src="img/admin.svg">
+								</div>
+								<div class="sidebar-link-text">Накладні видача</div>
 							</a>
 						</li>
 						<li class="nav-ul-item nav-ul-item--active">
@@ -94,12 +102,6 @@
 		}
 		function ReassessmentWithoutCoeffClose() {
 			document.getElementById('reassessmentWithoutCoefForm').style.display = "none";
-		}
-		function OpenInvoiceInForm() {
-			document.getElementById('addInvoiceInForm').style.display = "block";
-		}
-		function CloseInvoiceInForm() {
-			document.getElementById('addInvoiceInForm').style.display = "none";
 		}
 	</script>
 </body>

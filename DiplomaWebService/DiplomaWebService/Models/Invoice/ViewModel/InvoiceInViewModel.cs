@@ -1,12 +1,12 @@
-﻿using DiplomaWebService.Models.Items;
+﻿using DiplomaWebService.Models.Invoice.In;
+using DiplomaWebService.Models.Items;
 using DiplomaWebService.Models.Types;
 
-namespace DiplomaWebService.Models.Invoice
+namespace DiplomaWebService.Models.Invoice.ViewModel
 {
-    public class InvoiceModel
+    public class InvoiceInViewModel
     {
-        public List<Invoice> Invoices { get; set; }
-
+        public List<InvoiceIn> InvoicesIn { get; set; }
         public List<Sector> Sectors { get; set; }
         public List<DocumentType> DocumentTypes { get; set; }
         public List<InvoiceType> InvoiceTypes { get; set; }
