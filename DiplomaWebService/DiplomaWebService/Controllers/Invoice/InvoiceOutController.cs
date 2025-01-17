@@ -49,7 +49,7 @@ namespace DiplomaWebService.Controllers.Invoice
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
             Result<InvoiceOutViewModel> invoiceOutModel = await GetInvoiceOutModel(result.Data);
-            return View("/Views/Invoices/Invoice.cshtml", invoiceOutModel.Data);
+            return View("/Views/Invoices/InvoiceOut.cshtml", invoiceOutModel.Data);
         }
 
         //[HttpPost]
