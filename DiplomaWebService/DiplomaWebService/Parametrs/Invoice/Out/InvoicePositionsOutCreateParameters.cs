@@ -2,19 +2,21 @@
 {
     public class InvoicePositionsOutCreateParameters
     {
-        public InvoicePositionsOutCreateParameters(int itemId, decimal amount,
-    decimal price, int unitId, int categoryId)
+        public InvoicePositionsOutCreateParameters(/*int itemId, */int stockItemId, decimal amount
+    /*decimal price, int unitId, int categoryId*/)
         {
-            ItemId = itemId;
+            //ItemId = itemId;
             Amount = amount;
-            Price = price;
-            UnitId = unitId;
-            CategoryId = categoryId;
+            //Price = price;
+            //UnitId = unitId;
+            //CategoryId = categoryId;
+            StockItemId = stockItemId;
         }
-        public int ItemId { get; set; }
+        public int StockItemId { get; set; }
+        //public int ItemId { get; set; }
         public decimal Amount { get; set; }
-        public decimal Price { get; set; }
-        public int UnitId { get; set; }
-        public int CategoryId { get; set; }
+        //public decimal Price { get; set; }
+        //public int UnitId { get; set; }
+        //public int CategoryId { get; set; }
     }
 }

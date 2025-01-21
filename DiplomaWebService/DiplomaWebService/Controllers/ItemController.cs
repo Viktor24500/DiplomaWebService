@@ -70,6 +70,7 @@ namespace DiplomaWebService.Controllers
                 ItemCreateParameters itemCreateParam = new ItemCreateParameters(name, sectorId, inventoryNumber);
                 JsonContent content = JsonContent.Create(itemCreateParam);
 
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "asasasaas");
                 HttpResponseMessage responseMessage = await client.PostAsync(url, content);
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -105,6 +106,7 @@ namespace DiplomaWebService.Controllers
                 ItemUpdateParameters itemUpdateParam = new ItemUpdateParameters(id, name, sectorId, inventoryNumber);
                 JsonContent content = JsonContent.Create(itemUpdateParam);
 
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "asasasaas");
                 HttpResponseMessage responseMessage = await client.PutAsync(url, content);
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -136,6 +138,7 @@ namespace DiplomaWebService.Controllers
             Result<List<Sector>> resultSector = new Result<List<Sector>>();
             using (HttpClient client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "asasasaas");
                 HttpResponseMessage responseMessage = await client.GetAsync(sectorUrl);
                 if (responseMessage.IsSuccessStatusCode)
                 {

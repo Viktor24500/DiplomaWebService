@@ -26,6 +26,7 @@ namespace DiplomaWebService.Controllers
             string url = _connectionString + "stockItems";
             using (HttpClient client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "asasasaas");
                 HttpResponseMessage responseMessage = await client.GetAsync(url);
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -63,6 +64,7 @@ namespace DiplomaWebService.Controllers
             {
                 JsonContent content = JsonContent.Create(param);
 
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "asasasaas");
                 HttpResponseMessage responseMessage = await client.PostAsync(url, content);
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -100,6 +102,7 @@ namespace DiplomaWebService.Controllers
             {
                 JsonContent content = JsonContent.Create(param);
 
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "asasasaas");
                 HttpResponseMessage responseMessage = await client.PostAsync(url, content);
                 if (responseMessage.IsSuccessStatusCode)
                 {

@@ -28,6 +28,7 @@ namespace DiplomaWebService.Controllers.Invoice
             string url = _connectionString + "invoicesOut";
             using (HttpClient client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "asasasaas");
                 HttpResponseMessage responseMessage = await client.GetAsync(url);
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -64,6 +65,7 @@ namespace DiplomaWebService.Controllers.Invoice
         //        InvoiceOutCreateParameters invoiceCreateParam = new InvoiceOutCreateParameters();
         //        JsonContent content = JsonContent.Create(invoiceCreateParam);
 
+        //        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "asasasaas");
         //        HttpResponseMessage responseMessage = await client.PostAsync(url, content);
         //        if (responseMessage.IsSuccessStatusCode)
         //        {
