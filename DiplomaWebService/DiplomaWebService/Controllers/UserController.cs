@@ -61,7 +61,7 @@ namespace DiplomaWebService.Controllers
 			CookieOptions cookieOptions = new CookieOptions();
 			cookieOptions.Expires = result.Data.TokenExpiration;
 			HttpContext.Response.Cookies.Append("token", result.Data.Token, cookieOptions);
-			return RedirectToAction("GetAllStockItems", "/stockItems");
+			return RedirectToAction("GetAllStockItems", "StockItem");
 		}
 
 		[HttpGet]
