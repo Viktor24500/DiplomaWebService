@@ -38,6 +38,7 @@ namespace DiplomaWebService.Controllers
                 LoginParametrs loginParam = new LoginParametrs(username, password);
                 JsonContent content = JsonContent.Create(loginParam);
 
+                HttpContext.Response.Cookies.Delete("token");
                 HttpResponseMessage responseMessage = await client.PostAsync(url, content);
                 if (responseMessage.IsSuccessStatusCode)
                 {

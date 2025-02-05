@@ -5,7 +5,7 @@
 @{
 }
 @model InvoiceOutViewModel
-<form action="/invoice" method="post" class="modal" id="addInvoiceOutForm">
+<form action="/invoiceOut" method="post" class="modal" id="addInvoiceOutForm">
     <div class="user-modal-header">
         <button class="small-icon-container close-btn" onclick="closeModalForm()">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -20,21 +20,21 @@
         <div class="user-modal-block">
             <div class="user-modal-label" hidden>Id:</div>
             <div class="input-field-wrapper">
-                <input type="number" class="input-field hidden" id="invoiceId" name="Id" placeholder="Id" hidden required>
+                <input type="number" class="input-field hidden" id="invoiceId" name="id" placeholder="Id" hidden>
                 <div class="separator"></div>
             </div>
         </div>
         <div class="user-modal-block">
             <div class="user-modal-label">Дата накладної:</div>
             <div class="input-field-wrapper">
-                <input type="datetime" class="input-field" id="invoiceDate" name="InvoiceDate" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" min="2018-06-07T00:00" max="2026-06-14T00:00" required>
+                <input type="datetime-local" class="input-field" id="invoiceDate" name="invoiceDate" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" min="2018-06-07T00:00" max="2026-06-14T00:00" required>
                 <div class="separator"></div>
             </div>
         </div>
         <div class="user-modal-block">
             <div class="user-modal-label">Номер:</div>
             <div class="input-field-wrapper">
-                <input type="text" class="input-field" id="invoiceNumber" name="Number" placeholder="Номер" required>
+                <input type="text" class="input-field" id="invoiceNumber" name="number" placeholder="Номер" required>
                 <div class="separator"></div>
             </div>
         </div>
@@ -61,19 +61,7 @@
                 </select>
                 <div class="separator"></div>
             </div>
-        </div>
-        <div class="user-modal-block">
-            <div class="user-modal-label">Тип накладної:</div>
-            <div class="input-field-wrapper">
-                <select class="input-field dropdown" id="invoiceTypeId" name="invoiceTypeId" required>
-                    @for (int i = 0; i < @Model.InvoiceTypes.Count; i++)
-                    {
-                        <option value="@Model.InvoiceTypes[i].Id">@Model.InvoiceTypes[i].Name</option>
-                    }
-                </select>
-                <div class="separator"></div>
-            </div>
-        </div>
+        </div>        
         <div class="user-modal-block">
             <div class="user-modal-label">Сектор:</div>
             <div class="input-field-wrapper">
@@ -98,9 +86,45 @@
                 <div class="separator"></div>
             </div>
         </div>
-
+        <div class="itemRow" id="itemRow">
+            @* <div class="user-modal-block">
+                <div class="user-modal-label">Майно:</div>
+                <div class="input-field-wrapper">
+                    <select class="input-field dropdown" id="StockItemId[]" name="StockItemId[]" required>
+                        @for (int i = 0; i < @Model.StockItems.Count; i++)
+                        {
+                            <option value="@Model.StockItems[i].StockItemId">
+                                @Model.StockItems[i].Item.ItemName (@Model.StockItems[i].Category.Name
+                                @Model.StockItems[i].Price, @Model.StockItems[i].AllAmount, @Model.StockItems[i].Unit.Name)
+                            </option>
+                        }
+                    </select>
+                    <div class="separator"></div>
+                </div>
+            </div>
+            <div class="user-modal-block">
+                <div class="user-modal-label">Кількість</div>
+                <div class="input-field-wrapper">
+                    <input type="text" class="input-field" id="Amount[]" name="Amount[]" placeholder="Кількість" required>
+                    <div class="separator"></div>
+                </div>
+            </div>
+            <button type="button" class="remove-btn" onclick="removeRow(this)">❌</button> *@
+        </div>
+        <div id="stockOptionsContainer" style="display: none;">
+            <select class="input-field dropdown" id="StockItemId" name="StockItemId" required>
+                @for (int i = 0; i < @Model.StockItems.Count; i++)
+                {
+                    <option value="@Model.StockItems[i].StockItemId">
+                        @Model.StockItems[i].Item.ItemName (@Model.StockItems[i].Category.Name
+                        @Model.StockItems[i].Price, @Model.StockItems[i].AllAmount, @Model.StockItems[i].Unit.Name)
+                    </option>
+                }
+            </select>
+        </div>
     </div>
     <div class="user-modal-footer">
+        <button type="button" onclick="addInvoiceOutPosition()">➕ Додати рядок</button>
         <button type="submit" class="btn btn-modal">Зберегти</button>
     </div>
 </form>

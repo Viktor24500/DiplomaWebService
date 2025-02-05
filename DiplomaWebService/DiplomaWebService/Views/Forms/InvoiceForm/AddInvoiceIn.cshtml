@@ -5,7 +5,7 @@
 @{
 }
 @model InvoiceInViewModel
-<form action="/invoice" method="post" class="modal" id="addInvoiceInForm">
+<form action="/invoiceIn" method="post" class="modal" id="addInvoiceInForm">
     <div class="user-modal-header">
         <button class="small-icon-container close-btn" onclick="closeModalForm()">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -27,7 +27,7 @@
         <div class="user-modal-block">
             <div class="user-modal-label">Дата накладної:</div>
             <div class="input-field-wrapper">
-                <input type="datetime" class="input-field" id="invoiceDate" name="InvoiceDate" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" min="2018-06-07T00:00" max="2026-06-14T00:00" required>
+                <input type="datetime-local" class="input-field" id="invoiceDate" name="InvoiceDate" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" min="2018-06-07T00:00" max="2026-06-14T00:00" required>
                 <div class="separator"></div>
             </div>
         </div>
@@ -38,9 +38,6 @@
                 <div class="separator"></div>
             </div>
         </div>
-        @{
-            System.Diagnostics.Debugger.Break();
-        }
         <div class="user-modal-block">
             <div class="user-modal-label">Призначення:</div>
             <div class="input-field-wrapper">
@@ -60,18 +57,6 @@
                     @for (int i = 0; i < @Model.Contragents.Count; i++)
                     {
                         <option value="@Model.Contragents[i].ContragentId">@Model.Contragents[i].ContragentName</option>
-                    }
-                </select>
-                <div class="separator"></div>
-            </div>
-        </div>
-        <div class="user-modal-block">
-            <div class="user-modal-label">Тип накладної:</div>
-            <div class="input-field-wrapper">
-                <select class="input-field dropdown" id="invoiceTypeId" name="invoiceTypeId" required>
-                    @for (int i = 0; i < @Model.InvoiceTypes.Count; i++)
-                    {
-                        <option value="@Model.InvoiceTypes[i].Id">@Model.InvoiceTypes[i].Name</option>
                     }
                 </select>
                 <div class="separator"></div>
@@ -101,7 +86,39 @@
                 <div class="separator"></div>
             </div>
         </div>
-
+         <div class="itemRow" id="itemRow">
+        </div>
+        <div id="itemOptionsContainer" style="display: none;">
+            <select class="input-field dropdown" id="getItemId" name="getItemId" required>
+                @for (int i = 0; i < @Model.Items.Count; i++)
+                {
+                    <option value="@Model.Items[i].ItemId">
+                        @Model.Items[i].ItemName (@Model.Items[i].InventoryNumber
+                        @Model.Items[i].Sector.Name)
+                    </option>
+                }
+            </select>
+        </div>
+        <div id="unitOptionsContainer" style="display: none;">
+            <select class="input-field dropdown" id="getUnitId" name="getUnitId" required>
+                @for (int i = 0; i < @Model.Units.Count; i++)
+                {
+                    <option value="@Model.Units[i].Id">
+                        @Model.Units[i].Name
+                    </option>
+                }
+            </select>
+        </div>
+        <div id="categoryOptionsContainer" style="display: none;">
+            <select class="input-field dropdown" id="getCategoriesId" name="getCategoriesId" required>
+                @for (int i = 0; i < @Model.Categories.Count; i++)
+                {
+                    <option value="@Model.Categories[i].Id">
+                        @Model.Categories[i].Name
+                    </option>
+                }
+            </select>
+        </div>
     </div>
     <div class="user-modal-footer">
         <button type="submit" class="btn btn-modal">Зберегти</button>
