@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model BaseViewModel;
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
@@ -37,7 +38,7 @@
 						<li class="nav-ul-item nav-ul-item--active">
 							<a title="Depot" class="sidebar-link" href="/stockItems">
 								<div class="small-icon-container">
-									<img src="img/admin.svg">
+									<img src="img/warehouse.svg">
 								</div>
 								<div class="sidebar-link-text">Склад</div>
 							</a>
@@ -45,7 +46,7 @@
 						<li class="nav-ul-item nav-ul-item--active">
 							<a title="Reports" class="sidebar-link" href="reports.html">
 								<div class="small-icon-container">
-									<img src="img/admin.svg">
+									<img src="img/reports.svg">
 								</div>
 								<div class="sidebar-link-text">Звіти</div>
 							</a>
@@ -71,8 +72,12 @@
 					</ul>
 				</nav>
 				<div class="user-info-wrapper">
-					<div class="user-info"></div>
-					<div class="user-name">Копійка</div>
+					<div class="user-info">@Model.UsernameFirstLetter</div>
+					<div class="user-name">
+						<a title="logout" class="sidebar-link" href="/logout">
+							<div class="sidebar-link-text">@Model.Username</div>
+						</a>
+					</div>
 				</div>
 			</div>
 		</section>
