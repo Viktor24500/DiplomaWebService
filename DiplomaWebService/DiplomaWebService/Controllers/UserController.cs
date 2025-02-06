@@ -73,6 +73,7 @@ namespace DiplomaWebService.Controllers
 		public async Task<IActionResult> Logout()
 		{
 			HttpContext.Response.Cookies.Delete("token");
+			HttpContext.Session.Clear();
 			return RedirectToAction("Login");
 		}
 

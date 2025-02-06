@@ -1,36 +1,51 @@
 namespace DiplomaWebService
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            var builder = WebApplication.CreateBuilder(args);
+	public class Program
+	{
+		public static void Main(string[] args)
+		{
+			var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            builder.Services.AddControllersWithViews();
+			// Add services to the container.
+			builder.Services.AddControllersWithViews();
 
-            var app = builder.Build();
+			var config = new ConfigurationBuilder()
+					 .AddJsonFile("appsettings.json", optional: false)
+					 .Build();
 
-            // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
-            {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
+			builder.Services.AddDistributedMemoryCache(); // Required for session state
+			builder.Services.AddSession(options =>
+			{
+				double expirationTime = config.GetValue<double>("TokenExpirationTime");
+				options.IdleTimeout = TimeSpan.FromMinutes(expirationTime); // Set session timeout
+				options.Cookie.HttpOnly = true;
+				options.Cookie.IsEssential = true;
+			});
 
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
+			var app = builder.Build();
 
-            app.UseRouting();
+			// Configure the HTTP request pipeline.
+			if (!app.Environment.IsDevelopment())
+			{
+				app.UseExceptionHandler("/Home/Error");
+				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+				app.UseHsts();
+			}
 
-            app.UseAuthorization();
+			app.UseHttpsRedirection();
+			app.UseStaticFiles();
 
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+			app.UseRouting();
 
-            app.Run();
-        }
-    }
+			app.UseSession();
+
+			app.UseAuthorization();
+
+			app.MapControllerRoute(
+				name: "default",
+				pattern: "{controller=Home}/{action=Index}/{id?}");
+
+			app.Run();
+		}
+	}
 }
