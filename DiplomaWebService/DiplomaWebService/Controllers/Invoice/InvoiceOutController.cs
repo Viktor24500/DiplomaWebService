@@ -36,6 +36,16 @@ namespace DiplomaWebService.Controllers.Invoice
 				ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
+			Result<string> username = GetUsernameFromSession();
+			if (username.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(username.ErrorMessage);
+				result.ErrorCode = username.ErrorCode;
+				result.ErrorMessage = username.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), username.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(errorName, username.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
 			string url = _connectionString + "invoicesOut";
 			using (HttpClient client = new HttpClient())
 			{
@@ -61,6 +71,8 @@ namespace DiplomaWebService.Controllers.Invoice
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			Result<InvoiceOutViewModel> invoiceOutModel = await GetInvoiceOutModel(result.Data);
+			BaseViewModel model = CreateBaseViewModel(username.Data, username.Data[0]);
+			ViewData["LayoutModel"] = model;
 			return View("/Views/Invoices/InvoiceOut.cshtml", invoiceOutModel.Data);
 		}
 
@@ -271,6 +283,27 @@ namespace DiplomaWebService.Controllers.Invoice
 				result.ErrorCode = (int)ErrorCodes.BadRequest;
 			}
 			result.Data = token;
+			return result;
+		}
+		private BaseViewModel CreateBaseViewModel(string username, char usernameFirstLetter)
+		{
+			BaseViewModel model = new BaseViewModel(usernameFirstLetter, username);
+			return model;
+		}
+		private Result<string> GetUsernameFromSession()
+		{
+			Result<string> result = new Result<string>();
+			string? username = HttpContext.Session.GetString("Username");
+			if (string.IsNullOrEmpty(username))
+			{
+				result.ErrorMessage = "Can't get username from session";
+				result.ErrorCode = (int)ErrorCodes.BadRequest;
+				_logger.LogError(result.ErrorMessage);
+			}
+			else
+			{
+				result.Data = username;
+			}
 			return result;
 		}
 	}
