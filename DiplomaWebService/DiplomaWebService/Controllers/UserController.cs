@@ -61,8 +61,10 @@ namespace DiplomaWebService.Controllers
 			}
 			CookieOptions cookieOptions = new CookieOptions();
 			cookieOptions.Expires = result.Data.TokenExpiration;
+			HttpContext.Session.SetString("Username", username);
 			HttpContext.Response.Cookies.Append("token", result.Data.Token, cookieOptions);
-			BaseViewModel model = new BaseViewModel(char.ToUpper(username[0]), username);
+
+			BaseViewModel model = CreateBaseViewModel(username, username[0]);
 			ViewData["LayoutModel"] = model;
 			return RedirectToAction("GetAllStockItems", "StockItem");
 		}
@@ -139,6 +141,16 @@ namespace DiplomaWebService.Controllers
 			string url = _connectionString + "users";
 
 			Result<string> resToken = GetTokenFromCookies();
+			Result<string> username = GetUsernameFromSession();
+			if (username.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(username.ErrorMessage);
+				result.ErrorCode = username.ErrorCode;
+				result.ErrorMessage = username.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), username.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(errorName, username.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
 			if (resToken.ErrorCode != (int)ErrorCodes.Success)
 			{
 				_logger.LogError(resToken.ErrorMessage);
@@ -201,6 +213,9 @@ namespace DiplomaWebService.Controllers
 			UserViewModel userViewModel = new UserViewModel();
 			userViewModel.Users = result.Data;
 			userViewModel.Roles = resultRole.Data;
+
+			BaseViewModel model = CreateBaseViewModel(username.Data, username.Data[0]);
+			ViewData["LayoutModel"] = model;
 			return View("/Views/User.cshtml", userViewModel);
 		}
 
@@ -214,6 +229,29 @@ namespace DiplomaWebService.Controllers
 			}
 			result.Data = token;
 			return result;
+		}
+
+		private Result<string> GetUsernameFromSession()
+		{
+			Result<string> result = new Result<string>();
+			string? username = HttpContext.Session.GetString("Username");
+			if (string.IsNullOrEmpty(username))
+			{
+				result.ErrorMessage = "Can't get username from session";
+				result.ErrorCode = (int)ErrorCodes.BadRequest;
+				_logger.LogError(result.ErrorMessage);
+			}
+			else
+			{
+				result.Data = username;
+			}
+			return result;
+		}
+
+		private BaseViewModel CreateBaseViewModel(string username, char usernameFirstLetter)
+		{
+			BaseViewModel model = new BaseViewModel(usernameFirstLetter, username);
+			return model;
 		}
 	}
 }
