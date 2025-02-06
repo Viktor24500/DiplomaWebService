@@ -63,7 +63,7 @@ namespace DiplomaWebService.Controllers
 			{
 				_logger.LogError(result.ErrorMessage);
 				result.ErrorCode = (int)ErrorCodes.BadRequest;
-				result.ErrorMessage = "can't get all items";
+				//result.ErrorMessage = "can't get all items";
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
@@ -118,7 +118,7 @@ namespace DiplomaWebService.Controllers
 				{
 					_logger.LogError(result.ErrorMessage);
 					result.ErrorCode = (int)ErrorCodes.BadRequest;
-					result.ErrorMessage = "";
+					//result.ErrorMessage = "";
 					string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 					ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
 					return View("/Views/Shared/Error.cshtml", errorModel);
@@ -159,6 +159,15 @@ namespace DiplomaWebService.Controllers
 				{
 					result.ErrorCode = (int)responseMessage.StatusCode;
 					result.ErrorMessage = await responseMessage.Content.ReadAsStringAsync();
+				}
+				if (result.ErrorCode != (int)ErrorCodes.Success)
+				{
+					_logger.LogError(result.ErrorMessage);
+					result.ErrorCode = (int)ErrorCodes.BadRequest;
+					//result.ErrorMessage = "";
+					string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+					ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+					return View("/Views/Shared/Error.cshtml", errorModel);
 				}
 				return RedirectToAction("GetAllItems");
 			}

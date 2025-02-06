@@ -62,7 +62,7 @@ namespace DiplomaWebService.Controllers
 			{
 				_logger.LogError(result.ErrorMessage);
 				result.ErrorCode = (int)ErrorCodes.BadRequest;
-				result.ErrorMessage = "Can't get all contragents";
+				//result.ErrorMessage = "Can't get all contragents";
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
@@ -109,7 +109,7 @@ namespace DiplomaWebService.Controllers
 			{
 				_logger.LogError(result.ErrorMessage);
 				result.ErrorCode = (int)ErrorCodes.BadRequest;
-				result.ErrorMessage = "";
+				//result.ErrorMessage = "";
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
@@ -154,7 +154,7 @@ namespace DiplomaWebService.Controllers
 				{
 					_logger.LogError(result.ErrorMessage);
 					result.ErrorCode = (int)ErrorCodes.BadRequest;
-					result.ErrorMessage = "";
+					//result.ErrorMessage = "";
 					string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 					ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
 					return View("/Views/Shared/Error.cshtml", errorModel);
