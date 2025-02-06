@@ -2,36 +2,49 @@
 using DiplomaWebService.Common.Results;
 using DiplomaWebService.Constants;
 using DiplomaWebService.Models;
-using DiplomaWebService.Models.Invoice;
+using DiplomaWebService.Models.Invoice.In;
+using DiplomaWebService.Models.Invoice.ViewModel;
 using DiplomaWebService.Models.Items;
 using DiplomaWebService.Models.Types;
+using DiplomaWebService.Parametrs.Invoice.In;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DiplomaWebService.Controllers
+namespace DiplomaWebService.Controllers.Invoice
 {
-    public class InvoiceController : Controller
+    public class InvoiceInController : Controller
     {
-        private ILogger<InvoiceController> _logger;
+        private ILogger<InvoiceInController> _logger;
         private string? _connectionString;
 
-        public InvoiceController(ILogger<InvoiceController> logger, IConfiguration configuration)
+        public InvoiceInController(ILogger<InvoiceInController> logger, IConfiguration configuration)
         {
             _logger = logger;
             _connectionString = configuration.GetConnectionString(Constant.MainConnectionString);
         }
 
         [HttpGet]
-        [Route("/invoices")]
-        public async Task<IActionResult> GetAllInvoices()
+        [Route("/invoicesIn")]
+        public async Task<IActionResult> GetAllInvoicesIn()
         {
-            Result<List<Invoice>> result = new Result<List<Invoice>>();
-            string url = _connectionString + "invoices";
+            Result<List<InvoiceIn>> result = new Result<List<InvoiceIn>>();
+            Result<string> resToken = GetTokenFromCookies();
+            if (resToken.ErrorCode != (int)ErrorCodes.Success)
+            {
+                _logger.LogError(resToken.ErrorMessage);
+                result.ErrorCode = resToken.ErrorCode;
+                result.ErrorMessage = resToken.ErrorMessage;
+                string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+                ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                return View("/Views/Shared/Error.cshtml", errorModel);
+            }
+            string url = _connectionString + "invoicesIn";
             using (HttpClient client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
                 HttpResponseMessage responseMessage = await client.GetAsync(url);
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    result.Data = await responseMessage.Content.ReadFromJsonAsync<List<Invoice>>();
+                    result.Data = await responseMessage.Content.ReadFromJsonAsync<List<InvoiceIn>>();
                 }
                 else
                 {
@@ -48,28 +61,82 @@ namespace DiplomaWebService.Controllers
                 ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
-            Result<InvoiceModel> invoiceModel = await GetInvoiceModel(result.Data);
+            Result<InvoiceInViewModel> invoiceInModel = await GetInvoiceInModel(result.Data);
+            return View("/Views/Invoices/InvoiceIn.cshtml", invoiceInModel.Data);
+        }
 
-            return View("/Views/Invoices/Invoice.cshtml", invoiceModel.Data);
+        [HttpPost]
+        [Route("/invoice")]
+        public async Task<IActionResult> CreateInvoiceIn(DateTime invoiceDate, string number, int destinationId, int senderId,
+            int sectorId, int documentTypeId, List<InvoicePositionsInCreateParameters> positions)
+        {
+            int invoiceTypeId = 1;
+            Result<InvoiceIn> result = new Result<InvoiceIn>();
+            Result<string> resToken = GetTokenFromCookies();
+            if (resToken.ErrorCode != (int)ErrorCodes.Success)
+            {
+                _logger.LogError(resToken.ErrorMessage);
+                result.ErrorCode = resToken.ErrorCode;
+                result.ErrorMessage = resToken.ErrorMessage;
+                string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+                ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                return View("/Views/Shared/Error.cshtml", errorModel);
+            }
+            string url = _connectionString + "invoicesIn";
+            using (HttpClient client = new HttpClient())
+            {
+                InvoiceInCreateParameters invoiceCreateParam = new InvoiceInCreateParameters(invoiceDate, number, destinationId,
+                    senderId, invoiceTypeId, sectorId, documentTypeId, positions);
+                JsonContent content = JsonContent.Create(invoiceCreateParam);
+
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
+                HttpResponseMessage responseMessage = await client.PostAsync(url, content);
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    result.Data = await responseMessage.Content.ReadFromJsonAsync<InvoiceIn>();
+                }
+                else
+                {
+                    result.ErrorCode = (int)responseMessage.StatusCode;
+                    result.ErrorMessage = await responseMessage.Content.ReadAsStringAsync();
+                }
+            }
+            if (result.ErrorCode != (int)ErrorCodes.Success)
+            {
+                _logger.LogError(result.ErrorMessage);
+                result.ErrorCode = (int)ErrorCodes.BadRequest;
+                result.ErrorMessage = "can't get all invoices";
+                string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+                ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                return View("/Views/Shared/Error.cshtml", errorModel);
+            }
+            return RedirectToAction("GetAllInvoicesIn");
         }
         [HttpGet]
-        [Route("/invoice")]
-        public IActionResult GetCreateInvoice()
+        [Route("/invoiceIn")]
+        public IActionResult GetCreateInvoiceIn()
         {
-            return View("/Views/Forms/InvoiceForm/AddInvoice.cshtml");
+            return View("/Views/Forms/InvoiceForm/AddInvoiceIn.cshtml");
         }
-        private async Task<Result<InvoiceModel>> GetInvoiceModel(List<Invoice> invoices)
+        private async Task<Result<InvoiceInViewModel>> GetInvoiceInModel(List<InvoiceIn> invoices)
         {
-            Result<InvoiceModel> invoiceModel = new Result<InvoiceModel>();
-            invoiceModel.Data = new InvoiceModel();
-            //get invoices
-            invoiceModel.Data.Invoices = invoices;
-
+            Result<InvoiceInViewModel> invoiceModel = new Result<InvoiceInViewModel>();
+            Result<string> resToken = GetTokenFromCookies();
+            if (resToken.ErrorCode != (int)ErrorCodes.Success)
+            {
+                _logger.LogError(resToken.ErrorMessage);
+                invoiceModel.ErrorCode = resToken.ErrorCode;
+                invoiceModel.ErrorMessage = resToken.ErrorMessage;
+                return invoiceModel;
+            }
+            invoiceModel.Data = new InvoiceInViewModel();
+            invoiceModel.Data.InvoicesIn = invoices;
             //get sectors
             string sectorUrl = _connectionString + "sectors";
             Result<List<Sector>> resultSector = new Result<List<Sector>>();
             using (HttpClient client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
                 HttpResponseMessage responseMessage = await client.GetAsync(sectorUrl);
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -116,7 +183,7 @@ namespace DiplomaWebService.Controllers
             invoiceModel.Data.DocumentTypes = resultDocumentType.Data;
 
             //get invoice types
-            string invoiceTypeUrl = _connectionString + "documentTypes";
+            string invoiceTypeUrl = _connectionString + "invoiceTypes";
             Result<List<InvoiceType>> resultInvoiceType = new Result<List<InvoiceType>>();
             using (HttpClient client = new HttpClient())
             {
@@ -145,6 +212,7 @@ namespace DiplomaWebService.Controllers
             Result<List<Contragent>> resultContragent = new Result<List<Contragent>>();
             using (HttpClient client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
                 HttpResponseMessage responseMessage = await client.GetAsync(contragnetUrl);
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -170,6 +238,7 @@ namespace DiplomaWebService.Controllers
             Result<List<Item>> resultItem = new Result<List<Item>>();
             using (HttpClient client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
                 HttpResponseMessage responseMessage = await client.GetAsync(itemUrl);
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -195,6 +264,7 @@ namespace DiplomaWebService.Controllers
             Result<List<Unit>> resultUnit = new Result<List<Unit>>();
             using (HttpClient client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
                 HttpResponseMessage responseMessage = await client.GetAsync(unitUrl);
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -242,6 +312,17 @@ namespace DiplomaWebService.Controllers
 
             return invoiceModel;
 
+        }
+        private Result<string> GetTokenFromCookies()
+        {
+            Result<string> result = new Result<string>();
+            if (!HttpContext.Request.Cookies.TryGetValue("token", out string token))
+            {
+                result.ErrorMessage = "Authentication token is missing";
+                result.ErrorCode = (int)ErrorCodes.BadRequest;
+            }
+            result.Data = token;
+            return result;
         }
     }
 }

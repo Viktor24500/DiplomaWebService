@@ -1,13 +1,13 @@
 ﻿using DiplomaWebService.Models.Types;
 
-namespace DiplomaWebService.Models.Invoice
+namespace DiplomaWebService.Models.Invoice.In
 {
-    public class Invoice
+    public class InvoiceIn
     {
-        public Invoice(int id, DateTime invoiceDate, string number,
+        public InvoiceIn(int id, DateTime invoiceDate, string number,
                     int destinationId, string destinationName, int senderId, string senderName,
                     InvoiceType invoiceType, Sector sector, DocumentType documentType,
-                    List<InvoicePosition> invoicePositions)
+                    List<InvoicePositionIn> invoicePositions)
         {
             Id = id;
             InvoiceDate = invoiceDate;
@@ -33,6 +33,6 @@ namespace DiplomaWebService.Models.Invoice
         public Sector Sector { get; set; }
         public DocumentType DocumentType { get; set; }
 
-        public List<InvoicePosition> InvoicePositions { get; set; }
+        public List<InvoicePositionIn> InvoicePositions { get; set; }
     }
 }

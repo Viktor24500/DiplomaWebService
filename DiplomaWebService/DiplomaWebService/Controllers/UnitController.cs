@@ -23,9 +23,20 @@ namespace DiplomaWebService.Controllers
 		public async Task<IActionResult> GetAllUnits()
 		{
 			Result<List<Unit>> result = new Result<List<Unit>>();
+			Result<string> resToken = GetTokenFromCookies();
+			if (resToken.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(resToken.ErrorMessage);
+				result.ErrorCode = resToken.ErrorCode;
+				result.ErrorMessage = resToken.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
 			string url = _connectionString + "units";
 			using (HttpClient client = new HttpClient())
 			{
+				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
 				HttpResponseMessage responseMessage = await client.GetAsync(url);
 				if (responseMessage.IsSuccessStatusCode)
 				{
@@ -51,16 +62,27 @@ namespace DiplomaWebService.Controllers
 		}
 
 		[HttpPost]
-		[Route("/unit")]
+		[Route("/units")]
 		public async Task<IActionResult> CreateUnit(string name)
 		{
 			Result<Unit> result = new Result<Unit>();
-			string url = _connectionString + "unit";
+			Result<string> resToken = GetTokenFromCookies();
+			if (resToken.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(resToken.ErrorMessage);
+				result.ErrorCode = resToken.ErrorCode;
+				result.ErrorMessage = resToken.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			string url = _connectionString + "units";
 			using (HttpClient client = new HttpClient())
 			{
 				UnitCreateParameters unitCreateParam = new UnitCreateParameters(name);
 				JsonContent content = JsonContent.Create(unitCreateParam);
 
+				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
 				HttpResponseMessage responseMessage = await client.PostAsync(url, content);
 				if (responseMessage.IsSuccessStatusCode)
 				{
@@ -85,16 +107,27 @@ namespace DiplomaWebService.Controllers
 		}
 
 		[HttpPut]
-		[Route("/unit")]
+		[Route("/units")]
 		public async Task<IActionResult> UpdateUnit(int id, string name)
 		{
 			Result<Unit> result = new Result<Unit>();
-			string url = _connectionString + $"unit/{id}";
+			Result<string> resToken = GetTokenFromCookies();
+			if (resToken.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(resToken.ErrorMessage);
+				result.ErrorCode = resToken.ErrorCode;
+				result.ErrorMessage = resToken.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			string url = _connectionString + $"units/{id}";
 			using (HttpClient client = new HttpClient())
 			{
 				UnitUpdateParameters unitUpdateParam = new UnitUpdateParameters(id, name);
 				JsonContent content = JsonContent.Create(unitUpdateParam);
 
+				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
 				HttpResponseMessage responseMessage = await client.PutAsync(url, content);
 				if (responseMessage.IsSuccessStatusCode)
 				{
@@ -124,6 +157,17 @@ namespace DiplomaWebService.Controllers
 		public IActionResult GetCreateUnit()
 		{
 			return View("/Views/Forms/UnitForm/AddUnit.cshtml");
+		}
+		private Result<string> GetTokenFromCookies()
+		{
+			Result<string> result = new Result<string>();
+			if (!HttpContext.Request.Cookies.TryGetValue("token", out string token))
+			{
+				result.ErrorMessage = "Authentication token is missing";
+				result.ErrorCode = (int)ErrorCodes.BadRequest;
+			}
+			result.Data = token;
+			return result;
 		}
 	}
 }

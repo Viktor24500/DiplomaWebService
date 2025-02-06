@@ -23,9 +23,20 @@ namespace DiplomaWebService.Controllers
 		public async Task<IActionResult> GetAllSectors()
 		{
 			Result<List<Sector>> result = new Result<List<Sector>>();
+			Result<string> resToken = GetTokenFromCookies();
+			if (resToken.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(resToken.ErrorMessage);
+				result.ErrorCode = resToken.ErrorCode;
+				result.ErrorMessage = resToken.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
 			string url = _connectionString + "sectors";
 			using (HttpClient client = new HttpClient())
 			{
+				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
 				HttpResponseMessage responseMessage = await client.GetAsync(url);
 				if (responseMessage.IsSuccessStatusCode)
 				{
@@ -51,16 +62,27 @@ namespace DiplomaWebService.Controllers
 		}
 
 		[HttpPost]
-		[Route("/sector")]
+		[Route("/sectors")]
 		public async Task<IActionResult> CreateSector(string name, string shortSectorName)
 		{
-			SectorCreateParameters sectorCreateParam = new SectorCreateParameters(name, shortSectorName);
 			Result<Sector> result = new Result<Sector>();
-			string url = _connectionString + "sector";
+			Result<string> resToken = GetTokenFromCookies();
+			if (resToken.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(resToken.ErrorMessage);
+				result.ErrorCode = resToken.ErrorCode;
+				result.ErrorMessage = resToken.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			SectorCreateParameters sectorCreateParam = new SectorCreateParameters(name, shortSectorName);
+			string url = _connectionString + "sectors";
 			using (HttpClient client = new HttpClient())
 			{
 				JsonContent content = JsonContent.Create(sectorCreateParam);
 
+				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
 				HttpResponseMessage responseMessage = await client.PostAsync(url, content);
 				if (responseMessage.IsSuccessStatusCode)
 				{
@@ -86,16 +108,27 @@ namespace DiplomaWebService.Controllers
 		}
 
 		[HttpPut]
-		[Route("/sector/{id}")]
+		[Route("/sectors/{id}")]
 		public async Task<IActionResult> UpdateSector(int id, string name, string shortSectorName)
 		{
 			Result<Sector> result = new Result<Sector>();
-			string url = _connectionString + $"/sector/{id}";
+			Result<string> resToken = GetTokenFromCookies();
+			if (resToken.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(resToken.ErrorMessage);
+				result.ErrorCode = resToken.ErrorCode;
+				result.ErrorMessage = resToken.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			string url = _connectionString + $"/sectors/{id}";
 			using (HttpClient client = new HttpClient())
 			{
 				SectorUpdateParameters sectorUpdateParam = new SectorUpdateParameters(id, name, shortSectorName);
 				JsonContent content = JsonContent.Create(sectorUpdateParam);
 
+				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
 				HttpResponseMessage responseMessage = await client.PutAsync(url, content);
 				if (responseMessage.IsSuccessStatusCode)
 				{
@@ -125,6 +158,17 @@ namespace DiplomaWebService.Controllers
 		public IActionResult GetCreateSector()
 		{
 			return View("/Views/Forms/SectorForm/AddSector.cshtml");
+		}
+		private Result<string> GetTokenFromCookies()
+		{
+			Result<string> result = new Result<string>();
+			if (!HttpContext.Request.Cookies.TryGetValue("token", out string token))
+			{
+				result.ErrorMessage = "Authentication token is missing";
+				result.ErrorCode = (int)ErrorCodes.BadRequest;
+			}
+			result.Data = token;
+			return result;
 		}
 	}
 }

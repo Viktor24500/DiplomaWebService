@@ -23,9 +23,20 @@ namespace DiplomaWebService.Controllers
 		public async Task<IActionResult> GetAllContragents()
 		{
 			Result<List<Contragent>> result = new Result<List<Contragent>>();
+			Result<string> resToken = GetTokenFromCookies();
+			if (resToken.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(resToken.ErrorMessage);
+				result.ErrorCode = resToken.ErrorCode;
+				result.ErrorMessage = resToken.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
 			string url = _connectionString + "contragents";
 			using (HttpClient client = new HttpClient())
 			{
+				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
 				HttpResponseMessage responseMessage = await client.GetAsync(url);
 				if (responseMessage.IsSuccessStatusCode)
 				{
@@ -51,16 +62,27 @@ namespace DiplomaWebService.Controllers
 		}
 
 		[HttpPost]
-		[Route("/contragent")]
+		[Route("/contragents")]
 		public async Task<IActionResult> CreateContragent(string name, int? parentId, bool isActive)
 		{
 			Result<Contragent> result = new Result<Contragent>();
+			Result<string> resToken = GetTokenFromCookies();
+			if (resToken.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(resToken.ErrorMessage);
+				result.ErrorCode = resToken.ErrorCode;
+				result.ErrorMessage = resToken.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
 			ContragentCreateParameters contragentCreateParam = new ContragentCreateParameters(parentId, name, isActive);
-			string url = _connectionString + "contragent";
+			string url = _connectionString + "contragents";
 			using (HttpClient client = new HttpClient())
 			{
 				JsonContent content = JsonContent.Create(contragentCreateParam);
 
+				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
 				HttpResponseMessage responseMessage = await client.PostAsync(url, content);
 				if (responseMessage.IsSuccessStatusCode)
 				{
@@ -86,16 +108,27 @@ namespace DiplomaWebService.Controllers
 		}
 
 		[HttpPut]
-		[Route("/contragent/{id}")]
+		[Route("/contragents/{id}")]
 		public async Task<IActionResult> UpdateContragent(int id, string name, int? parentId, bool isActive)
 		{
 			Result<Contragent> result = new Result<Contragent>();
-			string url = _connectionString + $"/contragent/{id}";
+			Result<string> resToken = GetTokenFromCookies();
+			if (resToken.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(resToken.ErrorMessage);
+				result.ErrorCode = resToken.ErrorCode;
+				result.ErrorMessage = resToken.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			string url = _connectionString + $"/contragents/{id}";
 			using (HttpClient client = new HttpClient())
 			{
 				ContragentUpdateParameters contragentUpdateParam = new ContragentUpdateParameters(id, parentId, name, isActive);
 				JsonContent content = JsonContent.Create(contragentUpdateParam);
 
+				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
 				HttpResponseMessage responseMessage = await client.PutAsync(url, content);
 				if (responseMessage.IsSuccessStatusCode)
 				{
@@ -124,6 +157,17 @@ namespace DiplomaWebService.Controllers
 		public IActionResult GetCreateContragent()
 		{
 			return View("/Views/Forms/ContragentForm/AddContragent.cshtml");
+		}
+		private Result<string> GetTokenFromCookies()
+		{
+			Result<string> result = new Result<string>();
+			if (!HttpContext.Request.Cookies.TryGetValue("token", out string token))
+			{
+				result.ErrorMessage = "Authentication token is missing";
+				result.ErrorCode = (int)ErrorCodes.BadRequest;
+			}
+			result.Data = token;
+			return result;
 		}
 	}
 }

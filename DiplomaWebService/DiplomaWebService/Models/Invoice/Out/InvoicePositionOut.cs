@@ -1,10 +1,10 @@
 ﻿using DiplomaWebService.Models.Items;
 
-namespace DiplomaWebService.Models.Invoice
+namespace DiplomaWebService.Models.Invoice.Out
 {
-    public class InvoicePosition
+    public class InvoicePositionOut
     {
-        public InvoicePosition(int id, int invoiceId, Item item, decimal amount,
+        public InvoicePositionOut(int id, int invoiceId, Item item, decimal amount,
             decimal price, Unit unit, Category category)
         {
             Id = id;

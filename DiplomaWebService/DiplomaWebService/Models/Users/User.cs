@@ -2,7 +2,7 @@
 {
     public class User
     {
-        public User(int id, string userName, string email, string firstName, string lastName, string? fatherName, bool isActive, string roleName)
+        public User(int id, string userName, string email, string firstName, string lastName, string? fatherName, bool isActive, string roleName, string statusDescription)
         {
             Id = id;
             UserName = userName;
@@ -12,6 +12,7 @@
             IsActive = isActive;
             RoleName = roleName;
             Email = email;
+            StatusDescription = statusDescription;
         }
         public int Id { get; set; }
         public string UserName { get; set; }
@@ -23,5 +24,6 @@
 
         public string RoleName { get; set; }
         public bool IsActive { get; set; }
+        public string StatusDescription { get; set; }
     }
 }
