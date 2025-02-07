@@ -3,8 +3,8 @@
 *@
 @{
 }
-@using DiplomaWebService.Models;
-@model List<Contragent>
+@using DiplomaWebService.Models.ViewModel
+@model ContragentViewModel
 
 <form action="/contragents" method="post" class="modal" id="addContragentForm">
     <div class="user-modal-header">
@@ -37,9 +37,9 @@
             <div class="input-field-wrapper">
                 <select class="input-field dropdown" id="parentId" name="parentId">
                     <option value="null">Немає</option>
-                    @for (int i = 0; i < @Model.Count; i++)
+                    @for (int i = 0; i < @Model.Contragents.Count; i++)
                     {
-                        <option value="@Model[i].ContragentId">@Model[i].ContragentName</option>
+                        <option value="@Model.Contragents[i].ContragentId">@Model.Contragents[i].ContragentName</option>
                     }
                 </select>
                 <div class="separator"></div>

@@ -1,5 +1,5 @@
-﻿@using DiplomaWebService.Models;
-@model List<Unit>
+﻿@using DiplomaWebService.Models.ViewModel
+@model UnitViewModel
 @{
 }
 
@@ -29,11 +29,11 @@
             <th>Назва</th>
         </tr>
 
-        @for (int i = 0; i < Model.Count; i++)
+        @for (int i = 0; i < Model.Units.Count; i++)
         {
             <tr>
-                <td id="unitId" hidden>@Model[i].Id</td>
-                <td id="unitName">@Model[i].Name</td>
+				<td id="unitId" hidden>@Model.Units[i].Id</td>
+				<td id="unitName">@Model.Units[i].Name</td>
             </tr>
         }
     </table>

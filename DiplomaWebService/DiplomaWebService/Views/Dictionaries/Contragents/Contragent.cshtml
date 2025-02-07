@@ -1,5 +1,5 @@
-﻿@using DiplomaWebService.Models;
-@model List<Contragent>
+﻿@using DiplomaWebService.Models.ViewModel
+@model ContragentViewModel
 
 @{
 }
@@ -32,16 +32,21 @@
 			<th>Назва головної організації</th>
 			<th>Статус</th>
 		</tr>
-		@for (int i = 0; i < @Model.Count(); i++)
+		@for (int i = 0; i < @Model.Contragents.Count(); i++)
 		{
 			<tr>
-				<td id="contragentIdInTable" hidden>@Model[i].ContragentId</td>
-				<td id="contragentNameInTable">@Model[i].ContragentName</td>
-				<td id="parentIdInTable" hidden>@Model[i].ParentId</td>
-				<td id="parentNameInTable">@Model[i].ParentName</td>
-				<td id="IsActiveInTable">@Model[i].IsActive</td>
+				<td id="contragentIdInTable" hidden>@Model.Contragents[i].ContragentId</td>
+				<td id="contragentNameInTable">@Model.Contragents[i].ContragentName</td>
+				<td id="parentIdInTable" hidden>@Model.Contragents[i].ParentId</td>
+				<td id="parentNameInTable">@Model.Contragents[i].ParentName</td>
+				<td id="IsActiveInTable">@Model.Contragents[i].IsActive</td>
+				<td>
+					<button type="button" class="btn btn-add-user" onclick="/contragents/disable/{@Model.Contragents[i].ContragentId}">
+						<img src="img/trash.svg">
+					</button>
+				</td>
 			</tr>
 		}
 	</table>
 </div>
-@Html.Partial("/Views/Forms/ContragentForm/AddContragent.cshtml", ViewData["/contragents"])
+@Html.Partial("/Views/Forms/ContragentForm/AddContragent.cshtml", Model.Contragents)

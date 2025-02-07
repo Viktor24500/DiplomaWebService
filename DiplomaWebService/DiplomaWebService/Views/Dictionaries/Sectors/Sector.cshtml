@@ -1,5 +1,5 @@
-﻿@using DiplomaWebService.Models;
-@model List<Sector>
+﻿@using DiplomaWebService.Models.ViewModel
+@model SectorViewModel
 
 @{
 }
@@ -46,12 +46,12 @@
             <th>Назва</th>
             <th>Скорочена назва</th>
         </tr>
-        @for (int i = 0; i < Model.Count(); i++)
+        @for (int i = 0; i < Model.Sectors.Count(); i++)
         {
             <tr>
-                <td id="sectorId" hidden>@Model[i].Id</td>
-                <td id="Name">@Model[i].Name</td>
-                <td id="ShortName">@Model[i].ShortSectorName</td>
+                <td id="sectorId" hidden>@Model.Sectors[i].Id</td>
+                <td id="Name">@Model.Sectors[i].Name</td>
+                <td id="ShortName">@Model.Sectors[i].ShortSectorName</td>
             </tr>
         }
     </table>

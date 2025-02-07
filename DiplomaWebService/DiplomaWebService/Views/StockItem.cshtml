@@ -1,9 +1,10 @@
-﻿@*
+﻿@using DiplomaWebService.Models.ViewModel
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
-@model List<StockItem>
+@model StockItemViewModel
 <div class="app-content">
 	<div class="main-header">
 		<div class="top-header">
@@ -41,18 +42,18 @@
 				<th>Ціна</th>
 			</tr>
 		<thead>
-		@for (int i = 0; i < @Model.Count(); i++)
+		@for (int i = 0; i < @Model.StockItems.Count(); i++)
 		{
 			<tr>
-				<td id="stockItemId" hidden>@Model[i].StockItemId</td>
-				<td id="Amount">@Model[i].AllAmount</td>
-				<td id="ItemId" hidden><label>@Model[i].Item.ItemId</label></td>
-				<td id="ItemName">@Model[i].Item.ItemName</td>
-				<td id="CategoryId" hidden>@Model[i].Category.Id</td>
-				<td id="CategoryName">@Model[i].Category.Name</td>
-				<td id="UnitId" hidden>@Model[i].Unit.Id</td>
-				<td id="UnitName">@Model[i].Unit.Name</td>
-				<td id="Price">@Model[i].Price</td>
+				<td id="stockItemId" hidden>@Model.StockItems[i].StockItemId</td>
+				<td id="Amount">@Model.StockItems[i].AllAmount</td>
+				<td id="ItemId" hidden><label>@Model.StockItems[i].Item.ItemId</label></td>
+				<td id="ItemName">@Model.StockItems[i].Item.ItemName</td>
+				<td id="CategoryId" hidden>@Model.StockItems[i].Category.Id</td>
+				<td id="CategoryName">@Model.StockItems[i].Category.Name</td>
+				<td id="UnitId" hidden>@Model.StockItems[i].Unit.Id</td>
+				<td id="UnitName">@Model.StockItems[i].Unit.Name</td>
+				<td id="Price">@Model.StockItems[i].Price</td>
 			</tr>
 		}				
 	</table>

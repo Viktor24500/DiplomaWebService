@@ -2,6 +2,7 @@
 using DiplomaWebService.Common.Results;
 using DiplomaWebService.Constants;
 using DiplomaWebService.Models;
+using DiplomaWebService.Models.ViewModel;
 using DiplomaWebService.Parametrs.Contagents;
 using Microsoft.AspNetCore.Mvc;
 
@@ -67,9 +68,8 @@ namespace DiplomaWebService.Controllers
 				ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
-			BaseViewModel model = CreateBaseViewModel(username.Data, username.Data[0]);
-			ViewData["LayoutModel"] = model;
-			return View("/Views/Dictionaries/Contragents/Contragent.cshtml", result.Data);
+			ContragentViewModel model = CreateViewModel(username.Data, username.Data[0], result.Data);
+			return View("/Views/Dictionaries/Contragents/Contragent.cshtml", model);
 		}
 
 		[HttpPost]
@@ -180,9 +180,9 @@ namespace DiplomaWebService.Controllers
 			result.Data = token;
 			return result;
 		}
-		private BaseViewModel CreateBaseViewModel(string username, char usernameFirstLetter)
+		private ContragentViewModel CreateViewModel(string username, char usernameFirstLetter, List<Contragent> contragents)
 		{
-			BaseViewModel model = new BaseViewModel(usernameFirstLetter, username);
+			ContragentViewModel model = new ContragentViewModel(usernameFirstLetter, username, contragents);
 			return model;
 		}
 		private Result<string> GetUsernameFromSession()

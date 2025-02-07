@@ -1,4 +1,4 @@
-﻿@using DiplomaWebService.Models.Users
+﻿@using DiplomaWebService.Models.ViewModel
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -46,6 +46,11 @@
 				<td>@Model.Users[i].FatherName</td>
 				<td>@Model.Users[i].StatusDescription</td>
 				<td>@Model.Users[i].RoleName</td>
+				<td>
+					<button type="button" class="btn btn-add-user" onclick="/users/disable/{@Model.Users[i].Id}">
+						<img src="img/trash.svg">
+					</button>
+				</td>
 			</tr>
 		}
 	</table>
