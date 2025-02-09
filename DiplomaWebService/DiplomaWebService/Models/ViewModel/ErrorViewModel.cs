@@ -1,8 +1,10 @@
+using DiplomaWebService.Models.ViewModel;
+
 namespace DiplomaWebService.Models
 {
-    public class ErrorViewModel
+    public class ErrorViewModel : BaseViewModel
     {
-        public ErrorViewModel(string erorrCodeName, string errorMsg)
+        public ErrorViewModel(char usernameFirstLetter, string username, string erorrCodeName, string errorMsg) : base(usernameFirstLetter, username)
         {
             ErrorCodeName = erorrCodeName;
             ErrorMsg = errorMsg;

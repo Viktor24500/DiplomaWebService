@@ -41,7 +41,7 @@
 				<td id="parentNameInTable">@Model.Contragents[i].ParentName</td>
 				<td id="IsActiveInTable">@Model.Contragents[i].IsActive</td>
 				<td>
-					<button type="button" class="btn btn-add-user" onclick="/contragents/disable/{@Model.Contragents[i].ContragentId}">
+					<button type="button" onclick="/contragents/disable/{@Model.Contragents[i].ContragentId}">
 						<img src="img/trash.svg">
 					</button>
 				</td>
@@ -49,4 +49,4 @@
 		}
 	</table>
 </div>
-@Html.Partial("/Views/Forms/ContragentForm/AddContragent.cshtml", Model.Contragents)
+@Html.Partial("/Views/Forms/ContragentForm/AddContragent.cshtml", Model)

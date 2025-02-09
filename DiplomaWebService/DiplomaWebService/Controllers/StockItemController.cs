@@ -12,6 +12,8 @@ namespace DiplomaWebService.Controllers
     {
         private ILogger<StockItemController> _logger;
         private string? _connectionString;
+        private string _username = " ";
+        private char _usernameFirstLetter = ' ';
 
         public StockItemController(ILogger<StockItemController> logger, IConfiguration configuration)
         {
@@ -31,7 +33,7 @@ namespace DiplomaWebService.Controllers
                 result.ErrorCode = resToken.ErrorCode;
                 result.ErrorMessage = resToken.ErrorMessage;
                 string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-                ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
             Result<string> username = GetUsernameFromSession();
@@ -41,7 +43,7 @@ namespace DiplomaWebService.Controllers
                 result.ErrorCode = username.ErrorCode;
                 result.ErrorMessage = username.ErrorMessage;
                 string errorName = Enum.GetName(typeof(ErrorCodes), username.ErrorCode);
-                ErrorViewModel errorModel = new ErrorViewModel(errorName, username.ErrorMessage);
+                ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, username.ErrorMessage);
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
             string url = _connectionString + "stockItems";
@@ -65,7 +67,7 @@ namespace DiplomaWebService.Controllers
                 result.ErrorCode = (int)ErrorCodes.BadRequest;
                 //result.ErrorMessage = "can't get all stock items";
                 string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-                ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
             StockItemViewModel model = CreateViewModel(username.Data, username.Data[0], result.Data);
@@ -85,7 +87,7 @@ namespace DiplomaWebService.Controllers
                 result.ErrorCode = resToken.ErrorCode;
                 result.ErrorMessage = resToken.ErrorMessage;
                 string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-                ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
             ReassessmentWithoutCoeffParameters param = new ReassessmentWithoutCoeffParameters(stockItemId, newPrice, documentNumber,
@@ -112,7 +114,7 @@ namespace DiplomaWebService.Controllers
                     result.ErrorCode = (int)ErrorCodes.BadRequest;
                     //result.ErrorMessage = "";
                     string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-                    ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                    ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
                     return View("/Views/Shared/Error.cshtml", errorModel);
                 }
 
@@ -133,7 +135,7 @@ namespace DiplomaWebService.Controllers
                 result.ErrorCode = resToken.ErrorCode;
                 result.ErrorMessage = resToken.ErrorMessage;
                 string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-                ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
             ReassessmentWithCoeffParameters param = new ReassessmentWithCoeffParameters(stockItemId, coeff, documentNumber,
@@ -161,7 +163,7 @@ namespace DiplomaWebService.Controllers
                     result.ErrorCode = (int)ErrorCodes.BadRequest;
                     //result.ErrorMessage = "";
                     string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-                    ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                    ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
                     return View("/Views/Shared/Error.cshtml", errorModel);
                 }
 

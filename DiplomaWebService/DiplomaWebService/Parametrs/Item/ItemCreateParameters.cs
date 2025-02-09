@@ -2,7 +2,7 @@
 {
     public class ItemCreateParameters
     {
-        public ItemCreateParameters(string itemName, int sectorId, int? inventoryNumber)
+        public ItemCreateParameters(string itemName, int sectorId, string? inventoryNumber)
         {
             ItemName = itemName;
             SectorId = sectorId;
@@ -10,7 +10,7 @@
         }
         public string ItemName { get; set; }
 
-        public int? InventoryNumber { get; set; }
+        public string? InventoryNumber { get; set; }
         public int SectorId { get; set; }
     }
 }

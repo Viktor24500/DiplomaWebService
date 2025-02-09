@@ -12,6 +12,8 @@ namespace DiplomaWebService.Controllers
     {
         private ILogger<UnitController> _logger;
         private string? _connectionString;
+        private string _username = " ";
+        private char _usernameFirstLetter = ' ';
 
         public UnitController(ILogger<UnitController> logger, IConfiguration configuration)
         {
@@ -31,7 +33,7 @@ namespace DiplomaWebService.Controllers
                 result.ErrorCode = resToken.ErrorCode;
                 result.ErrorMessage = resToken.ErrorMessage;
                 string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-                ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
             Result<string> username = GetUsernameFromSession();
@@ -41,7 +43,7 @@ namespace DiplomaWebService.Controllers
                 result.ErrorCode = username.ErrorCode;
                 result.ErrorMessage = username.ErrorMessage;
                 string errorName = Enum.GetName(typeof(ErrorCodes), username.ErrorCode);
-                ErrorViewModel errorModel = new ErrorViewModel(errorName, username.ErrorMessage);
+                ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, username.ErrorMessage);
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
             string url = _connectionString + "units";
@@ -65,7 +67,7 @@ namespace DiplomaWebService.Controllers
                 result.ErrorCode = (int)ErrorCodes.BadRequest;
                 //result.ErrorMessage = "can't get all units";
                 string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-                ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
             UnitViewModel model = CreateViewModel(username.Data, username.Data[0], result.Data);
@@ -85,7 +87,7 @@ namespace DiplomaWebService.Controllers
                 result.ErrorCode = resToken.ErrorCode;
                 result.ErrorMessage = resToken.ErrorMessage;
                 string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-                ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
             string url = _connectionString + "units";
@@ -111,7 +113,7 @@ namespace DiplomaWebService.Controllers
                     result.ErrorCode = (int)ErrorCodes.BadRequest;
                     //result.ErrorMessage = "";
                     string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-                    ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                    ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
                     return View("/Views/Shared/Error.cshtml", errorModel);
                 }
                 return RedirectToAction("GetAllUnits");
@@ -130,7 +132,7 @@ namespace DiplomaWebService.Controllers
                 result.ErrorCode = resToken.ErrorCode;
                 result.ErrorMessage = resToken.ErrorMessage;
                 string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-                ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
             string url = _connectionString + $"units/{id}";
@@ -156,7 +158,7 @@ namespace DiplomaWebService.Controllers
                     result.ErrorCode = (int)ErrorCodes.BadRequest;
                     //result.ErrorMessage = "";
                     string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-                    ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                    ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
                     return View("/Views/Shared/Error.cshtml", errorModel);
                 }
 

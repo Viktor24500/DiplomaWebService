@@ -14,6 +14,8 @@ namespace DiplomaWebService.Controllers
     {
         private ILogger<UserController> _logger;
         private string? _connectionString;
+        private string _username = " ";
+        private char _usernameFirstLetter = ' ';
 
         public UserController(ILogger<UserController> logger, IConfiguration configuration)
         {
@@ -57,7 +59,7 @@ namespace DiplomaWebService.Controllers
                 result.ErrorCode = (int)ErrorCodes.BadRequest;
                 //result.ErrorMessage = "";
                 string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-                ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
                 return View("/Views/Shared/ErrorWithoutLayout.cshtml", errorModel);
             }
             CookieOptions cookieOptions = new CookieOptions();
@@ -100,7 +102,7 @@ namespace DiplomaWebService.Controllers
                 result.ErrorCode = resToken.ErrorCode;
                 result.ErrorMessage = resToken.ErrorMessage;
                 string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-                ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
             using (HttpClient client = new HttpClient())
@@ -128,7 +130,7 @@ namespace DiplomaWebService.Controllers
                 result.ErrorCode = (int)ErrorCodes.BadRequest;
                 //result.ErrorMessage = "";
                 string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-                ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
 
@@ -150,7 +152,7 @@ namespace DiplomaWebService.Controllers
                 result.ErrorCode = username.ErrorCode;
                 result.ErrorMessage = username.ErrorMessage;
                 string errorName = Enum.GetName(typeof(ErrorCodes), username.ErrorCode);
-                ErrorViewModel errorModel = new ErrorViewModel(errorName, username.ErrorMessage);
+                ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, username.ErrorMessage);
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
             if (resToken.ErrorCode != (int)ErrorCodes.Success)
@@ -159,7 +161,7 @@ namespace DiplomaWebService.Controllers
                 result.ErrorCode = resToken.ErrorCode;
                 result.ErrorMessage = resToken.ErrorMessage;
                 string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-                ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
             using (HttpClient client = new HttpClient())
@@ -182,7 +184,7 @@ namespace DiplomaWebService.Controllers
                 result.ErrorCode = (int)ErrorCodes.BadRequest;
                 //result.ErrorMessage = "invalid username or password";
                 string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-                ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
             //get roles
@@ -209,7 +211,7 @@ namespace DiplomaWebService.Controllers
                 result.ErrorMessage = resultRole.ErrorMessage;
                 //result.ErrorMessage = "invalid username or password";
                 string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-                ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
 

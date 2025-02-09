@@ -2,7 +2,7 @@
 {
     public class ItemUpdateParameters
     {
-        public ItemUpdateParameters(int itemId, string itemName, int sectorId, int? inventoryNumber)
+        public ItemUpdateParameters(int itemId, string itemName, int sectorId, string? inventoryNumber)
         {
             ItemId = itemId;
             ItemName = itemName;
@@ -12,7 +12,7 @@
         public int ItemId { get; set; }
         public string ItemName { get; set; }
 
-        public int? InventoryNumber { get; set; }
+        public string? InventoryNumber { get; set; }
         public int SectorId { get; set; }
     }
 }

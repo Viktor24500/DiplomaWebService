@@ -13,7 +13,8 @@ namespace DiplomaWebService.Controllers
     {
         private ILogger<ItemController> _logger;
         private string? _connectionString;
-
+        private string _username = " ";
+        private char _usernameFirstLetter = ' ';
         public ItemController(ILogger<ItemController> logger, IConfiguration configuration)
         {
             _logger = logger;
@@ -32,7 +33,7 @@ namespace DiplomaWebService.Controllers
                 result.ErrorCode = resToken.ErrorCode;
                 result.ErrorMessage = resToken.ErrorMessage;
                 string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-                ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
             Result<string> username = GetUsernameFromSession();
@@ -42,7 +43,7 @@ namespace DiplomaWebService.Controllers
                 result.ErrorCode = username.ErrorCode;
                 result.ErrorMessage = username.ErrorMessage;
                 string errorName = Enum.GetName(typeof(ErrorCodes), username.ErrorCode);
-                ErrorViewModel errorModel = new ErrorViewModel(errorName, username.ErrorMessage);
+                ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, username.ErrorMessage);
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
             string url = _connectionString + "items";
@@ -66,7 +67,7 @@ namespace DiplomaWebService.Controllers
                 result.ErrorCode = (int)ErrorCodes.BadRequest;
                 //result.ErrorMessage = "can't get all items";
                 string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-                ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
 
@@ -75,7 +76,7 @@ namespace DiplomaWebService.Controllers
             {
                 _logger.LogError(resItemViewModel.ErrorMessage);
                 string errorName = Enum.GetName(typeof(ErrorCodes), resItemViewModel.ErrorCode);
-                ErrorViewModel errorModel = new ErrorViewModel(errorName, resItemViewModel.ErrorMessage);
+                ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, resItemViewModel.ErrorMessage);
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
             return View("/Views/Dictionaries/Items/Item.cshtml", resItemViewModel.Data);
@@ -83,7 +84,7 @@ namespace DiplomaWebService.Controllers
 
         [HttpPost]
         [Route("/items")]
-        public async Task<IActionResult> CreateItem(string name, int? inventoryNumber, int sectorId)
+        public async Task<IActionResult> CreateItem(string name, string? inventoryNumber, int sectorId)
         {
             Result<Item> result = new Result<Item>();
             Result<string> resToken = GetTokenFromCookies();
@@ -93,7 +94,7 @@ namespace DiplomaWebService.Controllers
                 result.ErrorCode = resToken.ErrorCode;
                 result.ErrorMessage = resToken.ErrorMessage;
                 string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-                ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
             string url = _connectionString + "items";
@@ -119,7 +120,7 @@ namespace DiplomaWebService.Controllers
                     result.ErrorCode = (int)ErrorCodes.BadRequest;
                     //result.ErrorMessage = "";
                     string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-                    ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                    ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
                     return View("/Views/Shared/Error.cshtml", errorModel);
                 }
 
@@ -129,7 +130,7 @@ namespace DiplomaWebService.Controllers
 
         [HttpPut]
         [Route("/items/{id}")]
-        public async Task<IActionResult> UpdateItem(int id, string name, int inventoryNumber, int sectorId)
+        public async Task<IActionResult> UpdateItem(int id, string name, string inventoryNumber, int sectorId)
         {
             Result<Item> result = new Result<Item>();
             Result<string> resToken = GetTokenFromCookies();
@@ -139,7 +140,7 @@ namespace DiplomaWebService.Controllers
                 result.ErrorCode = resToken.ErrorCode;
                 result.ErrorMessage = resToken.ErrorMessage;
                 string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-                ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
             string url = _connectionString + $"/items/{id}";
@@ -165,7 +166,7 @@ namespace DiplomaWebService.Controllers
                     result.ErrorCode = (int)ErrorCodes.BadRequest;
                     //result.ErrorMessage = "";
                     string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-                    ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                    ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
                     return View("/Views/Shared/Error.cshtml", errorModel);
                 }
                 return RedirectToAction("GetAllItems");

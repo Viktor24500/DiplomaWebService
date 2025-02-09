@@ -14,6 +14,8 @@ namespace DiplomaWebService.Controllers.Invoice
     {
         private ILogger<InvoiceOutController> _logger;
         private string? _connectionString;
+        private string _username = " ";
+        private char _usernameFirstLetter = ' ';
 
         public InvoiceOutController(ILogger<InvoiceOutController> logger, IConfiguration configuration)
         {
@@ -33,7 +35,7 @@ namespace DiplomaWebService.Controllers.Invoice
                 result.ErrorCode = resToken.ErrorCode;
                 result.ErrorMessage = resToken.ErrorMessage;
                 string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-                ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
             Result<string> username = GetUsernameFromSession();
@@ -43,7 +45,7 @@ namespace DiplomaWebService.Controllers.Invoice
                 result.ErrorCode = username.ErrorCode;
                 result.ErrorMessage = username.ErrorMessage;
                 string errorName = Enum.GetName(typeof(ErrorCodes), username.ErrorCode);
-                ErrorViewModel errorModel = new ErrorViewModel(errorName, username.ErrorMessage);
+                ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, username.ErrorMessage);
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
             string url = _connectionString + "invoicesOut";
@@ -67,7 +69,7 @@ namespace DiplomaWebService.Controllers.Invoice
                 result.ErrorCode = (int)ErrorCodes.BadRequest;
                 //result.ErrorMessage = "can't get all invoices";
                 string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-                ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
             Result<InvoiceOutViewModel> invoiceOutModel = await GetInvoiceOutModel(username.Data, username.Data[0], result.Data);
@@ -88,7 +90,7 @@ namespace DiplomaWebService.Controllers.Invoice
                 result.ErrorCode = resToken.ErrorCode;
                 result.ErrorMessage = resToken.ErrorMessage;
                 string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-                ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
             string url = _connectionString + "invoicesOut";
@@ -116,7 +118,7 @@ namespace DiplomaWebService.Controllers.Invoice
                 result.ErrorCode = (int)ErrorCodes.BadRequest;
                 //result.ErrorMessage = "can't get all invoices";
                 string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-                ErrorViewModel errorModel = new ErrorViewModel(errorName, result.ErrorMessage);
+                ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
                 return View("/Views/Shared/Error.cshtml", errorModel);
             }
             return RedirectToAction("GetAllInvoicesOut");
