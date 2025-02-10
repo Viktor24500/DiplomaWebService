@@ -24,24 +24,28 @@
 </div>
 <div class="users-table-content">
 	<table>
-		<tr>
-			<th hidden>itemId</th>
-			<th>Назва</th>
-			<th>Інвентарний номер</th>
-			<th hidden>sectorId</th>
-			<th>Назва служби</th>
-			<th></th>
-		</tr>
-		@for (int i = 0; i < Model.Items.Count(); i++)
-		{
+		<thead>
 			<tr>
-				<td id="itemId" hidden>@Model.Items[i].ItemId</td>
-				<td id="Name">@Model.Items[i].ItemName</td>
-				<td id="InventoryNumber">@Model.Items[i].InventoryNumber</td>
-				<td id="sectorId" hidden>@Model.Items[i].Sector.Id</td>
-				<td id="SectorName">@Model.Items[i].Sector.Name</td>
+				<th hidden>itemId</th>
+				<th>Назва</th>
+				<th>Інвентарний номер</th>
+				<th hidden>sectorId</th>
+				<th>Назва служби</th>
+				<th></th>
 			</tr>
-		}
+		</thead>
+		<tbody>
+			@for (int i = 0; i < Model.Items.Count(); i++)
+			{
+				<tr>
+					<td id="itemId" hidden>@Model.Items[i].ItemId</td>
+					<td id="Name">@Model.Items[i].ItemName</td>
+					<td id="InventoryNumber">@Model.Items[i].InventoryNumber</td>
+					<td id="sectorId" hidden>@Model.Items[i].Sector.Id</td>
+					<td id="SectorName">@Model.Items[i].Sector.Name</td>
+				</tr>
+			}
+		</tbody>
 	</table>
 </div>
 @Html.Partial("/Views/Forms/ItemForm/AddItem.cshtml", @Model.Sectors)

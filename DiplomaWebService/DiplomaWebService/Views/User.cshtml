@@ -27,32 +27,36 @@
 </div>
 <div class="users-table-content">
 	<table>
-		<tr>
-			<th hidden>Id</th>
-			<th>Логін</th>
-			<th>Ім'я</th>
-			<th>Прізвище</th>
-			<th>По-батькові</th>
-			<th>Статус</th>
-			<th>Роль</th>
-		</tr>
-		@for (int i = 0; i < Model.Users.Count(); i++)
-		{
-			<tr>
-				<td id="UserIdInTable" hidden>@Model.Users[i].Id</td>
-				<td id="UserNameInTable">@Model.Users[i].UserName</td>
-				<td id="FirstNameInTable">@Model.Users[i].FirstName</td>
-				<td id="LastNameInTable">@Model.Users[i].LastName</td>
-				<td id="FatherNameInTable">@Model.Users[i].FatherName</td>
-				<td id="UserNameInTable" class="status-@Model.Users[i].StatusDescription">@Model.Users[i].StatusDescription</td>
-				<td id="IsActiveUserInTable">@Model.Users[i].RoleName</td>
-				<td>
-					<button type="button" onclick="/users/disable/{@Model.Users[i].Id}">
-						<img src="img/trash.svg">
-					</button>
-				</td>
-			</tr>
-		}
+		<thead>
+            <tr>
+                <th hidden>Id</th>
+                <th>Логін</th>
+                <th>Ім'я</th>
+                <th>Прізвище</th>
+                <th>По-батькові</th>
+                <th>Статус</th>
+                <th>Роль</th>
+            </tr>
+		</thead>
+		<tbody>
+            @for (int i = 0; i < Model.Users.Count(); i++)
+            {
+                <tr>
+                    <td id="UserIdInTable" hidden>@Model.Users[i].Id</td>
+                    <td id="UserNameInTable">@Model.Users[i].UserName</td>
+                    <td id="FirstNameInTable">@Model.Users[i].FirstName</td>
+                    <td id="LastNameInTable">@Model.Users[i].LastName</td>
+                    <td id="FatherNameInTable">@Model.Users[i].FatherName</td>
+                    <td id="UserNameInTable" class="status-@Model.Users[i].StatusDescription">@Model.Users[i].StatusDescription</td>
+                    <td id="IsActiveUserInTable">@Model.Users[i].RoleName</td>
+                    <td>
+                        <button type="button" onclick="/users/disable/{@Model.Users[i].Id}">
+                            <img src="img/trash.svg">
+                        </button>
+                    </td>
+                </tr>
+            }
+		</tbody>
 	</table>
 </div>
 @Html.Partial("/Views/Forms/UserForm/AddUserForm.cshtml", Model.Roles)

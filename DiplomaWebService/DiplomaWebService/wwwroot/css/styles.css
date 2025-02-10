@@ -461,8 +461,6 @@ body {
 /* == Table==*/
 .users-table-content {
     margin-top: 60px;
-    overflow: auto;
-    height:667px;
 }
 
 table {
@@ -473,6 +471,11 @@ table {
     border: 16px solid var(--search-color);
     border-radius: 20px;
     width: 100%;
+}
+
+tbody {
+    overflow: auto;
+    height: calc(100vh-200px);
 }
 
 th {
@@ -506,7 +509,6 @@ td {
     background-color: var(--cta-background-color);
     color: var(--cta-text-color);
     border-radius: 16px;
-    cursor: pointer;
     gap: 10px;
     padding: 5px 12px 5px 9px;
     position: relative;
@@ -521,7 +523,6 @@ td {
     background-color: var(--cta-background-color-disabled);
     color: var(--cta-text-color);
     border-radius: 16px;
-    cursor: pointer;
     gap: 10px;
     padding: 5px 12px 5px 9px;
     position: relative;
@@ -536,7 +537,6 @@ td {
     background-color: var(--cta-background-color);
     color: var(--cta-text-color);
     border-radius: 16px;
-    cursor: pointer;
     gap: 10px;
     padding: 5px 12px 5px 9px;
     position: relative;
@@ -551,7 +551,6 @@ td {
     background-color: var(--cta-background-color-disabled);
     color: var(--cta-text-color);
     border-radius: 16px;
-    cursor: pointer;
     gap: 10px;
     padding: 5px 12px 5px 9px;
     position: relative;
@@ -622,6 +621,11 @@ td img {
 
 .user-modal-label {
     width: 220px;
+}
+
+button {
+    border: 0px;
+    cursor: pointer;
 }
 /* == /Modal==*/
 /* == /Main ==*/
