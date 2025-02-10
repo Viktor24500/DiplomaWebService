@@ -530,34 +530,6 @@ td {
     margin: 10px;
 }
 
-.status-True {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--cta-background-color);
-    color: var(--cta-text-color);
-    border-radius: 16px;
-    gap: 10px;
-    padding: 5px 12px 5px 9px;
-    position: relative;
-    width: max-content;
-    margin: 10px;
-}
-
-.status-False {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--cta-background-color-disabled);
-    color: var(--cta-text-color);
-    border-radius: 16px;
-    gap: 10px;
-    padding: 5px 12px 5px 9px;
-    position: relative;
-    width: max-content;
-    margin: 10px;
-}
-
 .td-image {
     text-align: center;
 }
