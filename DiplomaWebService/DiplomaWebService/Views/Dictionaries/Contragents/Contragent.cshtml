@@ -18,7 +18,7 @@
 			<img src="img/plus.svg">Додати
 		</button>
 		<div class="right-actions">
-			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук...">
+			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук..." onkeydown="search(this)">
 			<img src="img/filtr.svg">
 		</div>
 	</nav>
@@ -31,6 +31,7 @@
 				<th>Назва</th>
 				<th hidden>parentId</th>
 				<th>Назва головної організації</th>
+				<th>Опис</th>
 				<th>Статус</th>
 				<th></th>
 			</tr>
@@ -43,6 +44,7 @@
 					<td id="contragentNameInTable">@Model.Contragents[i].ContragentName</td>
 					<td id="parentIdInTable" hidden>@Model.Contragents[i].ParentId</td>
 					<td id="parentNameInTable">@Model.Contragents[i].ParentName</td>
+					<td id="contragentDescriptionInTable">@Model.Contragents[i].ContragentDescription</td>
 					<td id="IsActiveContragnetInTable" class="status-@Model.Contragents[i].StatusDescription">@Model.Contragents[i].StatusDescription</td>
 					<td>
 						<button type="button" onclick="/contragents/disable/{@Model.Contragents[i].ContragentId}">
