@@ -17,7 +17,7 @@
 			<img src="img/plus.svg">Додати
 		</button>
 		<div class="right-actions">
-			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук...">
+			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук..." onkeydown="searchUnits(this)>
 			<img src="img/filtr.svg">
 		</div>
 	</nav>
@@ -28,6 +28,7 @@
 			<tr>
 				<th hidden>UnitId</th>
 				<th>Назва</th>
+				<th>Опис</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -36,6 +37,7 @@
 				<tr>
 					<td id="unitId" hidden>@Model.Units[i].Id</td>
 					<td id="unitName">@Model.Units[i].Name</td>
+					<td id="unitName">@Model.Units[i].Description</td>
 				</tr>
 			}
 		</tbody>
