@@ -242,9 +242,8 @@
 			if(event.key === 'Enter') {
 				let searchValue = document.getElementById("search").value;
 				let Http = new XMLHttpRequest();
-				let url = 'Contragent' + '/searchContragents/'+searchValue;
+				let url = "/searchContragents/"+encodeURIComponent(searchValue);
 				 Http.open("GET", url);
-				 Http.setRequestHeader("Content-Type", "application/json; charset=utf-8")
 				 Http.send(); // No data needed for GET request
 
 				Http.onreadystatechange = function () {
@@ -266,9 +265,8 @@
 			if(event.key === 'Enter') {
 				let searchValue = document.getElementById("search").value;
 				let Http = new XMLHttpRequest();
-				let url = 'Unit' + '/searchUnits/'+searchValue;
+				let url = "/searchUnits/"+ encodeURIComponent(searchValue);
 				 Http.open("GET", url);
-				 Http.setRequestHeader("Content-Type", "application/json; charset=utf-8")
 				 Http.send(); // No data needed for GET request
 
 				Http.onreadystatechange = function () {
@@ -276,11 +274,6 @@
 						console.log(Http.responseText);
 
 						document.getElementById("search").value = "";
-
-						let counter = document.getElementById("counter"); // Ensure element exists
-						if (counter) {
-							counter.value = Http.responseText;
-						}
 					}
 				};
 			}

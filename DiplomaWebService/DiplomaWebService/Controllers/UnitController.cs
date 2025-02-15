@@ -168,7 +168,7 @@ namespace DiplomaWebService.Controllers
 
 		[HttpGet]
 		[Route("/searchUnits/{name}")]
-		public async Task<IActionResult> SearchUnitsByName(string search)
+		public async Task<IActionResult> SearchUnitsByName(string name)
 		{
 			Result<List<Unit>> result = new Result<List<Unit>>();
 			Result<string> resToken = GetTokenFromCookies();
@@ -191,7 +191,7 @@ namespace DiplomaWebService.Controllers
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, username.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
-			string url = _connectionString + $"/searchContragents/{search}";
+			string url = _connectionString + $"searchUnits/{name}";
 			using (HttpClient client = new HttpClient())
 			{
 				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
