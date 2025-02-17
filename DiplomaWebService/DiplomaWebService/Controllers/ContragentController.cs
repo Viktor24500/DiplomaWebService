@@ -129,8 +129,9 @@ namespace DiplomaWebService.Controllers
 
 		[HttpPost]
 		[Route("/contragents")]
-		public async Task<IActionResult> CreateContragent(string name, int? parentId, bool isActive, bool whoAmI, string? contragentDescription)
+		public async Task<IActionResult> CreateContragent(string name, int? parentId, bool isActive, string? contragentDescription)
 		{
+			bool whoAmI = false;
 			Result<Contragent> result = new Result<Contragent>();
 			Result<string> resToken = GetTokenFromCookies();
 			if (resToken.ErrorCode != (int)ErrorCodes.Success)

@@ -3,8 +3,9 @@
 *@
 @{
 }
-@using DiplomaWebService.Models;
-@model List<Sector>
+@using DiplomaWebService.Models.ViewModel
+@model ItemViewModel
+
 
 @* <div class="newItemForm">
     <form action="/items" method="post" id="addItem">
@@ -53,9 +54,9 @@
             </div>
         </div>
         <div class="user-modal-block">
-            <div class="user-modal-label">Інвентарний номер:</div>
+            <div class="user-modal-label">Номенклатурний номер:</div>
             <div class="input-field-wrapper">
-                <input type="text" class="input-field" id="inventoryNumber" name="inventoryNumber" placeholder="Інвентарний номер" value="">
+                <input type="text" class="input-field" id="nomenclatureNumber" name="nomenclatureNumber" placeholder="Номенклатурний номер" value="">
                 <div class="separator"></div>
             </div>
         </div>
@@ -63,11 +64,37 @@
             <div class="user-modal-label">Сектор:</div>
             <div class="input-field-wrapper">
                 <select class="input-field dropdown" id="sectorId" name="sectorId" required>
-                    @for (int i = 0; i < @Model.Count; i++)
+                    @for (int i = 0; i < @Model.Sectors.Count; i++)
                     {
-                        <option value="@Model[i].Id">@Model[i].Name</option>
+                        <option value="@Model.Sectors[i].Id">@Model.Sectors[i].Name</option>
                     }
                 </select>
+                <div class="separator"></div>
+            </div>
+        </div>
+        <div class="user-modal-block">
+            <div class="user-modal-label">Одиниці виміру:</div>
+            <div class="input-field-wrapper">
+                <select class="input-field dropdown" id="unitId" name="unitId" required>
+                    @for (int i = 0; i < @Model.Units.Count; i++)
+                    {
+                        <option value="@Model.Units[i].Id">@Model.Units[i].Name</option>
+                    }
+                </select>
+                <div class="separator"></div>
+            </div>
+        </div>
+        <div class="user-modal-block">
+            <div class="user-modal-label">Вага:</div>
+            <div class="input-field-wrapper">
+                <input type="number" class="input-field" id="weight" name="weight" placeholder="Вага" value="" min="0">
+                <div class="separator"></div>
+            </div>
+        </div>
+        <div class="user-modal-block">
+            <div class="user-modal-label">Штат:</div>
+            <div class="input-field-wrapper">
+                <input type="number" class="input-field" id="requiredQuantity" name="requiredQuantity" placeholder="Штат" value="" min="0">
                 <div class="separator"></div>
             </div>
         </div>

@@ -91,111 +91,54 @@
 
 	</div>
 	<script type="text/javascript">
-		var invoiceOutRowCounter = -1;
-		var invoiceInRowCounter = -1;
-		function closeModalForm() {
-			document.getElementsByClassName('modal')[0].style.display = "none";
-			invoiceOutRowCounter = -1;
-			invoiceInRowCounter = -1;
-		}
-		function openModalForm() {
-			document.getElementsByClassName('modal')[0].style.display = "block";
-		}		
-		function ReassessmentWithCoeffOpen() {
-			document.getElementById('reassessmentWithCoefForm').style.display = "block";
-		}
-		function ReassessmentWithCoeffClose() {
-			document.getElementById('reassessmentWithCoefForm').style.display = "none";
-		}
-		function ReassessmentWithoutCoeffOpen() {
-			document.getElementById('reassessmentWithoutCoefForm').style.display = "block";
-		}
-		function ReassessmentWithoutCoeffClose() {
-			document.getElementById('reassessmentWithoutCoefForm').style.display = "none";
-		}
-		function removeRow(button) {
-			button.parentElement.remove();
-		}
+				var invoiceOutRowCounter = -1;
+				var invoiceInRowCounter = -1;
+				function closeModalForm() {
+					document.getElementsByClassName('modal')[0].style.display = "none";
+					invoiceOutRowCounter = -1;
+					invoiceInRowCounter = -1;
+				}
+				function openModalForm() {
+					document.getElementsByClassName('modal')[0].style.display = "block";
+				}		
+				function ReassessmentWithCoeffOpen() {
+					document.getElementById('reassessmentWithCoefForm').style.display = "block";
+				}
+				function ReassessmentWithCoeffClose() {
+					document.getElementById('reassessmentWithCoefForm').style.display = "none";
+				}
+				function ReassessmentWithoutCoeffOpen() {
+					document.getElementById('reassessmentWithoutCoefForm').style.display = "block";
+				}
+				function ReassessmentWithoutCoeffClose() {
+					document.getElementById('reassessmentWithoutCoefForm').style.display = "none";
+				}
+				function removeRow(button) {
+					button.parentElement.remove();
+				}
 
-		function addInvoiceOutPosition() {
-			let container = document.getElementById("itemRow");
-			invoiceOutRowCounter++;
+				function addInvoiceOutPosition() {
+					let container = document.getElementById("itemRow");
+					invoiceOutRowCounter++;
 
-			var stockOptions = "";
-			var stockSelect =  document.querySelector("select[name^='StockItemId']"); // Try to get from an existing row or fallback
+					var stockOptions = "";
+					var stockSelect =  document.querySelector("select[name^='StockItemId']"); // Try to get from an existing row or fallback
 
-			if (stockSelect) {
-				stockOptions = stockSelect.innerHTML; // Copy dropdown options
-			} else {
-				console.warn("StockItemId dropdown not found! Ensure it's available in the initial form.");
-			}
+					if (stockSelect) {
+						stockOptions = stockSelect.innerHTML; // Copy dropdown options
+					} else {
+						console.warn("StockItemId dropdown not found! Ensure it's available in the initial form.");
+					}
 
-			let newRow = document.createElement("div");
-			newRow.classList.add("row-item");
+					let newRow = document.createElement("div");
+					newRow.classList.add("row-item");
 
-			newRow.innerHTML = `
-						<div class="user-modal-block">
-							<div class="user-modal-label">Майно:</div>
-							<div class="input-field-wrapper">
-								<select class="input-field dropdown" name="invoicePositions[${invoiceOutRowCounter}].StockItemId" required>
-									${stockOptions}
-								</select>
-								<div class="separator"></div>
-							</div>
-						</div>
-						<div class="user-modal-block">
-							<div class="user-modal-label">Кількість</div>
-							<div class="input-field-wrapper">
-								<input type="text" class="input-field" name="invoicePositions[${invoiceOutRowCounter}].Amount" placeholder="Кількість" required>
-								<div class="separator"></div>
-							</div>
-						</div>
-						<button type="button" class="remove-btn" onclick="removeRow(this)">❌</button>
-					`;
-
-			container.appendChild(newRow);
-		}
-
-		function addInvoiceInPosition() {
-			let container = document.getElementById("itemRow");
-			invoiceInRowCounter++;
-
-			var itemOptions = "";
-			var itemSelect =  document.querySelector("select[name^='getItemId']"); // Try to get from an existing row or fallback
-
-			if (itemSelect) {
-				itemOptions = itemSelect.innerHTML; // Copy dropdown options
-			} else {
-				console.warn("getItemId dropdown not found! Ensure it's available in the initial form.");
-			}
-
-			var unitOptions = "";
-			var unitSelect =  document.querySelector("select[name^='getUnitId']"); // Try to get from an existing row or fallback
-
-			if (unitSelect) {
-				unitOptions = unitSelect.innerHTML; // Copy dropdown options
-			} else {
-				console.warn("getUnitId dropdown not found! Ensure it's available in the initial form.");
-			}
-
-			var categoryOptions = "";
-			var categorySelect = document.querySelector("select[name^='getCategoryId']"); // Try to get from an existing row or fallback
-
-			if (categorySelect) {
-				categoryOptions = categorySelect.innerHTML; // Copy dropdown options
-			} else {
-				console.warn("getItemId dropdown not found! Ensure it's available in the initial form.");
-			}
-
-			let newRow = document.createElement("div");
-			newRow.classList.add("row-item");
-
-			newRow.innerHTML = `
+					newRow.innerHTML = `
 								<div class="user-modal-block">
 									<div class="user-modal-label">Майно:</div>
 									<div class="input-field-wrapper">
-										<select class="input-field dropdown" name="positions[${invoiceInRowCounter}].ItemId" required>
-											${itemOptions}
+										<select class="input-field dropdown" name="invoicePositions[${invoiceOutRowCounter}].StockItemId" required>
+											${stockOptions}
 										</select>
 										<div class="separator"></div>
 									</div>
@@ -203,81 +146,151 @@
 								<div class="user-modal-block">
 									<div class="user-modal-label">Кількість</div>
 									<div class="input-field-wrapper">
-										<input type="text" class="input-field" name="positions[${invoiceInRowCounter}].Amount" placeholder="Кількість" required>
-										<div class="separator"></div>
-									</div>
-								</div>
-								<div class="user-modal-block">
-									<div class="user-modal-label">Ціна</div>
-									<div class="input-field-wrapper">
-										<input type="text" class="input-field" name="positions[${invoiceInRowCounter}].Price" placeholder="Ціна" required>
-										<div class="separator"></div>
-									</div>
-								</div>
-								<div class="user-modal-block">
-									<div class="user-modal-label">Одиниці виміру:</div>
-									<div class="input-field-wrapper">
-										<select class="input-field dropdown" name="positions[${invoiceInRowCounter}].UnitId" required>
-											${unitOptions}
-										</select>
-										<div class="separator"></div>
-									</div>
-								</div>
-								<div class="user-modal-block">
-									<div class="user-modal-label">Категорія:</div>
-									<div class="input-field-wrapper">
-										<select class="input-field dropdown" name="positions[${invoiceInRowCounter}].CategoryId" required>
-											${categoryOptions}
-										</select>
+										<input type="text" class="input-field" name="invoicePositions[${invoiceOutRowCounter}].Amount" placeholder="Кількість" required>
 										<div class="separator"></div>
 									</div>
 								</div>
 								<button type="button" class="remove-btn" onclick="removeRow(this)">❌</button>
 							`;
 
-			container.appendChild(newRow);
-		}
+					container.appendChild(newRow);
+				}
 
-		function searchContragents(event) {
-			if(event.key === 'Enter') {
-				let searchValue = document.getElementById("search").value;
-				let Http = new XMLHttpRequest();
-				let url = "/searchContragents/"+encodeURIComponent(searchValue);
-				 Http.open("GET", url);
-				 Http.send(); // No data needed for GET request
+				function addInvoiceInPosition() {
+					let container = document.getElementById("itemRow");
+					invoiceInRowCounter++;
 
-				Http.onreadystatechange = function () {
-					if (Http.readyState === 4 && Http.status === 200) {
-						console.log(Http.responseText);
+					var itemOptions = "";
+					var itemSelect =  document.querySelector("select[name^='getItemId']"); // Try to get from an existing row or fallback
 
-						document.getElementById("search").value = "";
+					if (itemSelect) {
+						itemOptions = itemSelect.innerHTML; // Copy dropdown options
+					} else {
+						console.warn("getItemId dropdown not found! Ensure it's available in the initial form.");
+					}
 
-						let counter = document.getElementById("counter"); // Ensure element exists
-						if (counter) {
-							counter.value = Http.responseText;
+					var unitOptions = "";
+					var unitSelect =  document.querySelector("select[name^='getUnitId']"); // Try to get from an existing row or fallback
+
+					if (unitSelect) {
+						unitOptions = unitSelect.innerHTML; // Copy dropdown options
+					} else {
+						console.warn("getUnitId dropdown not found! Ensure it's available in the initial form.");
+					}
+
+					var categoryOptions = "";
+					var categorySelect = document.querySelector("select[name^='getCategoryId']"); // Try to get from an existing row or fallback
+
+					if (categorySelect) {
+						categoryOptions = categorySelect.innerHTML; // Copy dropdown options
+					} else {
+						console.warn("getItemId dropdown not found! Ensure it's available in the initial form.");
+					}
+
+					let newRow = document.createElement("div");
+					newRow.classList.add("row-item");
+
+					newRow.innerHTML = `
+										<div class="user-modal-block">
+											<div class="user-modal-label">Майно:</div>
+											<div class="input-field-wrapper">
+												<select class="input-field dropdown" name="positions[${invoiceInRowCounter}].ItemId" required>
+													${itemOptions}
+												</select>
+												<div class="separator"></div>
+											</div>
+										</div>
+										<div class="user-modal-block">
+											<div class="user-modal-label">Кількість</div>
+											<div class="input-field-wrapper">
+												<input type="text" class="input-field" name="positions[${invoiceInRowCounter}].Amount" placeholder="Кількість" required>
+												<div class="separator"></div>
+											</div>
+										</div>
+										<div class="user-modal-block">
+											<div class="user-modal-label">Ціна</div>
+											<div class="input-field-wrapper">
+												<input type="text" class="input-field" name="positions[${invoiceInRowCounter}].Price" placeholder="Ціна" required>
+												<div class="separator"></div>
+											</div>
+										</div>
+										<div class="user-modal-block">
+											<div class="user-modal-label">Одиниці виміру:</div>
+											<div class="input-field-wrapper">
+												<select class="input-field dropdown" name="positions[${invoiceInRowCounter}].UnitId" required>
+													${unitOptions}
+												</select>
+												<div class="separator"></div>
+											</div>
+										</div>
+										<div class="user-modal-block">
+											<div class="user-modal-label">Категорія:</div>
+											<div class="input-field-wrapper">
+												<select class="input-field dropdown" name="positions[${invoiceInRowCounter}].CategoryId" required>
+													${categoryOptions}
+												</select>
+												<div class="separator"></div>
+											</div>
+										</div>
+										<button type="button" class="remove-btn" onclick="removeRow(this)">❌</button>
+									`;
+
+					container.appendChild(newRow);
+				}
+
+				function searchContragents(event) {
+					if(event.key === 'Enter') {
+						let searchValue = document.getElementById("search").value;
+						let Http = new XMLHttpRequest();
+						let url = "/searchContragents/"+encodeURIComponent(searchValue);
+						 Http.open("GET", url);
+						 Http.send(); // No data needed for GET request
+
+						Http.onreadystatechange = function () {
+							if (Http.readyState === 4 && Http.status === 200) {
+								console.log(Http.responseText);
+
+								document.getElementById("search").value = "";
+							}
+						};
+					}
+				}
+
+				function searchItems(event) {
+				if(event.key === 'Enter') {
+					let searchValue = document.getElementById("search").value;
+					let Http = new XMLHttpRequest();
+					let url = "/searchItems/"+encodeURIComponent(searchValue);
+						Http.open("GET", url);
+						Http.send(); // No data needed for GET request
+
+					Http.onreadystatechange = function () {
+						if (Http.readyState === 4 && Http.status === 200) {
+							console.log(Http.responseText);
+
+							document.getElementById("search").value = "";
 						}
-					}
-				};
+					};
+				}
 			}
-		}
 
-		function searchUnits(event) {
-			if(event.key === 'Enter') {
-				let searchValue = document.getElementById("search").value;
-				let Http = new XMLHttpRequest();
-				let url = "/searchUnits/"+ encodeURIComponent(searchValue);
-				 Http.open("GET", url);
-				 Http.send(); // No data needed for GET request
+			function searchUnits(event) {
+				if(event.key === 'Enter') {
+					let searchValue = document.getElementById("search").value;
+					let Http = new XMLHttpRequest();
+					let url = "/searchUnits/"+ encodeURIComponent(searchValue);
+						Http.open("GET", url);
+						Http.send(); // No data needed for GET request
 
-				Http.onreadystatechange = function () {
-					if (Http.readyState === 4 && Http.status === 200) {
-						console.log(Http.responseText);
+					Http.onreadystatechange = function () {
+						if (Http.readyState === 4 && Http.status === 200) {
+							console.log(Http.responseText);
 
-						document.getElementById("search").value = "";
-					}
-				};
+							document.getElementById("search").value = "";
+						}
+					};
+				}
 			}
-		}
 	</script>
 </body>
 </html>

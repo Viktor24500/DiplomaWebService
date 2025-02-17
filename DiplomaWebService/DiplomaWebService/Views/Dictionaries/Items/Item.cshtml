@@ -17,7 +17,7 @@
 			<img src="img/plus.svg">Додати
 		</button>
 		<div class="right-actions">
-			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук...">
+			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук..." onkeydown="searchItems(event)"
 			<img src="img/filtr.svg">
 		</div>
 	</nav>
@@ -28,9 +28,13 @@
 			<tr>
 				<th hidden>itemId</th>
 				<th>Назва</th>
-				<th>Інвентарний номер</th>
+				<th>Номенклатурний номер</th>
+				<th hidden>unitId</th>
+				<th>Одиниці виміру</th>
 				<th hidden>sectorId</th>
 				<th>Назва служби</th>
+				<th>Штат</th>
+				<th>Вага</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -38,13 +42,17 @@
 			{
 				<tr>
 					<td id="itemId" hidden>@Model.Items[i].ItemId</td>
-					<td id="Name">@Model.Items[i].ItemName</td>
-					<td id="InventoryNumber">@Model.Items[i].InventoryNumber</td>
+					<td id="name">@Model.Items[i].ItemName</td>
+					<td id="inventoryNumber">@Model.Items[i].NomenclatureNumber</td>
+					<td id="unitId" hidden>@Model.Items[i].Unit.Id</td>
+					<td id="unitName">@Model.Items[i].Unit.Name</td>
 					<td id="sectorId" hidden>@Model.Items[i].Sector.Id</td>
-					<td id="SectorName">@Model.Items[i].Sector.Name</td>
+					<td id="sectorName">@Model.Items[i].Sector.Name</td>
+					<td id="reuiredQuantity">@Model.Items[i].RequiredQuantity</td>
+					<td id="weight">@Model.Items[i].Weight</td>
 				</tr>
 			}
 		</tbody>
 	</table>
 </div>
-@Html.Partial("/Views/Forms/ItemForm/AddItem.cshtml", @Model.Sectors)
+@Html.Partial("/Views/Forms/ItemForm/AddItem.cshtml", @Model)
