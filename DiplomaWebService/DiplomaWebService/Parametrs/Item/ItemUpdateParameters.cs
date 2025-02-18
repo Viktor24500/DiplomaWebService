@@ -3,7 +3,7 @@
 	public class ItemUpdateParameters
 	{
 		public ItemUpdateParameters(int itemId, string itemName, int sectorId, string? nomenclatureNumber, decimal? weight,
-			 decimal? requiredQuantity, int unitId)
+			 decimal? requiredQuantity, int unitId, string? description)
 		{
 			ItemId = itemId;
 			ItemName = itemName;
@@ -12,6 +12,7 @@
 			Weight = weight;
 			RequiredQuantity = requiredQuantity;
 			UnitId = unitId;
+			Description = description;
 		}
 		public int ItemId { get; set; }
 		public string ItemName { get; set; }
@@ -25,5 +26,7 @@
 		public decimal? RequiredQuantity { get; set; }
 
 		public int UnitId { get; set; }
+
+		public string? Description { get; set; }
 	}
 }

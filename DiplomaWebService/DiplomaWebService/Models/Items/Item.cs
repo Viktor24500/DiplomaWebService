@@ -3,7 +3,8 @@
 	public class Item
 	{
 		public Item(int itemId, string itemName, string? nomenclatureNumber,
-			   Sector sector, decimal? weight, decimal? requiredQuantity, Unit unit)
+			decimal? weight, decimal? requiredQuantity, string? description,
+			 Sector sector, Unit unit)
 		{
 			ItemId = itemId;
 			ItemName = itemName;
@@ -12,6 +13,7 @@
 			Weight = weight;
 			RequiredQuantity = requiredQuantity;
 			Unit = unit;
+			Description = description;
 		}
 		public int ItemId { get; set; }
 		public string ItemName { get; set; }
@@ -23,6 +25,8 @@
 		public decimal? Weight { get; set; }
 
 		public decimal? RequiredQuantity { get; set; }
+
+		public string? Description { get; set; }
 
 		public Unit Unit { get; set; }
 	}

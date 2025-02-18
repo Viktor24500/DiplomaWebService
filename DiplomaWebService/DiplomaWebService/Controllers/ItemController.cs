@@ -85,7 +85,7 @@ namespace DiplomaWebService.Controllers
 		[HttpPost]
 		[Route("/items")]
 		public async Task<IActionResult> CreateItem(string name, string? nomenclatureNumber, int sectorId, decimal? weight,
-			decimal? requiredQuantity, int unitId)
+			decimal? requiredQuantity, int unitId, string? description)
 		{
 			Result<Item> result = new Result<Item>();
 			Result<string> resToken = GetTokenFromCookies();
@@ -102,7 +102,7 @@ namespace DiplomaWebService.Controllers
 			using (HttpClient client = new HttpClient())
 			{
 				ItemCreateParameters itemCreateParam = new ItemCreateParameters(name, sectorId, nomenclatureNumber, weight, requiredQuantity,
-					unitId);
+					unitId, description);
 				JsonContent content = JsonContent.Create(itemCreateParam);
 
 				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
@@ -133,7 +133,7 @@ namespace DiplomaWebService.Controllers
 		[HttpPut]
 		[Route("/items/{id}")]
 		public async Task<IActionResult> UpdateItem(int id, string name, string inventoryNumber, int sectorId, decimal? weight,
-			decimal? requiredQuantity, int unitId)
+			decimal? requiredQuantity, int unitId, string? description)
 		{
 			Result<Item> result = new Result<Item>();
 			Result<string> resToken = GetTokenFromCookies();
@@ -150,7 +150,7 @@ namespace DiplomaWebService.Controllers
 			using (HttpClient client = new HttpClient())
 			{
 				ItemUpdateParameters itemUpdateParam = new ItemUpdateParameters(id, name, sectorId, inventoryNumber, weight, requiredQuantity,
-					unitId);
+					unitId, description);
 				JsonContent content = JsonContent.Create(itemUpdateParam);
 
 				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
