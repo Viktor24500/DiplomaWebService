@@ -38,23 +38,41 @@
 				<th>Опис</th>
 			</tr>
 		</thead>
-		<tbody>
-			@for (int i = 0; i < Model.Items.Count(); i++)
-			{
-				<tr>
-					<td id="itemId" hidden>@Model.Items[i].ItemId</td>
-					<td id="name">@Model.Items[i].ItemName</td>
-					<td id="inventoryNumber">@Model.Items[i].NomenclatureNumber</td>
-					<td id="unitId" hidden>@Model.Items[i].Unit.Id</td>
-					<td id="unitName">@Model.Items[i].Unit.Name</td>
-					<td id="sectorId" hidden>@Model.Items[i].Sector.Id</td>
-					<td id="sectorName">@Model.Items[i].Sector.Name</td>
-					<td id="reuiredQuantity">@Model.Items[i].RequiredQuantity</td>
-					<td id="weight">@Model.Items[i].Weight</td>
-					<td id="description">@Model.Items[i].Description</td>
-				</tr>
-			}
-		</tbody>
 	</table>
+	<div class="scroll">
+		<table>
+			<thead>
+				<tr>
+					<th hidden>itemId</th>
+					<th>Назва</th>
+					<th>Номенклатурний номер</th>
+					<th hidden>unitId</th>
+					<th>Одиниці виміру</th>
+					<th hidden>sectorId</th>
+					<th>Назва служби</th>
+					<th>Штат</th>
+					<th>Вага</th>
+					<th>Опис</th>
+				</tr>
+			</thead>
+			<tbody>
+				@for (int i = 0; i < Model.Items.Count(); i++)
+				{
+					<tr>
+						<td id="itemId" hidden>@Model.Items[i].ItemId</td>
+						<td id="name">@Model.Items[i].ItemName</td>
+						<td id="inventoryNumber">@Model.Items[i].NomenclatureNumber</td>
+						<td id="unitId" hidden>@Model.Items[i].Unit.Id</td>
+						<td id="unitName">@Model.Items[i].Unit.Name</td>
+						<td id="sectorId" hidden>@Model.Items[i].Sector.Id</td>
+						<td id="sectorName">@Model.Items[i].Sector.Name</td>
+						<td id="reuiredQuantity">@Model.Items[i].RequiredQuantity</td>
+						<td id="weight">@Model.Items[i].Weight</td>
+						<td id="description">@Model.Items[i].Description</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
 </div>
 @Html.Partial("/Views/Forms/ItemForm/AddItem.cshtml", @Model)

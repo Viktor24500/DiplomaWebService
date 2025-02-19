@@ -64,7 +64,7 @@ namespace DiplomaWebService.Controllers
 			if (result.ErrorCode != (int)ErrorCodes.Success)
 			{
 				_logger.LogError(result.ErrorMessage);
-				result.ErrorCode = (int)ErrorCodes.BadRequest;
+				//result.ErrorCode = (int)ErrorCodes.BadRequest;
 				//result.ErrorMessage = "can't get all units";
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
@@ -110,7 +110,7 @@ namespace DiplomaWebService.Controllers
 				if (result.ErrorCode != (int)ErrorCodes.Success)
 				{
 					_logger.LogError(result.ErrorMessage);
-					result.ErrorCode = (int)ErrorCodes.BadRequest;
+					//result.ErrorCode = (int)ErrorCodes.BadRequest;
 					//result.ErrorMessage = "";
 					string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 					ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
@@ -155,7 +155,7 @@ namespace DiplomaWebService.Controllers
 				if (result.ErrorCode != (int)ErrorCodes.Success)
 				{
 					_logger.LogError(result.ErrorMessage);
-					result.ErrorCode = (int)ErrorCodes.BadRequest;
+					//result.ErrorCode = (int)ErrorCodes.BadRequest;
 					//result.ErrorMessage = "";
 					string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 					ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);

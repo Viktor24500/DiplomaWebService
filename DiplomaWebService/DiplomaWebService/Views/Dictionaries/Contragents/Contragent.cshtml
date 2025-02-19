@@ -23,28 +23,29 @@
 		</div>
 	</nav>
 </div>
-<div class="users-table-content">
+<div class="users-table-content my-agent-table">
 	<table>
+		<tr>
+			<td id="myAgentName">Моя в/ч: </td>
 		@for (int i = 0; i < @Model.Contragents.Count(); i++)
 		{
 			if (@Model.Contragents[i].WhoAmI == true)
 			{
-				<tr>
+				
 					<td id="contragentIdInTable" hidden>@Model.Contragents[i].ContragentId</td>
 					<td id="contragentNameInTable">@Model.Contragents[i].ContragentName</td>
-					<td id="parentIdInTable" hidden>@Model.Contragents[i].ParentId</td>
-					<td id="parentNameInTable">@Model.Contragents[i].ParentName</td>
-					<td id="contragentDescriptionInTable">@Model.Contragents[i].ContragentDescription</td>
-					<td id="IsActiveContragnetInTable" class="status-@Model.Contragents[i].StatusDescription">@Model.Contragents[i].StatusDescription</td>
 					@* 					<td>
 						<button type="button" onclick="/contragents/disable/{@Model.Contragents[i].ContragentId}">
 							<img src="img/trash.svg">
 						</button>
 					</td> *@
-				</tr>
+				
 			}
 		}
+		</tr>
 	</table>
+</div>
+<div>
 	<table>
 		<thead>
 			<tr>
@@ -57,27 +58,42 @@
 				@* <th></th> *@
 			</tr>
 		</thead>
-		<tbody>
-			@for (int i = 0; i < @Model.Contragents.Count(); i++)
-			{
-				if (@Model.Contragents[i].WhoAmI==false)
+	</table>
+	<div class="scroll">
+		<table>
+			<thead hidden>
+				<tr hidden>
+					<th hidden>contragentId</th>
+					<th>Назва</th>
+					<th hidden>parentId</th>
+					<th>Назва головної організації</th>
+					<th>Опис</th>
+					<th>Статус</th>
+					@* <th></th> *@
+				</tr>
+			</thead>
+			<tbody>
+				@for (int i = 0; i < @Model.Contragents.Count(); i++)
 				{
-					<tr style="background-color:lightgreen;">
-						<td id="contragentIdInTable" hidden>@Model.Contragents[i].ContragentId</td>
-						<td id="contragentNameInTable">@Model.Contragents[i].ContragentName</td>
-						<td id="parentIdInTable" hidden>@Model.Contragents[i].ParentId</td>
-						<td id="parentNameInTable">@Model.Contragents[i].ParentName</td>
-						<td id="contragentDescriptionInTable">@Model.Contragents[i].ContragentDescription</td>
-						<td id="IsActiveContragnetInTable" class="status-@Model.Contragents[i].StatusDescription">@Model.Contragents[i].StatusDescription</td>
-						@* 					<td>
+					if (@Model.Contragents[i].WhoAmI == false)
+					{
+						<tr>
+							<td id="contragentIdInTable" hidden>@Model.Contragents[i].ContragentId</td>
+							<td id="contragentNameInTable">@Model.Contragents[i].ContragentName</td>
+							<td id="parentIdInTable" hidden>@Model.Contragents[i].ParentId</td>
+							<td id="parentNameInTable">@Model.Contragents[i].ParentName</td>
+							<td id="contragentDescriptionInTable">@Model.Contragents[i].ContragentDescription</td>
+							<td id="IsActiveContragnetInTable" class="status-@Model.Contragents[i].StatusDescription">@Model.Contragents[i].StatusDescription</td>
+							@* 					<td>
 						<button type="button" onclick="/contragents/disable/{@Model.Contragents[i].ContragentId}">
 							<img src="img/trash.svg">
 						</button>
 					</td> *@
-					</tr>
+						</tr>
+					}
 				}
-			}
-		</tbody>
-	</table>
+			</tbody>
+		</table>
+	</div>
 </div>
 @Html.Partial("/Views/Forms/ContragentForm/AddContragent.cshtml", Model)

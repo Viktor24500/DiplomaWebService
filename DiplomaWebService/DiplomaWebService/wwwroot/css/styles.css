@@ -209,7 +209,8 @@ body {
 
 /* == Sidebar ==*/
 .logo-container {
-    padding-left: 20px;
+    /*padding-left: 20px;*/
+    padding-left: 1px;
     color: var(--cta-background-color);
 }
 
@@ -463,6 +464,10 @@ body {
     margin-top: 60px;
 }
 
+.my-agent-table{
+    margin-bottom: 20px;
+}
+
 table {
     text-align: left;
     border-collapse: separate;
@@ -473,9 +478,11 @@ table {
     width: 100%;
 }
 
-tbody {
+.scroll{
     overflow: auto;
-    height: calc(100vh-200px);
+    height: calc(100vh - 200px);
+    /*height: 50px;*/
+    /*max-height:50px;*/
 }
 
 th {
