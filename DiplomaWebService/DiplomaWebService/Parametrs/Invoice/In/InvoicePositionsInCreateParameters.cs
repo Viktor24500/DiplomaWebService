@@ -14,7 +14,9 @@
 		public int ItemId { get; set; }
 		public decimal Amount { get; set; }
 		public decimal Price { get; set; }
-		public int UnitId { get; set; }
+		//public int UnitId { get; set; }
 		public int CategoryId { get; set; }
+		public string? SerialNumber { get; set; }
+		public DateTime? ProductionYear { get; set; }
 	}
 }

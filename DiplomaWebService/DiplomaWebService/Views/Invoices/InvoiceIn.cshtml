@@ -67,6 +67,8 @@
                                 <tr>
                                     <th hidden>Item Id</th>
                                     <th>Назва</th>
+                                    <th>Серійний номер</th>
+                                    <th>Рік випуску</th>
                                     <th>Кількість</th>
                                     <th>Ціна</th>
                                     <th hidden>Unit Id</th>
@@ -83,6 +85,8 @@
                                         <td>@position.Item.ItemName</td>
                                         <td>@position.Amount</td>
                                         <td>@position.Price</td>
+                                        <td hidden>@position.SerialNumber</td>
+                                        <td>@position.ProductionYear</td>
                                         <td hidden>@position.Unit.Id</td>
                                         <td>@position.Unit.Name</td>
                                         <td hidden>@position.Category.Id</td>

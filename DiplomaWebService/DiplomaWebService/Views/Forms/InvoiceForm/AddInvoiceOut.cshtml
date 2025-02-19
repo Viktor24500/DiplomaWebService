@@ -56,7 +56,10 @@
                 <select class="input-field dropdown" id="senderId" name="senderId" required>
                     @for (int i = 0; i < @Model.Contragents.Count; i++)
                     {
-                        <option value="@Model.Contragents[i].ContragentId">@Model.Contragents[i].ContragentName</option>
+                        if (@Model.Contragents[i].WhoAmI == true)
+                        {
+                            <option value="@Model.Contragents[i].ContragentId" disabled>@Model.Contragents[i].ContragentName</option>
+                        }
                     }
                 </select>
                 <div class="separator"></div>

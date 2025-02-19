@@ -215,21 +215,37 @@
 												<div class="separator"></div>
 											</div>
 										</div>
-										<div class="user-modal-block">
-											<div class="user-modal-label">Одиниці виміру:</div>
-											<div class="input-field-wrapper">
-												<select class="input-field dropdown" name="positions[${invoiceInRowCounter}].UnitId" required>
-													${unitOptions}
-												</select>
-												<div class="separator"></div>
-											</div>
-										</div>
+										// <div class="user-modal-block">
+										// 	<div class="user-modal-label">Одиниці виміру:</div>
+										// 	<div class="input-field-wrapper">
+										// 		<select class="input-field dropdown" name="positions[${invoiceInRowCounter}].UnitId" required>
+										// 			${unitOptions}
+										// 		</select>
+										// 		<div class="separator"></div>
+										// 	</div>
+										// </div>
 										<div class="user-modal-block">
 											<div class="user-modal-label">Категорія:</div>
 											<div class="input-field-wrapper">
 												<select class="input-field dropdown" name="positions[${invoiceInRowCounter}].CategoryId" required>
 													${categoryOptions}
 												</select>
+												<div class="separator"></div>
+											</div>
+										</div>
+										<div class="user-modal-block">
+										<div class="user-modal-label">Серійний номер:</div>
+											<div class="input-field-wrapper">
+												<input type="text" class="input-field" name="positions[${invoiceInRowCounter}].SerialNumber" placeholder="Серійний номер">
+												<div class="separator"></div>
+											</div>
+										</div>
+										<div class="user-modal-block">
+											<div class="user-modal-label">Рік випуску:</div>
+											<div class="input-field-wrapper">
+												<input type="datetime-local" class="input-field" name="positions[${invoiceInRowCounter}].ProductionYear"
+												placeholder="Рік випуску" value="${new Date().toISOString().slice(0, 16)}"
+												min="2000-06-07T00:00" max="2050-12-14T00:00">
 												<div class="separator"></div>
 											</div>
 										</div>

@@ -44,7 +44,10 @@
                 <select class="input-field dropdown" id="destinationId" name="destinationId" required>
                     @for (int i = 0; i < @Model.Contragents.Count; i++)
                     {
-                        <option value="@Model.Contragents[i].ContragentId">@Model.Contragents[i].ContragentName</option>
+                        if (@Model.Contragents[i].WhoAmI==true)
+                        {
+                            <option value="@Model.Contragents[i].ContragentId" disabled>@Model.Contragents[i].ContragentName</option>
+                        }
                     }
                 </select>
                 <div class="separator"></div>
@@ -94,12 +97,12 @@
                 {
                     <option value="@Model.Items[i].ItemId">
                         @Model.Items[i].ItemName (@Model.Items[i].NomenclatureNumber
-                        @Model.Items[i].Sector.Name)
+                        @Model.Items[i].Sector.Name @Model.Items[i].Unit.Name)
                     </option>
                 }
             </select>
         </div>
-        <div id="unitOptionsContainer" style="display: none;">
+@*         <div id="unitOptionsContainer" style="display: none;">
             <select class="input-field dropdown" id="getUnitId" name="getUnitId" required>
                 @for (int i = 0; i < @Model.Units.Count; i++)
                 {
@@ -108,9 +111,9 @@
                     </option>
                 }
             </select>
-        </div>
+        </div> *@
         <div id="categoryOptionsContainer" style="display: none;">
-            <select class="input-field dropdown" id="getCategoriesId" name="getCategoriesId" required>
+            <select class="input-field dropdown" id="getCategoryId" name="getCategoryId" required>
                 @for (int i = 0; i < @Model.Categories.Count; i++)
                 {
                     <option value="@Model.Categories[i].Id">
@@ -118,6 +121,12 @@
                     </option>
                 }
             </select>
+        </div>
+        <div class="serialNumberContainer" style="display: none;">
+            <input type="text" class="input-field" id="serialNumber" name="serialNumber" placeholder="Серійний номер" value="">
+        </div>
+        <div class="productionYear" style="display: none;">
+            <input type="datetime-local" class="input-field" id="productionYear" name="productionYear" placeholder="Рік випуску" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" min="2018-06-07T00:00" max="2026-06-14T00:00">
         </div>
     </div>
     <div class="user-modal-footer">
