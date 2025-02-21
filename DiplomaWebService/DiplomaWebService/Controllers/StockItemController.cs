@@ -81,6 +81,66 @@ namespace DiplomaWebService.Controllers
 			return View("/Views/StockItem.cshtml", resStockItemViewModel.Data);
 		}
 
+		[HttpGet]
+		[Route("/stockItemsByContragentId")]
+		public async Task<IActionResult> GetAllStockItemsByContragentId(int contragentId)
+		{
+			Result<List<StockItem>> result = new Result<List<StockItem>>();
+			Result<string> resToken = GetTokenFromCookies();
+			if (resToken.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(resToken.ErrorMessage);
+				result.ErrorCode = resToken.ErrorCode;
+				result.ErrorMessage = resToken.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			Result<string> username = GetUsernameFromSession();
+			if (username.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(username.ErrorMessage);
+				result.ErrorCode = username.ErrorCode;
+				result.ErrorMessage = username.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), username.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, username.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			string url = _connectionString + "stockItemsByContragentId/{contragentId}";
+			using (HttpClient client = new HttpClient())
+			{
+				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
+				HttpResponseMessage responseMessage = await client.GetAsync(url);
+				if (responseMessage.IsSuccessStatusCode)
+				{
+					result.Data = await responseMessage.Content.ReadFromJsonAsync<List<StockItem>>();
+				}
+				else
+				{
+					result.ErrorCode = (int)responseMessage.StatusCode;
+					result.ErrorMessage = await responseMessage.Content.ReadAsStringAsync();
+				}
+			}
+			if (result.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(result.ErrorMessage);
+				result.ErrorCode = (int)ErrorCodes.BadRequest;
+				//result.ErrorMessage = "can't get all stock items";
+				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			Result<StockItemViewModel> resStockItemViewModel = await CreateViewModel(username.Data, username.Data[0], result.Data);
+			if (resStockItemViewModel.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(resStockItemViewModel.ErrorMessage);
+				string errorName = Enum.GetName(typeof(ErrorCodes), resStockItemViewModel.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, resStockItemViewModel.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			return View("/Views/StockItem.cshtml", resStockItemViewModel.Data);
+		}
+
 		[HttpPost]
 		[Route("/stockItemsReassessWithoutCoeff")]
 		public async Task<ActionResult> ReassessWithoutCoeff(int stockItemId, decimal newPrice, string documentNumber,
