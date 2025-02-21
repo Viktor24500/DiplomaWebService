@@ -105,10 +105,26 @@
 				function ReassessmentWithCoeffOpen() {
 					document.getElementById('reassessmentWithCoefForm').style.display = "block";
 				}
+				function AddInvoiceFormClose() {
+					let form = document.getElementById("addInvoiceInForm");
+
+					if (form) {
+						form.reset(); // Reset all form fields to their default values
+					}
+
+					let itemRowContainer = document.getElementById("itemRow");
+					if (itemRowContainer) {
+						itemRowContainer.innerHTML = ""; // Remove dynamically added rows
+					}
+
+					document.getElementById("addInvoiceInForm").style.display = "none"; // Hide the modal
+				}
 				function ReassessmentWithCoeffClose() {
 					document.getElementById('reassessmentWithCoefForm').style.display = "none";
 				}
-				function ReassessmentWithoutCoeffOpen() {
+				function ReassessmentWithoutCoeffOpen(stockItemId, displayText) {
+					document.getElementById('stockItemId').value=stockItemId;
+					document.getElementById('displayText').value=displayText;
 					document.getElementById('reassessmentWithoutCoefForm').style.display = "block";
 				}
 				function ReassessmentWithoutCoeffClose() {
@@ -123,10 +139,10 @@
 					invoiceOutRowCounter++;
 
 					var stockOptions = "";
-					var stockSelect =  document.querySelector("select[name^='StockItemId']"); // Try to get from an existing row or fallback
+					var stockSelect =  document.querySelector("select[name^='StockItemId']");
 
 					if (stockSelect) {
-						stockOptions = stockSelect.innerHTML; // Copy dropdown options
+						stockOptions = stockSelect.innerHTML;
 					} else {
 						console.warn("StockItemId dropdown not found! Ensure it's available in the initial form.");
 					}
@@ -162,28 +178,28 @@
 					invoiceInRowCounter++;
 
 					var itemOptions = "";
-					var itemSelect =  document.querySelector("select[name^='getItemId']"); // Try to get from an existing row or fallback
+					var itemSelect =  document.querySelector("select[name^='getItemId']");
 
 					if (itemSelect) {
-						itemOptions = itemSelect.innerHTML; // Copy dropdown options
+						itemOptions = itemSelect.innerHTML;
 					} else {
 						console.warn("getItemId dropdown not found! Ensure it's available in the initial form.");
 					}
 
 					var unitOptions = "";
-					var unitSelect =  document.querySelector("select[name^='getUnitId']"); // Try to get from an existing row or fallback
+					var unitSelect =  document.querySelector("select[name^='getUnitId']");
 
 					if (unitSelect) {
-						unitOptions = unitSelect.innerHTML; // Copy dropdown options
+						unitOptions = unitSelect.innerHTML;
 					} else {
 						console.warn("getUnitId dropdown not found! Ensure it's available in the initial form.");
 					}
 
 					var categoryOptions = "";
-					var categorySelect = document.querySelector("select[name^='getCategoryId']"); // Try to get from an existing row or fallback
+					var categorySelect = document.querySelector("select[name^='getCategoryId']");
 
 					if (categorySelect) {
-						categoryOptions = categorySelect.innerHTML; // Copy dropdown options
+						categoryOptions = categorySelect.innerHTML;
 					} else {
 						console.warn("getItemId dropdown not found! Ensure it's available in the initial form.");
 					}
@@ -204,14 +220,14 @@
 										<div class="user-modal-block">
 											<div class="user-modal-label">Кількість</div>
 											<div class="input-field-wrapper">
-												<input type="text" class="input-field" name="positions[${invoiceInRowCounter}].Amount" placeholder="Кількість" required>
+												<input type="number" class="input-field" name="positions[${invoiceInRowCounter}].Amount" placeholder="Кількість" required>
 												<div class="separator"></div>
 											</div>
 										</div>
 										<div class="user-modal-block">
 											<div class="user-modal-label">Ціна</div>
 											<div class="input-field-wrapper">
-												<input type="text" class="input-field" name="positions[${invoiceInRowCounter}].Price" placeholder="Ціна" required>
+												<input type="number" class="input-field" name="positions[${invoiceInRowCounter}].Price" placeholder="Ціна" required>
 												<div class="separator"></div>
 											</div>
 										</div>
@@ -243,9 +259,7 @@
 										<div class="user-modal-block">
 											<div class="user-modal-label">Рік випуску:</div>
 											<div class="input-field-wrapper">
-												<input type="datetime-local" class="input-field" name="positions[${invoiceInRowCounter}].ProductionYear"
-												placeholder="Рік випуску" value="${new Date().toISOString().slice(0, 16)}"
-												min="2000-06-07T00:00" max="2050-12-14T00:00">
+												<input type="number" class="input-field" name="positions[${invoiceInRowCounter}].ProductionYear" placeholder="Рік випуску" min="1900">
 												<div class="separator"></div>
 											</div>
 										</div>

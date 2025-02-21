@@ -20,15 +20,11 @@
         <div class="user-modal-block">
             <div class="user-modal-label">Майно</div>
             <div class="input-field-wrapper">
-                <select class="input-field dropdown" id="stockItemId" name="stockItemId" required>
-                    @for (int i = 0; i < @Model.StockItems.Count; i++)
-                    {
-                        <option value="@Model.StockItems[i].StockItemId">
-                            @Model.StockItems[i].Item.ItemName (@Model.StockItems[i].Category.Name
-                            @Model.StockItems[i].Price, @Model.StockItems[i].AllAmount, @Model.StockItems[i].Unit.Name)
-                        </option>                        
-                    }
-                </select>
+                <div class="input-field-wrapper">
+                    <input type="text" class="input-field" id="stockItemId" name="displayText" placeholder="Майно" value="" disabled>
+                    <input type="text" class="input-field" id="stockItemId" name="stockItemId" placeholder="Майно" value="" hidden>
+                    <div class="separator"></div>
+                </div>
                 <div class="separator"></div>
             </div>
         </div>

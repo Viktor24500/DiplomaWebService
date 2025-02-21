@@ -20,11 +20,11 @@
         <div class="user-modal-block">
             <div class="user-modal-label">Майно</div>
             <div class="input-field-wrapper">
-                <select class="input-field dropdown" id="stockItemId" name="stockItemId" required>
-                    @for (int i = 0; i < @Model.StockItems.Count; i++)
+                <select class="input-field dropdown" id="sectorId" name="sectorId" required>
+                    @for (int i = 0; i < @Model.Sectors.Count; i++)
                     {
-                        <option value="@Model.StockItems[i].StockItemId">@Model.StockItems[i].Item.ItemName (@Model.StockItems[i].Category.Name
-                            @Model.StockItems[i].Price, @Model.StockItems[i].AllAmount, @Model.StockItems[i].Unit.Name)
+                        <option value="@Model.Sectors[i].Id">
+                            @Model.Sectors[i].Name (@Model.Sectors[i].ShortSectorName)
                         </option>                        
                     }
                 </select>

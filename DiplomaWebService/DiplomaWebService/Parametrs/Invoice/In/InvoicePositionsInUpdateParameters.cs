@@ -3,7 +3,7 @@
 	public class InvoicePositionsInUpdateParameters
 	{
 		public InvoicePositionsInUpdateParameters(int id, int invoiceId, int itemId, decimal amount,
-	decimal price, int unitId, int categoryId, string? serialNumber, DateTime? productionYear)
+	decimal price, int unitId, int categoryId, string? serialNumber, int? productionYear)
 		{
 			Id = id;
 			InvoiceId = invoiceId;
@@ -24,6 +24,6 @@
 		public int UnitId { get; set; }
 		public int CategoryId { get; set; }
 		public string? SerialNumber { get; set; }
-		public DateTime? ProductionYear { get; set; }
+		public int? ProductionYear { get; set; }
 	}
 }

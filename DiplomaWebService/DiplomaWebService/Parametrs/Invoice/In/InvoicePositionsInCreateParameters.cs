@@ -17,6 +17,6 @@
 		//public int UnitId { get; set; }
 		public int CategoryId { get; set; }
 		public string? SerialNumber { get; set; }
-		public DateTime? ProductionYear { get; set; }
+		public int? ProductionYear { get; set; }
 	}
 }

@@ -17,10 +17,7 @@
 	<nav class="nav">
 		<button type="add-user" class="btn btn-add-user" onclick="ReassessmentWithCoeffOpen()">
 			<img src="img/reevaluation.svg">Коефіціент
-		</button>
-		<button type="add-user" class="btn btn-add-user" onclick="ReassessmentWithoutCoeffOpen()">
-			<img src="img/reevaluation1.svg">Переоцінка
-		</button>
+		</button>		
 		<div class="right-actions">
 			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук...">
 			<img src="img/filtr.svg">
@@ -32,14 +29,17 @@
 		<thead>
 			<tr>
 				<th hidden>stockItemId</th>
-				<th>Кількість</th>
 				<th hidden>ItemId</th>
 				<th>Майно</th>
-				<th hidden>CategoryId</th>
-				<th>Категорія</th>
+				<th>Номенклатурний номер</th>
+				<th>Рік випуску</th>
 				<th hidden>UnitId</th>
 				<th>Одиниця виміру</th>
+				<th hidden>CategoryId</th>
+				<th>Категорія</th>
 				<th>Ціна</th>
+				<th>Кількість</th>	
+				<th></th>
 			</tr>
 		<thead>
 		<tbody>
@@ -47,14 +47,21 @@
 			{
 				<tr>
 					<td id="stockItemId" hidden>@Model.StockItems[i].StockItemId</td>
-					<td id="Amount">@Model.StockItems[i].AllAmount</td>
 					<td id="ItemId" hidden><label>@Model.StockItems[i].Item.ItemId</label></td>
 					<td id="ItemName">@Model.StockItems[i].Item.ItemName</td>
-					<td id="CategoryId" hidden>@Model.StockItems[i].Category.Id</td>
-					<td id="CategoryName">@Model.StockItems[i].Category.Name</td>
+					<td id="ItemName">@Model.StockItems[i].Item.NomenclatureNumber</td>
+					<td id="ItemName">@Model.StockItems[i].ProductionYear</td>
 					<td id="UnitId" hidden>@Model.StockItems[i].Unit.Id</td>
 					<td id="UnitName">@Model.StockItems[i].Unit.Name</td>
+					<td id="CategoryId" hidden>@Model.StockItems[i].Category.Id</td>
+					<td id="CategoryName">@Model.StockItems[i].Category.Name</td>
 					<td id="Price">@Model.StockItems[i].Price</td>
+					<td id="Amount">@Model.StockItems[i].AllAmount</td>
+					<td>
+						<button type="add-user" class="btn btn-add-user" onclick="ReassessmentWithoutCoeffOpen('@Model.StockItems[i].StockItemId','@Model.StockItems[i].Item.ItemName,@Model.StockItems[i].Unit.Name,@Model.StockItems[i].Category.Name, @Model.StockItems[i].Price'))">
+							<img src="img/reevaluation1.svg">Переоцінка
+						</button>
+					</td>
 				</tr>
 			}
 		</tbody>			

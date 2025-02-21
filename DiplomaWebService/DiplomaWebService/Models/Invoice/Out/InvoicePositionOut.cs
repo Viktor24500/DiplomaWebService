@@ -5,7 +5,7 @@ namespace DiplomaWebService.Models.Invoice.Out
 	public class InvoicePositionOut
 	{
 		public InvoicePositionOut(int id, int invoiceId, Item item, decimal amount,
-			decimal price, Unit unit, Category category, string? serialNumber, DateTime? productionYear)
+			decimal price, Unit unit, Category category, string? serialNumber, int? productionYear)
 		{
 			Id = id;
 			InvoiceId = invoiceId;
@@ -26,6 +26,6 @@ namespace DiplomaWebService.Models.Invoice.Out
 		public Unit Unit { get; set; }
 		public Category Category { get; set; }
 		public string? SerialNumber { get; set; }
-		public DateTime? ProductionYear { get; set; }
+		public int? ProductionYear { get; set; }
 	}
 }
