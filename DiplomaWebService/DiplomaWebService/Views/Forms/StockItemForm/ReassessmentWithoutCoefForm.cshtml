@@ -20,18 +20,15 @@
         <div class="user-modal-block">
             <div class="user-modal-label">Майно</div>
             <div class="input-field-wrapper">
-                <div class="input-field-wrapper">
-                    <input type="text" class="input-field" id="stockItemId" name="displayText" placeholder="Майно" value="" disabled>
-                    <input type="text" class="input-field" id="stockItemId" name="stockItemId" placeholder="Майно" value="" hidden>
-                    <div class="separator"></div>
-                </div>
+                <input type="text" class="input-field" id="displayText" name="displayText" placeholder="Майно" disabled>         
                 <div class="separator"></div>
+                <input type="text" class="input-field" id="showStockItemId" name="stockItemId" placeholder="DisplayId" readonly hidden>
             </div>
         </div>
         <div class="user-modal-block">
             <div class="user-modal-label">Нова ціна:</div>
             <div class="input-field-wrapper">
-                <input type="number" class="input-field" id="newPrice" name="newPrice" placeholder="Нова ціна" required>
+                <input type="number" class="input-field" id="newPrice" name="newPrice" placeholder="Нова ціна" step="10e-10" required>
                 <div class="separator"></div>
             </div>
         </div>

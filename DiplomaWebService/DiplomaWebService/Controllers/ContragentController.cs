@@ -14,6 +14,7 @@ namespace DiplomaWebService.Controllers
 		private string? _connectionString;
 		private string _username = " ";
 		private char _usernameFirstLetter = ' ';
+		private int _roleId = (int)Roles.Viewer;
 
 		public ContragentController(ILogger<ContragentController> logger, IConfiguration configuration)
 		{
@@ -33,7 +34,7 @@ namespace DiplomaWebService.Controllers
 				result.ErrorCode = resToken.ErrorCode;
 				result.ErrorMessage = resToken.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			Result<string> username = GetUsernameFromSession();
@@ -43,7 +44,17 @@ namespace DiplomaWebService.Controllers
 				result.ErrorCode = username.ErrorCode;
 				result.ErrorMessage = username.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), username.ErrorCode);
-				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, username.ErrorMessage);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, username.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			Result<int> roleId = GetRoleIdFromSession();
+			if (username.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(roleId.ErrorMessage);
+				result.ErrorCode = roleId.ErrorCode;
+				result.ErrorMessage = roleId.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), roleId.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, roleId.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			string url = _connectionString + "contragents";
@@ -67,10 +78,10 @@ namespace DiplomaWebService.Controllers
 				result.ErrorCode = (int)ErrorCodes.BadRequest;
 				//result.ErrorMessage = "Can't get all contragents";
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
-			ContragentViewModel model = CreateViewModel(username.Data, username.Data[0], result.Data);
+			ContragentViewModel model = CreateViewModel(username.Data, username.Data[0], roleId.Data, result.Data);
 			return View("/Views/Dictionaries/Contragents/Contragent.cshtml", model);
 		}
 
@@ -86,7 +97,7 @@ namespace DiplomaWebService.Controllers
 				result.ErrorCode = resToken.ErrorCode;
 				result.ErrorMessage = resToken.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			Result<string> username = GetUsernameFromSession();
@@ -96,7 +107,17 @@ namespace DiplomaWebService.Controllers
 				result.ErrorCode = username.ErrorCode;
 				result.ErrorMessage = username.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), username.ErrorCode);
-				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, username.ErrorMessage);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, username.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			Result<int> roleId = GetRoleIdFromSession();
+			if (username.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(roleId.ErrorMessage);
+				result.ErrorCode = roleId.ErrorCode;
+				result.ErrorMessage = roleId.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), roleId.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, roleId.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			string url = _connectionString + $"searchContragents/{name}";
@@ -120,10 +141,10 @@ namespace DiplomaWebService.Controllers
 				result.ErrorCode = (int)ErrorCodes.BadRequest;
 				//result.ErrorMessage = "Can't get all contragents";
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
-			ContragentViewModel model = CreateViewModel(username.Data, username.Data[0], result.Data);
+			ContragentViewModel model = CreateViewModel(username.Data, username.Data[0], roleId.Data, result.Data);
 			return View("/Views/Dictionaries/Contragents/Contragent.cshtml", model);
 		}
 
@@ -140,7 +161,7 @@ namespace DiplomaWebService.Controllers
 				result.ErrorCode = resToken.ErrorCode;
 				result.ErrorMessage = resToken.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			ContragentCreateParameters contragentCreateParam = new ContragentCreateParameters(parentId, name, isActive, contragentDescription,
@@ -168,7 +189,7 @@ namespace DiplomaWebService.Controllers
 				result.ErrorCode = (int)ErrorCodes.BadRequest;
 				//result.ErrorMessage = "";
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 
@@ -187,7 +208,7 @@ namespace DiplomaWebService.Controllers
 				result.ErrorCode = resToken.ErrorCode;
 				result.ErrorMessage = resToken.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			string url = _connectionString + $"/contragents/{id}";
@@ -213,7 +234,7 @@ namespace DiplomaWebService.Controllers
 					result.ErrorCode = (int)ErrorCodes.BadRequest;
 					//result.ErrorMessage = "";
 					string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-					ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
+					ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
 					return View("/Views/Shared/Error.cshtml", errorModel);
 				}
 
@@ -237,9 +258,9 @@ namespace DiplomaWebService.Controllers
 			result.Data = token;
 			return result;
 		}
-		private ContragentViewModel CreateViewModel(string username, char usernameFirstLetter, List<Contragent> contragents)
+		private ContragentViewModel CreateViewModel(string username, char usernameFirstLetter, int roleId, List<Contragent> contragents)
 		{
-			ContragentViewModel model = new ContragentViewModel(usernameFirstLetter, username, contragents);
+			ContragentViewModel model = new ContragentViewModel(usernameFirstLetter, username, roleId, contragents);
 			return model;
 		}
 		private Result<string> GetUsernameFromSession()
@@ -255,6 +276,23 @@ namespace DiplomaWebService.Controllers
 			else
 			{
 				result.Data = username;
+			}
+			return result;
+		}
+
+		private Result<int> GetRoleIdFromSession()
+		{
+			Result<int> result = new Result<int>();
+			int? roleId = HttpContext.Session.GetInt32("RoleId");
+			if (!roleId.HasValue)
+			{
+				result.ErrorMessage = "Can't get roleId from session";
+				result.ErrorCode = (int)ErrorCodes.BadRequest;
+				_logger.LogError(result.ErrorMessage);
+			}
+			else
+			{
+				result.Data = roleId.Value;
 			}
 			return result;
 		}

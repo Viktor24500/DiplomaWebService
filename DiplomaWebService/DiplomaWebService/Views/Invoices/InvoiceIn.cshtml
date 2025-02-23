@@ -3,6 +3,7 @@
 *@
 @{
 }
+@using DiplomaWebService.Common.Enum
 @using DiplomaWebService.Models.ViewModel.Invoice;
 @model InvoiceInViewModel
 <div class="app-content">
@@ -15,9 +16,12 @@
 		</div>
 	</div>
 	<nav class="nav">
-        <button type="add-user" class="btn btn-add-user" onclick="openModalForm()">
-            <img src="img/plus.svg">Додати
-		</button>
+        @if(@Model.RoleId!=(int)Roles.Viewer)
+		{
+            <button type="add-user" class="btn btn-add-user" onclick="openModalForm()">
+                <img src="img/plus.svg">Додати
+		    </button>
+        }
 		<div class="right-actions">
 			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук...">
 			<img src="img/filtr.svg">
@@ -30,7 +34,7 @@
             <tr>
                 <th hidden>Invoice Id</th>
                 <th>Дата</th>
-                <th>Ромер</th>
+                <th>Номер</th>
                 <th hidden>Destination Id</th>
                 <th>Відправник</th>
                 <th hidden>Sender Id</th>

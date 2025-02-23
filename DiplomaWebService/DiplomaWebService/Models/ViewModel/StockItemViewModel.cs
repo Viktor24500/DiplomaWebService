@@ -2,7 +2,8 @@
 {
 	public class StockItemViewModel : BaseViewModel
 	{
-		public StockItemViewModel(char usernameFirstLetter, string username, List<StockItem> stockItems, List<Sector> sectors) : base(usernameFirstLetter, username)
+		public StockItemViewModel(char usernameFirstLetter, string username, int roleId, List<StockItem> stockItems, List<Sector> sectors) :
+			base(usernameFirstLetter, username, roleId)
 		{
 			StockItems = stockItems;
 			Sectors = sectors;

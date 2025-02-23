@@ -14,6 +14,7 @@ namespace DiplomaWebService.Controllers
 		private string? _connectionString;
 		private string _username = " ";
 		private char _usernameFirstLetter = ' ';
+		private int _roleId = (int)Roles.Viewer;
 
 		public StockItemController(ILogger<StockItemController> logger, IConfiguration configuration)
 		{
@@ -33,7 +34,7 @@ namespace DiplomaWebService.Controllers
 				result.ErrorCode = resToken.ErrorCode;
 				result.ErrorMessage = resToken.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			Result<string> username = GetUsernameFromSession();
@@ -43,7 +44,17 @@ namespace DiplomaWebService.Controllers
 				result.ErrorCode = username.ErrorCode;
 				result.ErrorMessage = username.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), username.ErrorCode);
-				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, username.ErrorMessage);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, username.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			Result<int> roleId = GetRoleIdFromSession();
+			if (username.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(roleId.ErrorMessage);
+				result.ErrorCode = roleId.ErrorCode;
+				result.ErrorMessage = roleId.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), roleId.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, roleId.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			string url = _connectionString + "stockItems";
@@ -67,15 +78,15 @@ namespace DiplomaWebService.Controllers
 				result.ErrorCode = (int)ErrorCodes.BadRequest;
 				//result.ErrorMessage = "can't get all stock items";
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
-			Result<StockItemViewModel> resStockItemViewModel = await CreateViewModel(username.Data, username.Data[0], result.Data);
+			Result<StockItemViewModel> resStockItemViewModel = await CreateViewModel(username.Data, username.Data[0], roleId.Data, result.Data);
 			if (resStockItemViewModel.ErrorCode != (int)ErrorCodes.Success)
 			{
 				_logger.LogError(resStockItemViewModel.ErrorMessage);
 				string errorName = Enum.GetName(typeof(ErrorCodes), resStockItemViewModel.ErrorCode);
-				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, resStockItemViewModel.ErrorMessage);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, resStockItemViewModel.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			return View("/Views/StockItem.cshtml", resStockItemViewModel.Data);
@@ -93,7 +104,7 @@ namespace DiplomaWebService.Controllers
 				result.ErrorCode = resToken.ErrorCode;
 				result.ErrorMessage = resToken.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			Result<string> username = GetUsernameFromSession();
@@ -103,7 +114,17 @@ namespace DiplomaWebService.Controllers
 				result.ErrorCode = username.ErrorCode;
 				result.ErrorMessage = username.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), username.ErrorCode);
-				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, username.ErrorMessage);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, username.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			Result<int> roleId = GetRoleIdFromSession();
+			if (username.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(roleId.ErrorMessage);
+				result.ErrorCode = roleId.ErrorCode;
+				result.ErrorMessage = roleId.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), roleId.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, roleId.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			string url = _connectionString + "stockItemsByContragentId/{contragentId}";
@@ -127,15 +148,15 @@ namespace DiplomaWebService.Controllers
 				result.ErrorCode = (int)ErrorCodes.BadRequest;
 				//result.ErrorMessage = "can't get all stock items";
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
-			Result<StockItemViewModel> resStockItemViewModel = await CreateViewModel(username.Data, username.Data[0], result.Data);
+			Result<StockItemViewModel> resStockItemViewModel = await CreateViewModel(username.Data, username.Data[0], roleId.Data, result.Data);
 			if (resStockItemViewModel.ErrorCode != (int)ErrorCodes.Success)
 			{
 				_logger.LogError(resStockItemViewModel.ErrorMessage);
 				string errorName = Enum.GetName(typeof(ErrorCodes), resStockItemViewModel.ErrorCode);
-				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, resStockItemViewModel.ErrorMessage);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, resStockItemViewModel.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			return View("/Views/StockItem.cshtml", resStockItemViewModel.Data);
@@ -154,7 +175,7 @@ namespace DiplomaWebService.Controllers
 				result.ErrorCode = resToken.ErrorCode;
 				result.ErrorMessage = resToken.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			ReassessmentWithoutCoeffParameters param = new ReassessmentWithoutCoeffParameters(stockItemId, newPrice, documentNumber,
@@ -181,7 +202,7 @@ namespace DiplomaWebService.Controllers
 					result.ErrorCode = (int)ErrorCodes.BadRequest;
 					//result.ErrorMessage = "";
 					string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-					ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
+					ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
 					return View("/Views/Shared/Error.cshtml", errorModel);
 				}
 
@@ -202,7 +223,7 @@ namespace DiplomaWebService.Controllers
 				result.ErrorCode = resToken.ErrorCode;
 				result.ErrorMessage = resToken.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			ReassessmentWithCoeffParameters param = new ReassessmentWithCoeffParameters(sectorId, coeff, documentNumber,
@@ -230,7 +251,7 @@ namespace DiplomaWebService.Controllers
 					result.ErrorCode = (int)ErrorCodes.BadRequest;
 					//result.ErrorMessage = "";
 					string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
-					ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, errorName, result.ErrorMessage);
+					ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
 					return View("/Views/Shared/Error.cshtml", errorModel);
 				}
 
@@ -248,7 +269,7 @@ namespace DiplomaWebService.Controllers
 			result.Data = token;
 			return result;
 		}
-		private async Task<Result<StockItemViewModel>> CreateViewModel(string username, char usernameFirstLetter, List<StockItem> stockItems)
+		private async Task<Result<StockItemViewModel>> CreateViewModel(string username, char usernameFirstLetter, int roleId, List<StockItem> stockItems)
 		{
 			Result<StockItemViewModel> result = new Result<StockItemViewModel>();
 			//get list sector
@@ -284,7 +305,7 @@ namespace DiplomaWebService.Controllers
 				return result;
 			}
 
-			result.Data = new StockItemViewModel(usernameFirstLetter, username, stockItems, resultSector.Data);
+			result.Data = new StockItemViewModel(usernameFirstLetter, username, roleId, stockItems, resultSector.Data);
 			return result;
 		}
 		private Result<string> GetUsernameFromSession()
@@ -300,6 +321,22 @@ namespace DiplomaWebService.Controllers
 			else
 			{
 				result.Data = username;
+			}
+			return result;
+		}
+		private Result<int> GetRoleIdFromSession()
+		{
+			Result<int> result = new Result<int>();
+			int? roleId = HttpContext.Session.GetInt32("RoleId");
+			if (!roleId.HasValue)
+			{
+				result.ErrorMessage = "Can't get roleId from session";
+				result.ErrorCode = (int)ErrorCodes.BadRequest;
+				_logger.LogError(result.ErrorMessage);
+			}
+			else
+			{
+				result.Data = roleId.Value;
 			}
 			return result;
 		}

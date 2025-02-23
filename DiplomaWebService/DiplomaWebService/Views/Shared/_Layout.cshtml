@@ -1,4 +1,5 @@
 ﻿@using DiplomaWebService.Models.ViewModel
+@using DiplomaWebService.Common.Enum
 @model BaseViewModel;
 <!DOCTYPE html>
 <html lang="en">
@@ -63,14 +64,17 @@
 							<a title="Property" class="accordion-content sidebar-menu-text" href="/items">Майно</a>
 							<a title="Units" class="accordion-content sidebar-menu-text" href="/units">Одиниці виміру</a>
 						</li>
-						<li class="nav-ul-item nav-ul-item--active">
-							<a title="Administration" class="sidebar-link" href="/users">
-								<div class="small-icon-container">
-									<img src="img/admin.svg">
-								</div>
-								<div class="sidebar-link-text">Адміністрування</div>
-							</a>
-						</li>
+						@if(@Model.RoleId!=(int)Roles.Admin)
+						{
+							<li class="nav-ul-item nav-ul-item--active">
+								<a title="Administration" class="sidebar-link" href="/users">
+									<div class="small-icon-container">
+										<img src="img/admin.svg">
+									</div>
+									<div class="sidebar-link-text">Адміністрування</div>
+								</a>
+							</li>
+						}						
 					</ul>
 				</nav>
 				<div class="user-info-wrapper">
@@ -120,14 +124,25 @@
 					document.getElementById("addInvoiceInForm").style.display = "none"; // Hide the modal
 				}
 				function ReassessmentWithCoeffClose() {
+					let form = document.getElementById("reassessmentWithCoefForm");
+
+					if (form) {
+						form.reset();
+					}
 					document.getElementById('reassessmentWithCoefForm').style.display = "none";
 				}
-				function ReassessmentWithoutCoeffOpen(stockItemId, displayText) {
-					document.getElementById('stockItemId').value=stockItemId;
+				function ReassessmentWithoutCoeffOpen(stockId, displayText) {
+					document.getElementById('showStockItemId').value=stockId;
 					document.getElementById('displayText').value=displayText;
 					document.getElementById('reassessmentWithoutCoefForm').style.display = "block";
 				}
 				function ReassessmentWithoutCoeffClose() {
+					let form = document.getElementById("reassessmentWithoutCoefForm");
+
+					if (form) {
+						form.reset();
+					}
+
 					document.getElementById('reassessmentWithoutCoefForm').style.display = "none";
 				}
 				function removeRow(button) {
