@@ -16,11 +16,17 @@
         </div>
     </div>
     <nav class="nav">
-        @if (@Model.RoleId != (int)Roles.Viewer)
+        @if (Model.RoleId == (int)Roles.Viewer)
         {
-            <button type="add-user" class="btn btn-add-user" onclick="openModalForm()">
+            <button type="button" class="btn btn-add-user" onclick="openModalForm()" disabled>
                 <img src="img/plus.svg">Додати
-        </button>
+            </button>
+        }
+        else
+        {
+            <button type="button" class="btn btn-add-user" onclick="openModalForm()">
+                <img src="img/plus.svg">Додати
+            </button>
         }
 		<div class="right-actions">
 			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук...">

@@ -52,7 +52,7 @@ namespace DiplomaWebService.Controllers.Invoice
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			Result<int> roleId = GetRoleIdFromSession();
-			if (username.ErrorCode != (int)ErrorCodes.Success)
+			if (roleId.ErrorCode != (int)ErrorCodes.Success)
 			{
 				_logger.LogError(roleId.ErrorMessage);
 				result.ErrorCode = roleId.ErrorCode;

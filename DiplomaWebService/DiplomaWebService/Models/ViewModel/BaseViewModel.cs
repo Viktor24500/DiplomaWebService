@@ -6,6 +6,7 @@
 		{
 			UsernameFirstLetter = usernameFirstLetter;
 			Username = username;
+			RoleId = roleId;
 		}
 		public char UsernameFirstLetter { get; set; }
 		public string Username { get; set; }

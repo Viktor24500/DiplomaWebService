@@ -31,9 +31,15 @@
         </div>
     </div>
     <nav class="nav">
-        @if (@Model.RoleId != (int)Roles.Viewer)
+        @if (Model.RoleId == (int)Roles.Viewer)
         {
-            <button type="add-sector" class="btn btn-add-user" onclick="openModalForm('addSectorForm')">
+            <button type="button" class="btn btn-add-user" onclick="openModalForm('addSectorForm')" disabled>
+                <img src="img/plus.svg">Додати
+            </button>
+        }
+        else
+        {
+            <button type="button" class="btn btn-add-user" onclick="openModalForm('addSectorForm')">
                 <img src="img/plus.svg">Додати
             </button>
         }

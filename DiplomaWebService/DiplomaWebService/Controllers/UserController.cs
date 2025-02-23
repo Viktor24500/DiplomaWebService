@@ -66,7 +66,7 @@ namespace DiplomaWebService.Controllers
 			CookieOptions cookieOptions = new CookieOptions();
 			cookieOptions.Expires = result.Data.TokenExpiration;
 			HttpContext.Session.SetString("Username", username);
-			HttpContext.Session.SetString("RoleId", result.Data.RoleId.ToString());
+			HttpContext.Session.SetInt32("RoleId", result.Data.RoleId);
 			HttpContext.Response.Cookies.Append("token", result.Data.Token, cookieOptions);
 
 			BaseViewModel model = CreateBaseViewModel(username, username[0], result.Data.RoleId);
@@ -167,7 +167,7 @@ namespace DiplomaWebService.Controllers
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			Result<int> roleId = GetRoleIdFromSession();
-			if (username.ErrorCode != (int)ErrorCodes.Success)
+			if (roleId.ErrorCode != (int)ErrorCodes.Success)
 			{
 				_logger.LogError(roleId.ErrorMessage);
 				result.ErrorCode = roleId.ErrorCode;

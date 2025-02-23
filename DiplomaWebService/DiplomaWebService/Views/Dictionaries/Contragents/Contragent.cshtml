@@ -15,7 +15,13 @@
 		</div>
 	</div>
 	<nav class="nav">
-		@if (@Model.RoleId != (int)Roles.Viewer)
+		@if (@Model.RoleId == (int)Roles.Viewer)
+		{
+			<button type="add-user" class="btn btn-add-user" onclick="openModalForm('addContragent')" disabled>
+				<img src="img/plus.svg">Додати
+			</button>
+		}
+		else
 		{
 			<button type="add-user" class="btn btn-add-user" onclick="openModalForm('addContragent')">
 				<img src="img/plus.svg">Додати

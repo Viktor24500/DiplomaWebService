@@ -64,7 +64,7 @@
 							<a title="Property" class="accordion-content sidebar-menu-text" href="/items">Майно</a>
 							<a title="Units" class="accordion-content sidebar-menu-text" href="/units">Одиниці виміру</a>
 						</li>
-						@if(@Model.RoleId!=(int)Roles.Admin)
+						@if(@Model.RoleId==(int)Roles.Admin)
 						{
 							<li class="nav-ul-item nav-ul-item--active">
 								<a title="Administration" class="sidebar-link" href="/users">
