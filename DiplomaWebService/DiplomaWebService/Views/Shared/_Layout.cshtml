@@ -111,8 +111,6 @@
 				var invoiceInRowCounter = -1;
 				function closeModalForm() {
 					document.getElementsByClassName("modal")[0].style.display = "none";
-					invoiceOutRowCounter = -1;
-					invoiceInRowCounter = -1;
 				}
 				function openModalForm() {
 					document.getElementsByClassName("modal")[0].style.display = "block";
@@ -123,17 +121,30 @@
 				function ReassessmentWithCoeffOpen() {
 					document.getElementById("reassessmentWithCoefForm").style.display = "block";
 				}
-				function AddInvoiceFormClose() {
-					let form = document.getElementById("addInvoiceInForm");
-
-					if (form) {
-						form.reset(); // Reset all form fields to their default values
-					}
+				function AddInvoiceOutFormClose() {
+					document.getElementById("invoiceNumber").value="";
 
 					let itemRowContainer = document.getElementById("itemRow");
 					if (itemRowContainer) {
 						itemRowContainer.innerHTML = ""; // Remove dynamically added rows
 					}
+
+					invoiceOutRowCounter = -1;
+					invoiceInRowCounter = -1;
+
+					document.getElementById("addInvoiceOutForm").style.display = "none"; // Hide the modal
+				}
+
+				function AddInvoiceInFormClose() {
+					document.getElementById("invoiceNumber").value="";
+
+					let itemRowContainer = document.getElementById("itemRow");
+					if (itemRowContainer) {
+						itemRowContainer.innerHTML = ""; // Remove dynamically added rows
+					}
+
+					invoiceOutRowCounter = -1;
+					invoiceInRowCounter = -1;
 
 					document.getElementById("addInvoiceInForm").style.display = "none"; // Hide the modal
 				}
@@ -181,8 +192,8 @@
 
 					newRow.innerHTML = `
 								<div class="user-modal-block">
-									<div class="user-modal-label">Майно:</div>
-									<div class="input-field-wrapper">
+									<div class="user-modal-label">Майно: *</div>
+									<div class="input-field-wrapper input-field-wrapper-invoice-in-out">
 										<select class="input-field dropdown" name="invoicePositions[${invoiceOutRowCounter}].StockItemId" required>
 											${stockOptions}
 										</select>
@@ -190,8 +201,8 @@
 									</div>
 								</div>
 								<div class="user-modal-block">
-									<div class="user-modal-label">Кількість</div>
-									<div class="input-field-wrapper">
+									<div class="user-modal-label">Кількість: *</div>
+									<div class="input-field-wrapper input-field-wrapper-invoice-in-out">
 										<input type="text" class="input-field" name="invoicePositions[${invoiceOutRowCounter}].Amount" placeholder="Кількість" required>
 										<div class="separator"></div>
 									</div>
@@ -239,7 +250,7 @@
 					newRow.innerHTML = `
 										<div class="user-modal-block">
 											<div class="user-modal-label">Майно:</div>
-											<div class="input-field-wrapper">
+											<div class="input-field-wrapper input-field-wrapper-invoice-in-out">
 												<select class="input-field dropdown" name="positions[${invoiceInRowCounter}].ItemId" required>
 													${itemOptions}
 												</select>
@@ -248,30 +259,21 @@
 										</div>
 										<div class="user-modal-block">
 											<div class="user-modal-label">Кількість</div>
-											<div class="input-field-wrapper">
+											<div class="input-field-wrapper input-field-wrapper-invoice-in-out">
 												<input type="number" class="input-field" name="positions[${invoiceInRowCounter}].Amount" placeholder="Кількість" required>
 												<div class="separator"></div>
 											</div>
 										</div>
 										<div class="user-modal-block">
 											<div class="user-modal-label">Ціна</div>
-											<div class="input-field-wrapper">
+											<div class="input-field-wrapper input-field-wrapper-invoice-in-out">
 												<input type="number" class="input-field" name="positions[${invoiceInRowCounter}].Price" placeholder="Ціна" required>
 												<div class="separator"></div>
 											</div>
 										</div>
-										// <div class="user-modal-block">
-										// 	<div class="user-modal-label">Одиниці виміру:</div>
-										// 	<div class="input-field-wrapper">
-										// 		<select class="input-field dropdown" name="positions[${invoiceInRowCounter}].UnitId" required>
-										// 			${unitOptions}
-										// 		</select>
-										// 		<div class="separator"></div>
-										// 	</div>
-										// </div>
 										<div class="user-modal-block">
 											<div class="user-modal-label">Категорія:</div>
-											<div class="input-field-wrapper">
+											<div class="input-field-wrapper input-field-wrapper-invoice-in-out">
 												<select class="input-field dropdown" name="positions[${invoiceInRowCounter}].CategoryId" required>
 													${categoryOptions}
 												</select>
@@ -280,14 +282,14 @@
 										</div>
 										<div class="user-modal-block">
 										<div class="user-modal-label">Серійний номер:</div>
-											<div class="input-field-wrapper">
+											<div class="input-field-wrapper input-field-wrapper-invoice-in-out">
 												<input type="text" class="input-field" name="positions[${invoiceInRowCounter}].SerialNumber" placeholder="Серійний номер">
 												<div class="separator"></div>
 											</div>
 										</div>
 										<div class="user-modal-block">
 											<div class="user-modal-label">Рік випуску:</div>
-											<div class="input-field-wrapper">
+											<div class="input-field-wrapper input-field-wrapper-invoice-in-out">
 												<input type="number" class="input-field" name="positions[${invoiceInRowCounter}].ProductionYear" placeholder="Рік випуску" min="1900">
 												<div class="separator"></div>
 											</div>

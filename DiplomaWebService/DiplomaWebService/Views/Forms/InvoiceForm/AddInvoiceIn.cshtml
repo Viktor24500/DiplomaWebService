@@ -5,9 +5,9 @@
 @{
 }
 @model InvoiceInViewModel
-<form action="/invoiceIn" method="post" class="modal" id="addInvoiceInForm">
+<form action="/invoiceIn" method="post" class="modal invoice-in-out-form" id="addInvoiceInForm">
     <div class="user-modal-header">
-        <button class="small-icon-container close-btn" onclick="AddInvoiceFormClose()">
+        <button class="small-icon-container close-btn" type="button" onclick="AddInvoiceInFormClose()">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M2.05808 15.59C1.1359 15.59 0.405029 14.8587 0.405029 13.9188C0.405029 13.501 0.579034 13.0832 0.90962 12.7698L5.64237 8.01742L0.90962 3.28238C0.579034 2.96907 0.405029 2.55127 0.405029 2.13348C0.405029 1.19342 1.1359 0.479631 2.05808 0.479631C2.54525 0.479631 2.92799 0.636408 3.24127 0.949721L7.99132 5.68477L12.7588 0.932288C13.1068 0.601542 13.4723 0.444885 13.942 0.444885C14.8642 0.444885 15.595 1.17599 15.595 2.09862C15.595 2.53384 15.421 2.91677 15.0905 3.26495L10.3577 8.01742L15.0905 12.7523C15.4036 13.0832 15.5776 13.4836 15.5776 13.9188C15.5776 14.8587 14.8468 15.59 13.9073 15.59C13.4374 15.59 13.0372 15.4159 12.7067 15.1026L7.99132 10.3849L3.276 15.1026C2.96284 15.4333 2.54525 15.59 2.05808 15.59Z" fill="#768B63" />
             </svg>
@@ -19,28 +19,28 @@
     <div class="user-modal-content">
         <div class="user-modal-block">
             <div class="user-modal-label" hidden>Id:</div>
-            <div class="input-field-wrapper">
+            <div class="input-field-wrapper input-field-wrapper-invoice-in-out">
                 <input type="number" class="input-field hidden" id="invoiceId" name="Id" placeholder="Id" hidden required>
                 <div class="separator" hidden></div>
             </div>
         </div>
         <div class="user-modal-block">
             <div class="user-modal-label">Дата накладної:</div>
-            <div class="input-field-wrapper">
+            <div class="input-field-wrapper input-field-wrapper-invoice-in-out">
                 <input type="datetime-local" class="input-field" id="invoiceDate" name="InvoiceDate" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" min="2018-06-07T00:00" max="2026-06-14T00:00" required>
                 <div class="separator"></div>
             </div>
         </div>
         <div class="user-modal-block">
             <div class="user-modal-label">Номер:</div>
-            <div class="input-field-wrapper">
+            <div class="input-field-wrapper input-field-wrapper-invoice-in-out">
                 <input type="text" class="input-field" id="invoiceNumber" name="Number" placeholder="Номер" required>
                 <div class="separator"></div>
             </div>
         </div>
         <div class="user-modal-block">
             <div class="user-modal-label">Призначення:</div>
-            <div class="input-field-wrapper">
+            <div class="input-field-wrapper input-field-wrapper-invoice-in-out">
                 <select class="input-field dropdown" id="destinationId" name="destinationId" required>
                     @for (int i = 0; i < @Model.Contragents.Count; i++)
                     {
@@ -55,7 +55,7 @@
         </div>
         <div class="user-modal-block">
             <div class="user-modal-label">Відправник:</div>
-            <div class="input-field-wrapper">
+            <div class="input-field-wrapper input-field-wrapper-invoice-in-out">
                 <select class="input-field dropdown" id="senderId" name="senderId" required>
                     @for (int i = 0; i < @Model.Contragents.Count; i++)
                     {
@@ -67,7 +67,7 @@
         </div>
         <div class="user-modal-block">
             <div class="user-modal-label">Сектор:</div>
-            <div class="input-field-wrapper">
+            <div class="input-field-wrapper input-field-wrapper-invoice-in-out">
                 <select class="input-field dropdown" id="sectorId" name="sectorId" required>
                     @for (int i = 0; i < @Model.Sectors.Count; i++)
                     {
@@ -79,7 +79,7 @@
         </div>
         <div class="user-modal-block">
             <div class="user-modal-label">Тип документа:</div>
-            <div class="input-field-wrapper">
+            <div class="input-field-wrapper input-field-wrapper-invoice-in-out">
                 <select class="input-field dropdown" id="documentTypeId" name="documentTypeId" required>
                     @for (int i = 0; i < @Model.DocumentTypes.Count; i++)
                     {
@@ -130,7 +130,7 @@
         </div>
     </div>
     <div class="user-modal-footer">
-        <button type="add-user" class="btn btn-add-user" onclick="openModalForm()">
+        <button type="add-user" class="btn btn-add-user" onclick="addInvoiceInPosition()">
             <img src="img/plus.svg">Додати
         </button>
         <button type="submit" class="btn btn-modal">Зберегти</button>

@@ -322,7 +322,7 @@ namespace DiplomaWebService.Controllers.Invoice
 				invoiceModel.ErrorMessage = "can't get all  Stock Items";
 				return invoiceModel;
 			}
-			invoiceModel.Data = new InvoiceOutViewModel(usernameFirstLetter, username, _roleId, invoices, resultSector.Data, resultDocumentType.Data,
+			invoiceModel.Data = new InvoiceOutViewModel(usernameFirstLetter, username, roleId, invoices, resultSector.Data, resultDocumentType.Data,
 				resultContragent.Data, resultStockItem.Data);
 			return invoiceModel;
 
