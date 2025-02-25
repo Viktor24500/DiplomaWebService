@@ -43,7 +43,7 @@
 								<div class="small-icon-container">
 									<img src="img/warehouse.svg">
 								</div>
-								<div class="sidebar-link-text">Склад</div>
+								<div class="sidebar-link-text">Майно на обліку</div>
 							</a>
 						</li>
 						<li class="nav-ul-item nav-ul-item--active">
@@ -60,7 +60,7 @@
 								<img src="img/dictionary.svg">
 								<span class="sidebar-link-text">Довідники</span>
 							</label>
-							<a title="Agents" class="accordion-content sidebar-menu-text" href="/contragents">Контрагенти</a>
+							<a title="Agents" class="accordion-content sidebar-menu-text" href="/contragents">Підрозділи</a>
 							<a title="Property" class="accordion-content sidebar-menu-text" href="/items">Майно</a>
 							<a title="Units" class="accordion-content sidebar-menu-text" href="/units">Одиниці виміру</a>
 						</li>
@@ -76,15 +76,26 @@
 							</li>
 						}						
 					</ul>
-				</nav>
-				<div class="user-info-wrapper">
-					<div class="user-info">@Model.UsernameFirstLetter</div>
-					<div class="user-name">
-						<a title="logout" class="sidebar-link" href="/logout">
-							<div class="sidebar-link-text">@Model.Username</div>
+                </nav>
+				<div class="logout" id="logout">
+					<div class="version">
+						<span>v: 1.0</span>
+					</div>
+					<div class="logout-link">
+						<span>Вийти</span>
+						<a href="/logout">
+							<img src="img/logout.svg" alt="Logout Icon">
 						</a>
 					</div>
 				</div>
+				<div class="user-info-wrapper">
+					<div class="user-info">@Model.UsernameFirstLetter</div>
+					<div class="user-name">
+						<a href="#" class="sidebar-link" onclick="openLogOutForm(); return false;">
+							<div class="sidebar-link-text">@Model.Username</div>
+						</a>
+					</div>
+				</div>				
 			</div>
 		</section>
 		<!--/sidebar-->
@@ -99,15 +110,18 @@
 				var invoiceOutRowCounter = -1;
 				var invoiceInRowCounter = -1;
 				function closeModalForm() {
-					document.getElementsByClassName('modal')[0].style.display = "none";
+					document.getElementsByClassName("modal")[0].style.display = "none";
 					invoiceOutRowCounter = -1;
 					invoiceInRowCounter = -1;
 				}
 				function openModalForm() {
-					document.getElementsByClassName('modal')[0].style.display = "block";
-				}		
+					document.getElementsByClassName("modal")[0].style.display = "block";
+				}
+				function openLogOutForm() {
+					document.getElementById("logout").style.display = "block";
+				}
 				function ReassessmentWithCoeffOpen() {
-					document.getElementById('reassessmentWithCoefForm').style.display = "block";
+					document.getElementById("reassessmentWithCoefForm").style.display = "block";
 				}
 				function AddInvoiceFormClose() {
 					let form = document.getElementById("addInvoiceInForm");
@@ -302,13 +316,49 @@
 					}
 				}
 
-				function searchItems(event) {
+			function searchItems(event) {
 				if(event.key === 'Enter') {
 					let searchValue = document.getElementById("search").value;
 					let Http = new XMLHttpRequest();
 					let url = "/searchItems/"+encodeURIComponent(searchValue);
 						Http.open("GET", url);
 						Http.send(); // No data needed for GET request
+
+					Http.onreadystatechange = function () {
+						if (Http.readyState === 4 && Http.status === 200) {
+							console.log(Http.responseText);
+
+							document.getElementById("search").value = "";
+						}
+					};
+				}
+			}
+
+			function searchInvoiceIn(event) {
+				if(event.key === 'Enter') {
+					let searchValue = document.getElementById("search").value;
+					let Http = new XMLHttpRequest();
+					let url = "/searchInvoicesIn/"+encodeURIComponent(searchValue);
+						Http.open("GET", url);
+						Http.send();
+
+					Http.onreadystatechange = function () {
+						if (Http.readyState === 4 && Http.status === 200) {
+							console.log(Http.responseText);
+
+							document.getElementById("search").value = "";
+						}
+					};
+				}
+			}
+
+			function searchInvoiceOut(event) {
+				if(event.key === 'Enter') {
+					let searchValue = document.getElementById("search").value;
+					let Http = new XMLHttpRequest();
+					let url = "/searchInvoicesOut/"+encodeURIComponent(searchValue);
+						Http.open("GET", url);
+						Http.send();
 
 					Http.onreadystatechange = function () {
 						if (Http.readyState === 4 && Http.status === 200) {

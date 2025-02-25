@@ -5,7 +5,6 @@ using DiplomaWebService.Models;
 using DiplomaWebService.Models.Invoice.In;
 using DiplomaWebService.Models.Items;
 using DiplomaWebService.Models.Types;
-using DiplomaWebService.Models.ViewModel;
 using DiplomaWebService.Models.ViewModel.Invoice;
 using DiplomaWebService.Parametrs.Invoice.In;
 using Microsoft.AspNetCore.Mvc;
@@ -86,6 +85,15 @@ namespace DiplomaWebService.Controllers.Invoice
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			Result<InvoiceInViewModel> invoiceInModel = await GetInvoiceInModel(result.Data, username.Data, roleId.Data, username.Data[0]);
+			if (invoiceInModel.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(result.ErrorMessage);
+				result.ErrorCode = (int)ErrorCodes.BadRequest;
+				//result.ErrorMessage = "can't get all invoices";
+				string errorName = Enum.GetName(typeof(ErrorCodes), invoiceInModel.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, invoiceInModel.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
 			return View("/Views/Invoices/InvoiceIn.cshtml", invoiceInModel.Data);
 		}
 
@@ -136,6 +144,79 @@ namespace DiplomaWebService.Controllers.Invoice
 			}
 			return RedirectToAction("GetAllInvoicesIn");
 		}
+
+		[HttpGet]
+		[Route("/searchInvoicesIn/{number}")]
+		public async Task<IActionResult> SearchInvoiceInByNumber(string number)
+		{
+			Result<List<InvoiceIn>> result = new Result<List<InvoiceIn>>();
+			Result<string> resToken = GetTokenFromCookies();
+			if (resToken.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(resToken.ErrorMessage);
+				result.ErrorCode = resToken.ErrorCode;
+				result.ErrorMessage = resToken.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			Result<string> username = GetUsernameFromSession();
+			if (username.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(username.ErrorMessage);
+				result.ErrorCode = username.ErrorCode;
+				result.ErrorMessage = username.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), username.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, username.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			Result<int> roleId = GetRoleIdFromSession();
+			if (roleId.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(roleId.ErrorMessage);
+				result.ErrorCode = roleId.ErrorCode;
+				result.ErrorMessage = roleId.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), roleId.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, roleId.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			string url = _connectionString + $"searchInvoicesIn/{number}";
+			using (HttpClient client = new HttpClient())
+			{
+				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
+				HttpResponseMessage responseMessage = await client.GetAsync(url);
+				if (responseMessage.IsSuccessStatusCode)
+				{
+					result.Data = await responseMessage.Content.ReadFromJsonAsync<List<InvoiceIn>>();
+				}
+				else
+				{
+					result.ErrorCode = (int)responseMessage.StatusCode;
+					result.ErrorMessage = await responseMessage.Content.ReadAsStringAsync();
+				}
+			}
+			if (result.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(result.ErrorMessage);
+				result.ErrorCode = (int)ErrorCodes.BadRequest;
+				//result.ErrorMessage = "Can't get all contragents";
+				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			Result<InvoiceInViewModel> invoiceInModel = await GetInvoiceInModel(result.Data, username.Data, roleId.Data, username.Data[0]);
+			if (invoiceInModel.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(result.ErrorMessage);
+				result.ErrorCode = (int)ErrorCodes.BadRequest;
+				//result.ErrorMessage = "can't get all invoices";
+				string errorName = Enum.GetName(typeof(ErrorCodes), invoiceInModel.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, invoiceInModel.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			return View("/Views/Dictionaries/Contragents/Contragent.cshtml", invoiceInModel.Data);
+		}
+
 		[HttpGet]
 		[Route("/invoiceIn")]
 		public IActionResult GetCreateInvoiceIn()
@@ -305,6 +386,7 @@ namespace DiplomaWebService.Controllers.Invoice
 			return invoiceModel;
 
 		}
+
 		private Result<string> GetTokenFromCookies()
 		{
 			Result<string> result = new Result<string>();
@@ -315,11 +397,6 @@ namespace DiplomaWebService.Controllers.Invoice
 			}
 			result.Data = token;
 			return result;
-		}
-		private BaseViewModel CreateBaseViewModel(string username, char usernameFirstLetter, int roleId)
-		{
-			BaseViewModel model = new BaseViewModel(usernameFirstLetter, username, roleId);
-			return model;
 		}
 		private Result<string> GetUsernameFromSession()
 		{

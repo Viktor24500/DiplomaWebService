@@ -8,7 +8,7 @@
 <div class="app-content">
 	<div class="main-header">
 		<div class="top-header">
-			<h2>Склад</h2>
+			<h2>Майно на обліку</h2>
 		</div>
 		<div class="btn-header">
 			<button type="button" class="btn btn-header btn-header-disable" disabled>Зберегти</button>
@@ -39,6 +39,7 @@
 				<th>Категорія</th>
 				<th>Ціна</th>
 				<th>Кількість</th>	
+				<th>Підрозділ</th>
 				<th></th>
 			</tr>
 		<thead>
@@ -57,6 +58,7 @@
 					<td id="CategoryName">@Model.StockItems[i].Category.Name</td>
 					<td id="Price">@Model.StockItems[i].Price</td>
 					<td id="Amount">@Model.StockItems[i].AllAmount</td>
+					<td id="ContragentName">@Model.StockItems[i].ContragentName</td>
 					<td>
 						<button type="add-user" class="btn btn-add-user" onclick="ReassessmentWithoutCoeffOpen('@Model.StockItems[i].StockItemId','@Model.StockItems[i].Item.ItemName, @Model.StockItems[i].Unit.Name, @Model.StockItems[i].Category.Name, @Model.StockItems[i].Price')">
 							<img src="img/reevaluation1.svg">Переоцінка

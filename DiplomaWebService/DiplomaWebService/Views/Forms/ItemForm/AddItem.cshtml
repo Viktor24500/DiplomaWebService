@@ -47,7 +47,7 @@
             </div>
         </div>
         <div class="user-modal-block">
-            <div class="user-modal-label">Назва:</div>
+            <div class="user-modal-label">Назва: *</div>
             <div class="input-field-wrapper">
                 <input type="text" class="input-field" id="itemName" name="name" placeholder="Назва" value="" required>
                 <div class="separator"></div>
@@ -61,7 +61,7 @@
             </div>
         </div>
         <div class="user-modal-block">
-            <div class="user-modal-label">Сектор:</div>
+            <div class="user-modal-label">Служба: *</div>
             <div class="input-field-wrapper">
                 <select class="input-field dropdown" id="sectorId" name="sectorId" required>
                     @for (int i = 0; i < @Model.Sectors.Count; i++)
@@ -73,7 +73,7 @@
             </div>
         </div>
         <div class="user-modal-block">
-            <div class="user-modal-label">Одиниці виміру:</div>
+            <div class="user-modal-label">Одиниці виміру: *</div>
             <div class="input-field-wrapper">
                 <select class="input-field dropdown" id="unitId" name="unitId" required>
                     @for (int i = 0; i < @Model.Units.Count; i++)

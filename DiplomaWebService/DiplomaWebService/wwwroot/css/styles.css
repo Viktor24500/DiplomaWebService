@@ -606,5 +606,43 @@ button {
     border: 0px;
     cursor: pointer;
 }
+
+.logout {
+    background-color: #E9ECEF;
+    height: 95px;
+    width: 269px;
+    margin-left: 5px;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: flex-start;
+    display: none;
+    margin-top: auto;
+    margin-bottom: -170px;
+}
+
+.logout-link {
+    display: flex;
+    align-items: center;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+.logout a {
+    display: flex;
+    align-items: center;
+    padding-left: 170px;
+}
+
+.logout img {
+    width: 20px;
+    height: 20px;
+}
+
+.version {
+    display: flex;
+    align-items: center;
+    padding-top: 5px;
+    padding-left: 10px;
+}
 /* == /Modal==*/
 /* == /Main ==*/
