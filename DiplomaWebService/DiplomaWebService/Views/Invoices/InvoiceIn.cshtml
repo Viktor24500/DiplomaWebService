@@ -55,59 +55,7 @@
             </tr>
         </thead>
         <tbody>
-            @for (int i = 0; i < Model.InvoicesIn.Count(); i++)
-            {
-                <tr>
-                    <td hidden>@Model.InvoicesIn[i].Id</td>
-                    <td>@Model.InvoicesIn[i].InvoiceDate.ToString("yyyy-MM-dd")</td>
-                    <td>@Model.InvoicesIn[i].Number</td>
-                    <td hidden>@Model.InvoicesIn[i].DestinationId</td>
-                    <td>@Model.InvoicesIn[i].DestinationName</td>
-                    <td hidden>@Model.InvoicesIn[i].SenderId</td>
-                    <td>@Model.InvoicesIn[i].SenderName</td>
-                    <td hidden>@Model.InvoicesIn[i].InvoiceType.Id</td>
-                    <td>@Model.InvoicesIn[i].InvoiceType.Name</td>
-                    <td hidden>@Model.InvoicesIn[i].Sector.Id</td>
-                    <td>@Model.InvoicesIn[i].Sector.Name</td>
-                    <td hidden>@Model.InvoicesIn[i].DocumentType.Id</td>
-                    <td>@Model.InvoicesIn[i].DocumentType.Name</td>
-                    <td>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th hidden>Item Id</th>
-                                    <th>Назва</th>
-                                    <th>Серійний номер</th>
-                                    <th>Рік випуску</th>
-                                    <th>Кількість</th>
-                                    <th>Ціна</th>
-                                    <th hidden>Unit Id</th>
-                                    <th>Одиниці виміру</th>
-                                    <th hidden>Category Id</th>
-                                    <th>Категорія</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var position in Model.InvoicesIn[i].InvoicePositions)
-                                {
-                                    <tr>
-                                        <td hidden>@position.Item.ItemId</td>
-                                        <td>@position.Item.ItemName</td>
-                                        <td>@position.Amount</td>
-                                        <td>@position.Price</td>
-                                        <td hidden>@position.SerialNumber</td>
-                                        <td>@position.ProductionYear</td>
-                                        <td hidden>@position.Unit.Id</td>
-                                        <td>@position.Unit.Name</td>
-                                        <td hidden>@position.Category.Id</td>
-                                        <td>@position.Category.Name</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-            }
+            @Html.Partial("/Views/Invoices/_InvoiceInList.cshtml", @Model.InvoicesIn)
         </tbody>
     </table>
 </div>

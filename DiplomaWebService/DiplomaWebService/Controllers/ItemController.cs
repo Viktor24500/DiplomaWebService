@@ -246,15 +246,7 @@ namespace DiplomaWebService.Controllers
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
-			Result<ItemViewModel> resItemViewModel = await GetItemViewModel(result.Data, username.Data, username.Data[0], roleId.Data);
-			if (resItemViewModel.ErrorCode != (int)ErrorCodes.Success)
-			{
-				_logger.LogError(resItemViewModel.ErrorMessage);
-				string errorName = Enum.GetName(typeof(ErrorCodes), resItemViewModel.ErrorCode);
-				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, resItemViewModel.ErrorMessage);
-				return View("/Views/Shared/Error.cshtml", errorModel);
-			}
-			return View("/Views/Dictionaries/Items/Item.cshtml", resItemViewModel.Data);
+			return PartialView("/Views/Dictionaries/Items/_ItemsList.cshtml", result.Data);
 		}
 
 		[HttpGet]

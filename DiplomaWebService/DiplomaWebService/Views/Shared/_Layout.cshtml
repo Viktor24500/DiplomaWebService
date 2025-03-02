@@ -310,9 +310,7 @@
 
 						Http.onreadystatechange = function () {
 							if (Http.readyState === 4 && Http.status === 200) {
-								console.log(Http.responseText);
-
-								document.getElementById("search").value = "";
+						     document.getElementById("contragentsList").innerHTML=Http.responseText;
 							}
 						};
 					}
@@ -328,9 +326,7 @@
 
 					Http.onreadystatechange = function () {
 						if (Http.readyState === 4 && Http.status === 200) {
-							console.log(Http.responseText);
-
-							document.getElementById("search").value = "";
+							document.getElementById("itemsList").innerHTML=Http.responseText;
 						}
 					};
 				}
@@ -346,9 +342,7 @@
 
 					Http.onreadystatechange = function () {
 						if (Http.readyState === 4 && Http.status === 200) {
-							console.log(Http.responseText);
-
-							document.getElementById("search").value = "";
+							document.getElementById("invoiceInList").innerHTML=Http.responseText;
 						}
 					};
 				}
@@ -364,9 +358,7 @@
 
 					Http.onreadystatechange = function () {
 						if (Http.readyState === 4 && Http.status === 200) {
-							console.log(Http.responseText);
-
-							document.getElementById("search").value = "";
+							document.getElementById("invoiceOutList").innerHTML=Http.responseText;
 						}
 					};
 				}
@@ -382,13 +374,27 @@
 
 					Http.onreadystatechange = function () {
 						if (Http.readyState === 4 && Http.status === 200) {
-							console.log(Http.responseText);
-
-							document.getElementById("search").value = "";
+							document.getElementById("unitsList").innerHTML=Http.responseText;
 						}
 					};
 				}
 			}
+
+		function searchUsers(event) {
+			if(event.key === 'Enter') {
+				let searchValue = document.getElementById("search").value;
+				let Http = new XMLHttpRequest();
+				let url = "/searchUsers/"+ encodeURIComponent(searchValue);
+					Http.open("GET", url);
+					Http.send(); // No data needed for GET request
+
+				Http.onreadystatechange = function () {
+					if (Http.readyState === 4 && Http.status === 200) {
+						document.getElementById("usersList").innerHTML=Http.responseText;
+					}
+				};
+			}
+		}
 	</script>
 </body>
 </html>

@@ -204,17 +204,7 @@ namespace DiplomaWebService.Controllers.Invoice
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
-			Result<InvoiceInViewModel> invoiceInModel = await GetInvoiceInModel(result.Data, username.Data, roleId.Data, username.Data[0]);
-			if (invoiceInModel.ErrorCode != (int)ErrorCodes.Success)
-			{
-				_logger.LogError(result.ErrorMessage);
-				result.ErrorCode = (int)ErrorCodes.BadRequest;
-				//result.ErrorMessage = "can't get all invoices";
-				string errorName = Enum.GetName(typeof(ErrorCodes), invoiceInModel.ErrorCode);
-				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, invoiceInModel.ErrorMessage);
-				return View("/Views/Shared/Error.cshtml", errorModel);
-			}
-			return View("/Views/Dictionaries/Contragents/Contragent.cshtml", invoiceInModel.Data);
+			return PartialView("/Views/Invoices/_InvoiceInList.cshtml", result.Data);
 		}
 
 		[HttpGet]

@@ -144,8 +144,7 @@ namespace DiplomaWebService.Controllers
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
-			ContragentViewModel model = CreateViewModel(username.Data, username.Data[0], roleId.Data, result.Data);
-			return View("/Views/Dictionaries/Contragents/Contragent.cshtml", model);
+			return PartialView("/Views/Dictionaries/Contragents/_ContragentsList.cshtml", result.Data);
 		}
 
 		[HttpPost]

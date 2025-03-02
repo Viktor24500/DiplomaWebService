@@ -65,22 +65,8 @@
 					<th>Опис</th>
 				</tr>
 			</thead>
-			<tbody>
-				@for (int i = 0; i < Model.Items.Count(); i++)
-				{
-					<tr>
-						<td id="itemId" hidden>@Model.Items[i].ItemId</td>
-						<td id="name">@Model.Items[i].ItemName</td>
-						<td id="inventoryNumber">@Model.Items[i].NomenclatureNumber</td>
-						<td id="unitId" hidden>@Model.Items[i].Unit.Id</td>
-						<td id="unitName">@Model.Items[i].Unit.Name</td>
-						<td id="sectorId" hidden>@Model.Items[i].Sector.Id</td>
-						<td id="sectorName">@Model.Items[i].Sector.Name</td>
-						<td id="reuiredQuantity">@Model.Items[i].RequiredQuantity</td>
-						<td id="weight">@Model.Items[i].Weight</td>
-						<td id="description">@Model.Items[i].Description</td>
-					</tr>
-				}
+			<tbody id="itemsList">
+				@Html.Partial("/Views/Dictionaries/Items/_ItemsList.cshtml", @Model.Items)
 			</tbody>
 		</table>
 	</div>

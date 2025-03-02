@@ -236,8 +236,7 @@ namespace DiplomaWebService.Controllers
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
-			UnitViewModel model = CreateViewModel(username.Data, username.Data[0], result.Data, roleId.Data);
-			return View("/Views/Dictionaries/Units/Unit.cshtml", model);
+			return PartialView("/Views/Dictionaries/Units/_UnitsList.cshtml", result.Data);
 		}
 
 		[HttpGet]

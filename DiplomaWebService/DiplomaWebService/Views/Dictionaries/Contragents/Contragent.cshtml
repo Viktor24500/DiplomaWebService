@@ -37,21 +37,21 @@
 	<table>
 		<tr>
 			<td id="myAgentName">Моя в/ч: </td>
-		@for (int i = 0; i < @Model.Contragents.Count(); i++)
-		{
-			if (@Model.Contragents[i].WhoAmI == true)
+			@for (int i = 0; i < @Model.Contragents.Count(); i++)
 			{
-				
+				if (@Model.Contragents[i].WhoAmI == true)
+				{
+
 					<td id="contragentIdInTable" hidden>@Model.Contragents[i].ContragentId</td>
 					<td id="contragentNameInTable">@Model.Contragents[i].ContragentName</td>
 					@* 					<td>
-						<button type="button" onclick="/contragents/disable/{@Model.Contragents[i].ContragentId}">
-							<img src="img/trash.svg">
-						</button>
-					</td> *@
-				
+							<button type="button" onclick="/contragents/disable/{@Model.Contragents[i].ContragentId}">
+								<img src="img/trash.svg">
+							</button>
+						</td> *@
+
+				}
 			}
-		}
 		</tr>
 	</table>
 </div>
@@ -82,26 +82,8 @@
 					@* <th></th> *@
 				</tr>
 			</thead>
-			<tbody>
-				@for (int i = 0; i < @Model.Contragents.Count(); i++)
-				{
-					if (@Model.Contragents[i].WhoAmI == false)
-					{
-						<tr>
-							<td id="contragentIdInTable" hidden>@Model.Contragents[i].ContragentId</td>
-							<td id="contragentNameInTable">@Model.Contragents[i].ContragentName</td>
-							<td id="parentIdInTable" hidden>@Model.Contragents[i].ParentId</td>
-							<td id="parentNameInTable">@Model.Contragents[i].ParentName</td>
-							<td id="contragentDescriptionInTable">@Model.Contragents[i].ContragentDescription</td>
-							<td id="IsActiveContragnetInTable" class="status-@Model.Contragents[i].StatusDescription">@Model.Contragents[i].StatusDescription</td>
-							@* 					<td>
-						<button type="button" onclick="/contragents/disable/{@Model.Contragents[i].ContragentId}">
-							<img src="img/trash.svg">
-						</button>
-					</td> *@
-						</tr>
-					}
-				}
+			<tbody id="contragentsList">
+				@Html.Partial("/Views/Dictionaries/Contragents/_ContragentsList.cshtml", @Model.Contragents)
 			</tbody>
 		</table>
 	</div>
