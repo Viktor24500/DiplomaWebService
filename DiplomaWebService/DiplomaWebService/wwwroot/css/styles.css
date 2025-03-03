@@ -483,62 +483,58 @@ table {
 }
 
 .scroll{
-    overflow: auto;
-    height: calc(100vh - 200px);
-    /*height: 50px;*/
-    /*max-height:50px;*/
+    overflow-y: scroll;
+    height: calc(100vh - 315px);
+    display: block;
+    width:100%
 }
 
 th {
-    /* background:var(--cta-background-color);
-  color: var(--cta-text-color); */
     color: var(--cta-background-color);
     border-right: 1px solid var(--cta-background-color);
     padding: 10px 20px;
+    width: 15%;
+    text-align: center;
 }
 
-    th:last-child {
-        border-right: none;
-    }
+th:last-child {
+    border-right: none;
+}
 
 tr {
     border-radius: 16px;
     overflow: hidden;
     height: 50px;
     box-shadow: var(--table-shadow);
+    width: 100%;
+    display: table;
+    margin: 5px 0px;
 }
 
 td {
-    padding: 10px 20px;
     color: var(--sidebar-menu-text-color);
+    width: 15%;
+    text-align: center;
 }
 
 .status-Активний {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     background-color: var(--cta-background-color);
     color: var(--cta-text-color);
     border-radius: 16px;
-    gap: 10px;
-    padding: 5px 12px 5px 9px;
-    position: relative;
-    width: max-content;
-    margin: 10px;
 }
 
 .status-Неактивний {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--cta-background-color-disabled);
+    /*display: flex;*/
+    /* align-items: center;
+    justify-content: center;*/
+    background-color: var(--cta-background-color);
     color: var(--cta-text-color);
     border-radius: 16px;
-    gap: 10px;
+    /*    gap: 10px;
     padding: 5px 12px 5px 9px;
     position: relative;
     width: max-content;
-    margin: 10px;
+    margin: 10px;*/
 }
 
 .td-image {
@@ -628,22 +624,41 @@ button {
     margin-bottom: -170px;
 }
 
-.logout-link {
-    display: flex;
-    align-items: center;
-    padding-top: 10px;
-    padding-left: 10px;
+thead {
+    display: table;
+    width: 100%;
+}
+
+.logout-text {
+    width: 150%;
+    font: var(--fw-medium);
+    color: var(--sidebar-menu-text-color);
+    max-width: 230px;
+    margin-top: 5%;
+    margin-left: 3%;
+}
+
+.logout-img {
+    width: 20px;
+    height: 20px;
+    margin-top: 5%;
 }
 
 .logout a {
+    cursor: pointer;
     display: flex;
-    align-items: center;
-    padding-left: 170px;
+    text-decoration: none;
 }
 
 .logout img {
     width: 20px;
     height: 20px;
+}
+
+.logout-link:hover {
+    background: var(--cta-background-color);
+    border-radius: 0px 16px 16px 0px;
+    height: 53%;
 }
 
 .version {

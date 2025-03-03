@@ -54,7 +54,7 @@
                 <th>Позиції</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="scroll" id="invoiceInList">
             @Html.Partial("/Views/Invoices/_InvoiceInList.cshtml", @Model.InvoicesIn)
         </tbody>
     </table>

@@ -26,24 +26,22 @@
 	</nav>
 </div>
 <div class="users-table-content">
-     <div class="scroll">
-        <table>
-            <thead>
-                <tr>
-                    <th hidden>Id</th>
-                    <th>Логін</th>
-                    <th>Прізвище</th>
-                    <th>Ім'я</th>
-                    <th>По-батькові</th>
-                    <th>Статус</th>
-                    <th>Роль</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody id="usersList">
-                @Html.Partial("/Views/Users/_UsersList.cshtml", @Model.Users)
-            </tbody>
-        </table>
-     </div>
+    <table>
+        <thead>
+            <tr>
+                <th hidden>Id</th>
+                <th>Логін</th>
+                <th>Прізвище</th>
+                <th>Ім'я</th>
+                <th>По-батькові</th>
+                <th>Статус</th>
+                <th>Роль</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="usersList" class="scroll">
+            @Html.Partial("/Views/Users/_UsersList.cshtml", @Model.Users)
+        </tbody>
+    </table>
 </div>
 @Html.Partial("/Views/Forms/UserForm/AddUserForm.cshtml", Model.Roles)

@@ -41,20 +41,9 @@
 				<th>Опис</th>
 			</tr>
 		</thead>
+		<tbody id="unitsList" class="scroll">
+			@Html.Partial("/Views/Dictionaries/Units/_UnitsList.cshtml", @Model.Units)
+		</tbody>
 	</table>
-	<div class="scroll">
-		<table>
-			<thead>
-				<tr>
-					<th hidden>UnitId</th>
-					<th>Назва</th>
-					<th>Опис</th>
-				</tr>
-			</thead>
-			<tbody id="unitsList">
-				@Html.Partial("/Views/Dictionaries/Units/_UnitsList.cshtml", @Model.Units)
-			</tbody>
-		</table>
-	</div>   
 </div>
 @Html.Partial("/Views/Forms/UnitForm/AddUnit.cshtml")

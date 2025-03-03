@@ -58,20 +58,9 @@
                 <th>Скорочена назва</th>
             </tr>
         </thead>
+        <tbody id="sectorsList" >
+            @Html.Partial("/Views/Dictionaries/Sectors/_SectorsList.cshtml", @Model.Sectors)
+        </tbody>
     </table>
-    <div class="scroll">
-        <table>
-            <thead>
-                <tr>
-                    <th hidden>sectorId</th>
-                    <th>Назва</th>
-                    <th>Скорочена назва</th>
-                </tr>
-            </thead>
-            <tbody id="sectorsList">
-                @Html.Partial("/Views/Dictionaries/Sectors/_SectorsList.cshtml", @Model.Sectors)
-            </tbody>
-        </table>
-    </div>
 </div>
 @Html.Partial("/Views/Forms/SectorForm/AddSector.cshtml")
