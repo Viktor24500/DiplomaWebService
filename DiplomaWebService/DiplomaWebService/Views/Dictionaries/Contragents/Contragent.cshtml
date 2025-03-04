@@ -69,23 +69,21 @@
 			</tr>
 		</thead>
 	</table>
-	<div class="scroll">
-		<table>
-			<thead hidden>
-				<tr hidden>
-					<th hidden>contragentId</th>
-					<th>Назва</th>
-					<th hidden>parentId</th>
-					<th>Вище формування</th>
-					<th>Опис</th>
-					<th>Статус</th>
-					@* <th></th> *@
-				</tr>
-			</thead>
-			<tbody id="contragentsList" class="scroll">
-				@Html.Partial("/Views/Dictionaries/Contragents/_ContragentsList.cshtml", @Model.Contragents)
-			</tbody>
-		</table>
-	</div>
+	<table>
+		<thead hidden>
+			<tr hidden>
+				<th hidden>contragentId</th>
+				<th>Назва</th>
+				<th hidden>parentId</th>
+				<th>Вище формування</th>
+				<th>Опис</th>
+				<th>Статус</th>
+				@* <th></th> *@
+			</tr>
+		</thead>
+		<tbody id="contragentsList" class="scroll">
+			@Html.Partial("/Views/Dictionaries/Contragents/_ContragentsList.cshtml", @Model.Contragents)
+		</tbody>
+	</table>
 </div>
 @Html.Partial("/Views/Forms/ContragentForm/AddContragent.cshtml", Model)

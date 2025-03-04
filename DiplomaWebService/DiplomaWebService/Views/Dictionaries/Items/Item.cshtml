@@ -49,26 +49,24 @@
 			</tr>
 		</thead>
 	</table>
-	<div class="scroll">
-		<table>
-			<thead>
-				<tr>
-					<th hidden>itemId</th>
-					<th>Назва</th>
-					<th>Номенклатурний номер</th>
-					<th hidden>unitId</th>
-					<th>Одиниці виміру</th>
-					<th hidden>sectorId</th>
-					<th>Назва служби</th>
-					<th>Штат</th>
-					<th>Вага</th>
-					<th>Опис</th>
-				</tr>
-			</thead>
-			<tbody id="itemsList" class="scroll">
-				@Html.Partial("/Views/Dictionaries/Items/_ItemsList.cshtml", @Model.Items)
-			</tbody>
-		</table>
-	</div>
+	<table>
+		<thead>
+			<tr>
+				<th hidden>itemId</th>
+				<th>Назва</th>
+				<th>Номенклатурний номер</th>
+				<th hidden>unitId</th>
+				<th>Одиниці виміру</th>
+				<th hidden>sectorId</th>
+				<th>Назва служби</th>
+				<th>Штат</th>
+				<th>Вага</th>
+				<th>Опис</th>
+			</tr>
+		</thead>
+		<tbody id="itemsList" class="scroll">
+			@Html.Partial("/Views/Dictionaries/Items/_ItemsList.cshtml", @Model.Items)
+		</tbody>
+	</table>
 </div>
 @Html.Partial("/Views/Forms/ItemForm/AddItem.cshtml", @Model)
