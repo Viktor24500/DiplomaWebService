@@ -77,29 +77,28 @@
 						}						
 					</ul>
                 </nav>
-				<div class="logout" id="logout">
-					<div class="version">
-						<span>Будяк v: 1.2.0</span>
-					</div>
-					<div class="separator"></div>
-                    <div class="logout-link">
-                        <a href="/logout">
-                            <div class="logout-text">
-                                Вийти
-                            </div>
-                            <div class="logout-img">
-                                <img src="img/logout.svg" alt="Logout Icon">
-                            </div>
-                        </a>
-					</div>
-
-				</div>
 				<div class="user-info-wrapper">
 					<div class="user-info">@Model.UsernameFirstLetter</div>
 					<div class="user-name">
 						<a href="#" class="sidebar-link" onclick="openLogOutForm(); return false;">
 							<div class="sidebar-link-text">@Model.Username</div>
 						</a>
+					</div>
+					<div class="logout" id="logout">
+						<div class="version">
+							<span>Будяк v: 1.2.0</span>
+						</div>
+						<div class="separator"></div>
+						<div class="logout-link">
+							<a href="/logout">
+								<div class="logout-text">
+									Вийти
+								</div>
+								<div class="logout-img">
+									<img src="img/logout.svg" alt="Logout Icon">
+								</div>
+							</a>
+						</div>
 					</div>
 				</div>				
 			</div>
@@ -115,6 +114,49 @@
 	<script type="text/javascript">
 				var invoiceOutRowCounter = -1;
 				var invoiceInRowCounter = -1;
+
+				//  document.addEventListener("DOMContentLoaded", function () {
+				// 	let logout = document.getElementById("logout");
+
+				// 	document.addEventListener('click', function (e) {
+				// 		if (logout.style.display === "block" && !logout.contains(e.target)) {
+				// 			logout.style.display = "none";
+				// 		}
+				// 	});
+				// });
+
+				function openMenu(id) {
+					document.getElementById("menu").style.display = "block";
+					//document.getElementById("table1").onclick = function() { openMenuAlert(id); };
+				}
+				function createReportInvoiceOut(invoiceId) {
+					let Http = new XMLHttpRequest();
+					let url = "/reportInvoiceOut/";
+					Http.open("POST", url);
+					Http.setRequestHeader("Content-Type", "application/json; charset=utf-8")
+					Http.send(invoiceId);
+
+					Http.onreadystatechange = function () {
+						if (Http.readyState === 4 && Http.status === 200) {
+							console.log(Http.responseText);
+						}
+					};
+				}
+
+				function createReportInvoiceIn(invoiceId) {
+					let Http = new XMLHttpRequest();
+					let url = "/reportInvoiceIn/";
+					Http.open("POST", url);
+					Http.setRequestHeader("Content-Type", "application/json; charset=utf-8")
+					Http.send(invoiceId);
+
+					Http.onreadystatechange = function () {
+						if (Http.readyState === 4 && Http.status === 200) {
+							console.log(Http.responseText);
+						}
+					};
+				}
+
 				function closeModalForm() {
 					document.getElementsByClassName("modal")[0].style.display = "none";
 				}
@@ -255,7 +297,7 @@
 
 					newRow.innerHTML = `
 										<div class="user-modal-block">
-											<div class="user-modal-label">Майно:</div>
+											<div class="user-modal-label">Майно: *</div>
 											<div class="input-field-wrapper input-field-wrapper-invoice-in-out">
 												<select class="input-field dropdown" name="positions[${invoiceInRowCounter}].ItemId" required>
 													${itemOptions}
@@ -264,21 +306,21 @@
 											</div>
 										</div>
 										<div class="user-modal-block">
-											<div class="user-modal-label">Кількість</div>
+											<div class="user-modal-label">Кількість: *</div>
 											<div class="input-field-wrapper input-field-wrapper-invoice-in-out">
 												<input type="number" class="input-field" name="positions[${invoiceInRowCounter}].Amount" placeholder="Кількість" required>
 												<div class="separator"></div>
 											</div>
 										</div>
 										<div class="user-modal-block">
-											<div class="user-modal-label">Ціна</div>
+											<div class="user-modal-label">Ціна: *</div>
 											<div class="input-field-wrapper input-field-wrapper-invoice-in-out">
 												<input type="number" class="input-field" name="positions[${invoiceInRowCounter}].Price" placeholder="Ціна" required>
 												<div class="separator"></div>
 											</div>
 										</div>
 										<div class="user-modal-block">
-											<div class="user-modal-label">Категорія:</div>
+											<div class="user-modal-label">Категорія: *</div>
 											<div class="input-field-wrapper input-field-wrapper-invoice-in-out">
 												<select class="input-field dropdown" name="positions[${invoiceInRowCounter}].CategoryId" required>
 													${categoryOptions}

@@ -98,7 +98,7 @@ namespace DiplomaWebService.Controllers.Invoice
 		}
 
 		[HttpPost]
-		[Route("/invoice")]
+		[Route("/invoiceIn")]
 		public async Task<IActionResult> CreateInvoiceIn(DateTime invoiceDate, string number, int destinationId, int senderId,
 			int sectorId, int documentTypeId, List<InvoicePositionsInCreateParameters> positions)
 		{

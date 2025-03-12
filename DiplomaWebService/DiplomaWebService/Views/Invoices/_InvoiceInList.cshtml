@@ -36,6 +36,7 @@
                         <th>Одиниці виміру</th>
                         <th hidden>Category Id</th>
                         <th>Категорія</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,6 +57,13 @@
                     }
                 </tbody>
             </table>
+        <td>
+            <button onclick="openMenu(i)"></button>
         </td>
     </tr>
+    <div class="menu">
+        <button id="createExelInvoiceIn{i}" onclick="createReportInvoiceIn(i)">
+            <img scr="" alt="Create xlsx" />
+        </button>
+    </div>
 }
