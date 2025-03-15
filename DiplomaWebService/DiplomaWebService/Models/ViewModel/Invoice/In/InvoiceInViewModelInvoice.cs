@@ -2,15 +2,15 @@
 using DiplomaWebService.Models.Items;
 using DiplomaWebService.Models.Types;
 
-namespace DiplomaWebService.Models.ViewModel.Invoice
+namespace DiplomaWebService.Models.ViewModel.Invoice.In
 {
-	public class InvoiceInViewModel : BaseViewModel
+	public class InvoiceInViewModelInvoice : BaseViewModel
 	{
-		public InvoiceInViewModel(char usernameFirstLetter, string username, int roleId, List<InvoiceIn> invoicesIn, List<Sector> sectors,
+		public InvoiceInViewModelInvoice(char usernameFirstLetter, string username, int roleId, InvoiceIn invoiceIn, List<Sector> sectors,
 			List<DocumentType> documentTypes, List<Contragent> contragents,
 			List<Item> items, List<Unit> units, List<Category> categories) : base(usernameFirstLetter, username, roleId)
 		{
-			InvoicesIn = invoicesIn;
+			InvoiceIn = invoiceIn;
 			Sectors = sectors;
 			DocumentTypes = documentTypes;
 			Contragents = contragents;
@@ -19,7 +19,7 @@ namespace DiplomaWebService.Models.ViewModel.Invoice
 			Categories = categories;
 		}
 
-		public List<InvoiceIn> InvoicesIn { get; set; }
+		public InvoiceIn InvoiceIn { get; set; }
 		public List<Sector> Sectors { get; set; }
 		public List<DocumentType> DocumentTypes { get; set; }
 

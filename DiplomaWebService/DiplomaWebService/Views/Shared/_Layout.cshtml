@@ -10,6 +10,10 @@
 
 	<link rel="stylesheet" href="css/styles.css" />
 	<link rel="stylesheet" href="css/normalize.css" />
+	<script src="js/search.js"></script>
+	<script src="js/report.js"></script>
+	<script src="js/reassessment.js"></script>
+	<script src="js/form.js"></script>
 </head>
 <body>
 	<div class="sidebar-page">
@@ -78,29 +82,26 @@
 					</ul>
                 </nav>
 				<div class="user-info-wrapper">
-					<div class="user-info">@Model.UsernameFirstLetter</div>
+					<div class="user-info">T</div>
 					<div class="user-name">
 						<a href="#" class="sidebar-link" onclick="openLogOutForm(); return false;">
-							<div class="sidebar-link-text">@Model.Username</div>
+							<div class="sidebar-link-text">Test</div>
 						</a>
 					</div>
-					<div class="logout" id="logout">
+					<div class="logout-popup" id="logout">
 						<div class="version">
-							<span>Будяк v: 1.2.0</span>
+							<img src="../img/logo_small.svg">
+							Будяк v: 1.2.1
 						</div>
 						<div class="separator"></div>
-						<div class="logout-link">
+						<div class="logout">
 							<a href="/logout">
-								<div class="logout-text">
-									Вийти
-								</div>
-								<div class="logout-img">
-									<img src="img/logout.svg" alt="Logout Icon">
-								</div>
+								Вийти
+								<img src="../img/logout.svg" alt="Logout Icon">
 							</a>
 						</div>
 					</div>
-				</div>				
+				</div>
 			</div>
 		</section>
 		<!--/sidebar-->
@@ -126,49 +127,9 @@
 				// });
 
 				function openMenu(id) {
-					document.getElementById("menu").style.display = "block";
-					//document.getElementById("table1").onclick = function() { openMenuAlert(id); };
-				}
-				function createReportInvoiceOut(invoiceId) {
-					let Http = new XMLHttpRequest();
-					let url = "/reportInvoiceOut/";
-					Http.open("POST", url);
-					Http.setRequestHeader("Content-Type", "application/json; charset=utf-8")
-					Http.send(invoiceId);
-
-					Http.onreadystatechange = function () {
-						if (Http.readyState === 4 && Http.status === 200) {
-							console.log(Http.responseText);
-						}
-					};
-				}
-
-				function createReportInvoiceIn(invoiceId) {
-					let Http = new XMLHttpRequest();
-					let url = "/reportInvoiceIn/";
-					Http.open("POST", url);
-					Http.setRequestHeader("Content-Type", "application/json; charset=utf-8")
-					Http.send(invoiceId);
-
-					Http.onreadystatechange = function () {
-						if (Http.readyState === 4 && Http.status === 200) {
-							console.log(Http.responseText);
-						}
-					};
-				}
-
-				function closeModalForm() {
-					document.getElementsByClassName("modal")[0].style.display = "none";
-				}
-				function openModalForm() {
-					document.getElementsByClassName("modal")[0].style.display = "block";
-				}
-				function openLogOutForm() {
-					document.getElementById("logout").style.display = "block";
-				}
-				function ReassessmentWithCoeffOpen() {
-					document.getElementById("reassessmentWithCoefForm").style.display = "block";
-				}
+					//document.getElementById("modal-popup-hidden"+id).style.display = "block";
+					document.getElementsByClassName("modal-popup-container")[id].style.display = "block";
+				}				
 				function AddInvoiceOutFormClose() {
 					document.getElementById("invoiceNumber").value="";
 
@@ -195,29 +156,7 @@
 					invoiceInRowCounter = -1;
 
 					document.getElementById("addInvoiceInForm").style.display = "none"; // Hide the modal
-				}
-				function ReassessmentWithCoeffClose() {
-					let form = document.getElementById("reassessmentWithCoefForm");
-
-					if (form) {
-						form.reset();
-					}
-					document.getElementById('reassessmentWithCoefForm').style.display = "none";
-				}
-				function ReassessmentWithoutCoeffOpen(stockId, displayText) {
-					document.getElementById('showStockItemId').value=stockId;
-					document.getElementById('displayText').value=displayText;
-					document.getElementById('reassessmentWithoutCoefForm').style.display = "block";
-				}
-				function ReassessmentWithoutCoeffClose() {
-					let form = document.getElementById("reassessmentWithoutCoefForm");
-
-					if (form) {
-						form.reset();
-					}
-
-					document.getElementById('reassessmentWithoutCoefForm').style.display = "none";
-				}
+				}				
 				function removeRow(button) {
 					button.parentElement.remove();
 				}
@@ -347,102 +286,6 @@
 
 					container.appendChild(newRow);
 				}
-
-				function searchContragents(event) {
-					if(event.key === 'Enter') {
-						let searchValue = document.getElementById("search").value;
-						let Http = new XMLHttpRequest();
-						let url = "/searchContragents/"+encodeURIComponent(searchValue);
-						 Http.open("GET", url);
-						 Http.send(); // No data needed for GET request
-
-						Http.onreadystatechange = function () {
-							if (Http.readyState === 4 && Http.status === 200) {
-						     document.getElementById("contragentsList").innerHTML=Http.responseText;
-							}
-						};
-					}
-				}
-
-			function searchItems(event) {
-				if(event.key === 'Enter') {
-					let searchValue = document.getElementById("search").value;
-					let Http = new XMLHttpRequest();
-					let url = "/searchItems/"+encodeURIComponent(searchValue);
-						Http.open("GET", url);
-						Http.send(); // No data needed for GET request
-
-					Http.onreadystatechange = function () {
-						if (Http.readyState === 4 && Http.status === 200) {
-							document.getElementById("itemsList").innerHTML=Http.responseText;
-						}
-					};
-				}
-			}
-
-			function searchInvoiceIn(event) {
-				if(event.key === 'Enter') {
-					let searchValue = document.getElementById("search").value;
-					let Http = new XMLHttpRequest();
-					let url = "/searchInvoicesIn/"+encodeURIComponent(searchValue);
-						Http.open("GET", url);
-						Http.send();
-
-					Http.onreadystatechange = function () {
-						if (Http.readyState === 4 && Http.status === 200) {
-							document.getElementById("invoiceInList").innerHTML=Http.responseText;
-						}
-					};
-				}
-			}
-
-			function searchInvoiceOut(event) {
-				if(event.key === 'Enter') {
-					let searchValue = document.getElementById("search").value;
-					let Http = new XMLHttpRequest();
-					let url = "/searchInvoicesOut/"+encodeURIComponent(searchValue);
-						Http.open("GET", url);
-						Http.send();
-
-					Http.onreadystatechange = function () {
-						if (Http.readyState === 4 && Http.status === 200) {
-							document.getElementById("invoiceOutList").innerHTML=Http.responseText;
-						}
-					};
-				}
-			}
-
-			function searchUnits(event) {
-				if(event.key === 'Enter') {
-					let searchValue = document.getElementById("search").value;
-					let Http = new XMLHttpRequest();
-					let url = "/searchUnits/"+ encodeURIComponent(searchValue);
-						Http.open("GET", url);
-						Http.send(); // No data needed for GET request
-
-					Http.onreadystatechange = function () {
-						if (Http.readyState === 4 && Http.status === 200) {
-							document.getElementById("unitsList").innerHTML=Http.responseText;
-						}
-					};
-				}
-			}
-
-		function searchUsers(event) {
-			if(event.key === 'Enter') {
-				let searchValue = document.getElementById("search").value;
-				let Http = new XMLHttpRequest();
-				let url = "/searchUsers/"+ encodeURIComponent(searchValue);
-					Http.open("GET", url);
-					Http.send(); // No data needed for GET request
-
-				Http.onreadystatechange = function () {
-					if (Http.readyState === 4 && Http.status === 200) {
-						document.getElementById("usersList").innerHTML=Http.responseText;
-					}
-				};
-			}
-		}
 	</script>
 </body>
 </html>

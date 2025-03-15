@@ -53,6 +53,19 @@
 				<th hidden>contragentId</th>
 				<th>Назва</th>
 				<th hidden>parentId</th>
+				<th>Головний підрозділ</th>
+				<th>Опис</th>
+				<th>Статус</th>
+				@* <th></th> *@
+			</tr>
+		</thead>
+	</table>
+	<table>
+		<thead hidden>
+			<tr hidden>
+				<th hidden>contragentId</th>
+				<th>Назва</th>
+				<th hidden>parentId</th>
 				<th>Вище формування</th>
 				<th>Опис</th>
 				<th>Статус</th>

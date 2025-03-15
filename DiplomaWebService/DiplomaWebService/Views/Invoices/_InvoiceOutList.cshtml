@@ -21,49 +21,27 @@
         <td hidden>@Model[i].Sector.Id</td>
         <td>@Model[i].Sector.Name</td>
         <td hidden>@Model[i].DocumentType.Id</td>
-        <td>@Model[i].DocumentType.Name</td>
-        <td>
-            <table>
-                <thead>
-                    <tr>
-                        <th hidden>Item Id</th>
-                        <th>Назва</th>
-                        <th>Кількість</th>
-                        <th>Ціна</th>
-                        <th>Рік випуску</th>
-                        <th>Кількість</th>
-                        <th hidden>Unit Id</th>
-                        <th>Одиниці виміру</th>
-                        <th hidden>Category Id</th>
-                        <th>Категорія</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var position in Model[i].InvoicePositions)
-                    {
-                        <tr>
-                            <td hidden>@position.Item.ItemId</td>
-                            <td>@position.Item.ItemName</td>
-                            <td>@position.Amount</td>
-                            <td>@position.Price</td>
-                            <td hidden>@position.SerialNumber</td>
-                            <td>@position.ProductionYear</td>
-                            <td hidden>@position.Unit.Id</td>
-                            <td>@position.Unit.Name</td>
-                            <td hidden>@position.Category.Id</td>
-                            <td>@position.Category.Name</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </td>
-        <td>
-            <button onclick="openMenu(i)"></button>
+        <td>@Model[i].DocumentType.Name</td>       
+        <td class="td-image">
+            <div class="modal-popup">
+                <div class="three-dots-button-container">
+                    <button onclick="openMenu(@i)">
+                        <img src="img/3dots.svg">
+                    </button>
+                </div>
+                <div class="modal-popup-container">
+                    <div class="menu-item-container">
+                        Перегляд
+                        <button class="small-icon-container" id="invoiceDetails" onclick="/invoiceOut/{@Model[i].Id}"><img src="img/review.svg"></button>
+                    </div>
+                    <div class="separator">
+                    </div>
+                    <div class="menu-item-container">
+                        Експорт
+                        <button class="small-icon-container" id="createExelInvoiceOut@i" onclick="createReportInvoiceOut(@Model[i].Id)"><img src="img/excel.svg"></button>
+                    </div>
+                </div>
+            </div>
         </td>
     </tr>
-    <div class="menu">
-        <button id="createExelInvoiceOut{i}" onclick="createReportInvoiceOut(i)">
-            <img scr="" alt="Create xlsx"/>
-        </button>
-    </div>
 }

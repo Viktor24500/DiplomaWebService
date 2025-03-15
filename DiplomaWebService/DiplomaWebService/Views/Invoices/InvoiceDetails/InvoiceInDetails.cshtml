@@ -1,0 +1,73 @@
+﻿@using DiplomaWebService.Models.Invoice.In
+@using DiplomaWebService.Models.ViewModel.Invoice.In
+@model InvoiceInViewModelInvoice
+<div class="main-header">
+    <div class="top-header">
+        <h2>Накладні прихід @Model.InvoiceIn.Number</h2>
+    </div>
+    <div class="btn-header">
+        <button type="button" class="btn btn-header btn-header-disable" disabled>Зберегти</button>
+    </div>
+</div>
+<nav class="nav">
+    <button type="button" class="btn btn-add-user" onclick="openModalForm()" disabled>
+        <img src="img/back.svg">
+    </button>
+</nav>
+</div>
+<div class="container">
+    <div class="block-container ">
+        <span>Дата @Model.InvoiceIn.InvoiceDate</span>
+        <span hidden>Sender Id @Model.InvoiceIn.SenderId</span>
+        <span>Відправник @Model.InvoiceIn.SenderName</span>
+        <span hidden>Destination Id @Model.InvoiceIn.DestinationId</span>
+        <span>Отримувач @Model.InvoiceIn.DestinationId</span>
+        <span hidden>Sector Id @Model.InvoiceIn.Sector.Id</span>
+        <span>Служба @Model.InvoiceIn.Sector.Name</span>
+        <div class="separator">
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="block-container ">
+        Позиції
+        <button type="button" class="btn btn-add-user" onclick="openModalForm()" disabled>
+            <img src="img/plus.svg">Додати
+        </button>
+    </div>
+</div>
+<div class="users-table-content">
+    <table>
+        <thead>
+            <tr>
+                <th hidden>Item Id</th>
+                <th>Назва</th>
+                <th>Серійний номер</th>
+                <th>Рік випуску</th>
+                <th>Кількість</th>
+                <th>Ціна</th>
+                <th hidden>Unit Id</th>
+                <th>Одиниці виміру</th>
+                <th hidden>Category Id</th>
+                <th>Категорія</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (InvoicePositionIn position in Model.InvoiceIn.InvoicePositions)
+            {
+                <tr>
+                    <td hidden>@position.Item.ItemId</td>
+                    <td>@position.Item.ItemName</td>
+                    <td>@position.Amount</td>
+                    <td>@position.Price</td>
+                    <td hidden>@position.SerialNumber</td>
+                    <td>@position.ProductionYear</td>
+                    <td hidden>@position.Unit.Id</td>
+                    <td>@position.Unit.Name</td>
+                    <td hidden>@position.Category.Id</td>
+                    <td>@position.Category.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

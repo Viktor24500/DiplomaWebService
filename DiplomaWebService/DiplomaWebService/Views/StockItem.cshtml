@@ -59,9 +59,9 @@
 					<td id="Price">@Model.StockItems[i].Price</td>
 					<td id="Amount">@Model.StockItems[i].AllAmount</td>
 					<td id="ContragentName">@Model.StockItems[i].ContragentName</td>
-					<td>
-						<button type="add-user" class="btn btn-add-user" onclick="ReassessmentWithoutCoeffOpen('@Model.StockItems[i].StockItemId','@Model.StockItems[i].Item.ItemName, @Model.StockItems[i].Unit.Name, @Model.StockItems[i].Category.Name, @Model.StockItems[i].Price')">
-							<img src="img/reevaluation1.svg">Переоцінка
+					<td class="td-image">
+						<button type="add-user" class="btn" onclick="ReassessmentWithoutCoeffOpen('@Model.StockItems[i].StockItemId','@Model.StockItems[i].Item.ItemName, @Model.StockItems[i].Unit.Name, @Model.StockItems[i].Category.Name, @Model.StockItems[i].Price')">
+							<img src="img/reevaluation1.svg">
 						</button>
 					</td>
 				</tr>

@@ -2,6 +2,8 @@
 using DiplomaWebService.Common.Results;
 using DiplomaWebService.Constants;
 using DiplomaWebService.Models;
+using DiplomaWebService.Parametrs.Reports;
+using DiplomaWebService.Request;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DiplomaWebService.Controllers
@@ -21,7 +23,7 @@ namespace DiplomaWebService.Controllers
 
 		[HttpPost]
 		[Route("/reportInvoiceIn")]
-		public async Task<IActionResult> CreateReportInvoiceIn(int invoiceId)
+		public async Task<IActionResult> CreateReportInvoiceIn([FromBody] ReportInvoiceInRequest request)
 		{
 			Result<string> result = new Result<string>();
 			Result<string> resToken = GetTokenFromCookies();
@@ -55,10 +57,12 @@ namespace DiplomaWebService.Controllers
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			string url = _connectionString + "reportInvoiceIn";
+			ReportCreateParameters reportParam = new ReportCreateParameters(request.InvoiceId);
 			using (HttpClient client = new HttpClient())
 			{
+				JsonContent content = JsonContent.Create(reportParam);
 				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
-				HttpResponseMessage responseMessage = await client.GetAsync(url);
+				HttpResponseMessage responseMessage = await client.PostAsync(url, content);
 				if (responseMessage.IsSuccessStatusCode)
 				{
 					result.Data = await responseMessage.Content.ReadAsStringAsync();
@@ -78,12 +82,12 @@ namespace DiplomaWebService.Controllers
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
-			return RedirectToAction("InvoiceIn/GetAllInvoicesIn");
+			return RedirectToAction("GetAllInvoicesIn", "InvoiceIn");
 		}
 
 		[HttpPost]
 		[Route("/reportInvoiceOut")]
-		public async Task<IActionResult> CreateReportInvoiceOut(int invoiceId)
+		public async Task<IActionResult> CreateReportInvoiceOut([FromBody] ReportInvoiceOutRequest request)
 		{
 			Result<string> result = new Result<string>();
 			Result<string> resToken = GetTokenFromCookies();
@@ -117,10 +121,12 @@ namespace DiplomaWebService.Controllers
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			string url = _connectionString + "reportInvoiceOut";
+			ReportCreateParameters reportParam = new ReportCreateParameters(request.InvoiceId);
 			using (HttpClient client = new HttpClient())
 			{
+				JsonContent content = JsonContent.Create(reportParam);
 				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
-				HttpResponseMessage responseMessage = await client.GetAsync(url);
+				HttpResponseMessage responseMessage = await client.PostAsync(url, content);
 				if (responseMessage.IsSuccessStatusCode)
 				{
 					result.Data = await responseMessage.Content.ReadAsStringAsync();
@@ -140,7 +146,7 @@ namespace DiplomaWebService.Controllers
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
-			return RedirectToAction("InvoiceOut/GetAllInvoicesOut");
+			return RedirectToAction("GetAllInvoicesOut", "InvoiceOut");
 		}
 
 		private Result<string> GetTokenFromCookies()

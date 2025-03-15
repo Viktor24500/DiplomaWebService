@@ -21,7 +21,7 @@
 		</button>
 		<div class="right-actions">
 			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук..." onkeydown="searchUsers(event)">
-			<div class="modal-popup">
+	<div class="modal-popup">
 				<button onclick="openMenu(0)">
 					<img src="img/filtr.svg">
 				</button>
@@ -37,7 +37,7 @@
 						Блокувати 
 						<button class="small-icon-container" id="createExelInvoiceIn@i" onclick="createReportInvoiceIn(0)"><img src="img/archive.svg"></button>								
 					</div>
-				</div>													
+				</div>
 		</div>
 	</nav>
 </div>
@@ -55,7 +55,7 @@
                 <th></th>
             </tr>
         </thead>
-		<tbody id="usersList" class="scroll">
+        <tbody id="usersList" class="scroll">
             @Html.Partial("/Views/Users/_UsersList.cshtml", @Model.Users)
         </tbody>
     </table>

@@ -14,15 +14,15 @@
         <td id="LastNameInTable">@Model[i].LastName</td>
         <td id="FirstNameInTable">@Model[i].FirstName</td>
         <td id="FatherNameInTable">@Model[i].FatherName</td>
-        <td id="UserStatusInTable">
-			<div class="status-@Model[i].StatusDescription">@Model[i].StatusDescription
+        <td id="UserNameInTable">
+			<div class="status-@Model[i].StatusDescription">@Model[i].StatusDescription>
 			</div>
 		</td> 
 		<td id="IsActiveUserInTable">@Model[i].RoleName</td>
 		<td class="td-image">
 			<div class="modal-popup">
 				<div class="three-dots-button-container">
-					<button onclick="openMenu(@i)">
+					<button onclick="openMenu(0)">
 						<img src="img/3dots.svg">
 					</button>
 				</div>

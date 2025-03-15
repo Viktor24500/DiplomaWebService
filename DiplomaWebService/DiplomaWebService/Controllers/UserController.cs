@@ -144,7 +144,7 @@ namespace DiplomaWebService.Controllers
 		public async Task<IActionResult> SearchUserByName(string name)
 		{
 			Result<List<User>> result = new Result<List<User>>();
-			string url = _connectionString + $"/searchUsers/{name}";
+			string url = _connectionString + $"searchUsers/{name}";
 
 			Result<string> resToken = GetTokenFromCookies();
 			Result<string> username = GetUsernameFromSession();
@@ -155,7 +155,7 @@ namespace DiplomaWebService.Controllers
 				result.ErrorMessage = username.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), username.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, username.ErrorMessage);
-				return View("/Views/Shared/Error.cshtml", errorModel);
+				return PartialView("/Views/Shared/Error.cshtml", errorModel);
 			}
 			if (resToken.ErrorCode != (int)ErrorCodes.Success)
 			{
@@ -164,7 +164,7 @@ namespace DiplomaWebService.Controllers
 				result.ErrorMessage = resToken.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
-				return View("/Views/Shared/Error.cshtml", errorModel);
+				return PartialView("/Views/Shared/Error.cshtml", errorModel);
 			}
 			Result<int> roleId = GetRoleIdFromSession();
 			if (roleId.ErrorCode != (int)ErrorCodes.Success)
@@ -174,7 +174,7 @@ namespace DiplomaWebService.Controllers
 				result.ErrorMessage = roleId.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), roleId.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, roleId.ErrorMessage);
-				return View("/Views/Shared/Error.cshtml", errorModel);
+				return PartialView("/Views/Shared/Error.cshtml", errorModel);
 			}
 			using (HttpClient client = new HttpClient())
 			{
@@ -197,7 +197,7 @@ namespace DiplomaWebService.Controllers
 				//result.ErrorMessage = "invalid username or password";
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
-				return View("/Views/Shared/Error.cshtml", errorModel);
+				return PartialView("/Views/Shared/Error.cshtml", errorModel);
 			}
 			return PartialView("/Views/Users/_UsersList.cshtml", result.Data);
 		}

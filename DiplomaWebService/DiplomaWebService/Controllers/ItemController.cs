@@ -200,7 +200,7 @@ namespace DiplomaWebService.Controllers
 				result.ErrorMessage = resToken.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
-				return View("/Views/Shared/Error.cshtml", errorModel);
+				return PartialView("/Views/Shared/Error.cshtml", errorModel);
 			}
 			Result<string> username = GetUsernameFromSession();
 			if (username.ErrorCode != (int)ErrorCodes.Success)
@@ -210,7 +210,7 @@ namespace DiplomaWebService.Controllers
 				result.ErrorMessage = username.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), username.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, username.ErrorMessage);
-				return View("/Views/Shared/Error.cshtml", errorModel);
+				return PartialView("/Views/Shared/Error.cshtml", errorModel);
 			}
 			Result<int> roleId = GetRoleIdFromSession();
 			if (roleId.ErrorCode != (int)ErrorCodes.Success)
@@ -220,7 +220,7 @@ namespace DiplomaWebService.Controllers
 				result.ErrorMessage = roleId.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), roleId.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, roleId.ErrorMessage);
-				return View("/Views/Shared/Error.cshtml", errorModel);
+				return PartialView("/Views/Shared/Error.cshtml", errorModel);
 			}
 			string url = _connectionString + $"searchItems/{name}";
 			using (HttpClient client = new HttpClient())
@@ -244,7 +244,7 @@ namespace DiplomaWebService.Controllers
 				//result.ErrorMessage = "Can't search units";
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
-				return View("/Views/Shared/Error.cshtml", errorModel);
+				return PartialView("/Views/Shared/Error.cshtml", errorModel);
 			}
 			return PartialView("/Views/Dictionaries/Items/_ItemsList.cshtml", result.Data);
 		}

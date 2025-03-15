@@ -1,11 +1,11 @@
 ﻿using DiplomaWebService.Models.Invoice.Out;
 using DiplomaWebService.Models.Types;
 
-namespace DiplomaWebService.Models.ViewModel.Invoice
+namespace DiplomaWebService.Models.ViewModel.Invoice.Out
 {
-	public class InvoiceOutViewModel : BaseViewModel
+	public class InvoiceOutViewModelInvoiceList : BaseViewModel
 	{
-		public InvoiceOutViewModel(char usernameFirstLetter, string username, int roleId, List<InvoiceOut> invoicesOut, List<Sector> sectors,
+		public InvoiceOutViewModelInvoiceList(char usernameFirstLetter, string username, int roleId, List<InvoiceOut> invoicesOut, List<Sector> sectors,
 			List<DocumentType> documentTypes, List<Contragent> contragents, List<StockItem> stockItems) : base(usernameFirstLetter, username, roleId)
 		{
 			InvoicesOut = invoicesOut;
