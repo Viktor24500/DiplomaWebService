@@ -17,7 +17,7 @@
         <td hidden>@Model[i].SenderId</td>
         <td>@Model[i].SenderName</td>
         <td hidden>@Model[i].InvoiceType.Id</td>
-        <td>@Model[i].InvoiceType.Name</td>
+        @* <td>@Model[i].InvoiceType.Name</td> *@
         <td hidden>@Model[i].Sector.Id</td>
         <td>@Model[i].Sector.Name</td>
         <td hidden>@Model[i].DocumentType.Id</td>
@@ -32,7 +32,10 @@
                 <div class="modal-popup-container">
                     <div class="menu-item-container">
                         Перегляд
-                        <button class="small-icon-container" id="invoiceDetails" onclick="/invoiceOut/{@Model[i].Id}"><img src="img/review.svg"></button>
+                        @* <button class="small-icon-container" id="invoiceDetails" onclick="/invoiceOut/{@Model[i].Id}"><img src="img/review.svg"></button> *@
+                        <a href="/invoiceOut/@Model[i].Id" class="small-icon-container">
+                            <img src="img/review.svg">
+                        </a>
                     </div>
                     <div class="separator">
                     </div>

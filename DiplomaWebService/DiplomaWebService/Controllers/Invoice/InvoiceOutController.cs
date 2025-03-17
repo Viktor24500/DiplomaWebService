@@ -122,7 +122,7 @@ namespace DiplomaWebService.Controllers.Invoice
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, roleId.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
-			string url = _connectionString + $"invoiceIn/{id}";
+			string url = _connectionString + $"invoiceOut/{id}";
 			using (HttpClient client = new HttpClient())
 			{
 				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);

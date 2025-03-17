@@ -1,6 +1,19 @@
 ﻿@using DiplomaWebService.Models.Invoice.Out
 @using DiplomaWebService.Models.ViewModel.Invoice.Out
 @model InvoiceOutViewModelInvoice
+<div class="main-header">
+    <div class="top-header">
+        <h2>Накладні видача @Model.InvoicesOut.Number</h2>
+    </div>
+    <div class="btn-header">
+        <button type="button" class="btn btn-header btn-header-disable" disabled>Зберегти</button>
+    </div>
+</div>
+<nav class="nav">
+    <a href="/invoicesOut" class="btn btn-add-user">
+        <img src="../img/back.svg">
+    </a>
+</nav>
 <div class="container">
     <div class="block-container ">
         <span>Дата @Model.InvoicesOut.InvoiceDate</span>
@@ -18,7 +31,7 @@
     <div class="block-container ">
         Позиції
         <button type="button" class="btn btn-add-user" onclick="openModalForm()" disabled>
-            <img src="img/plus.svg">Додати
+            <img src="../img/plus.svg">Додати
         </button>
     </div>
 </div>
