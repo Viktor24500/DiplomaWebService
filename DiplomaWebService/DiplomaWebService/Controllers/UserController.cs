@@ -91,8 +91,8 @@ namespace DiplomaWebService.Controllers
 
 		[Route("/users")]
 		[HttpPost]
-		public async Task<IActionResult> CreateUser(string lastName, string firstName, string? fatherName,
-									string username, string userPassword, string email, int roleId, bool isActive)
+		public async Task<IActionResult> CreateUser(string lastName, string firstName,
+									string username, string userPassword, string email, int roleId, bool isActive, string? comment, string phoneNumber)
 		{
 			isActive = true;
 			Result<User> result = new Result<User>();
@@ -111,7 +111,7 @@ namespace DiplomaWebService.Controllers
 			{
 				UserCreateParameters userCreateParam = new UserCreateParameters(
 					username, userPassword, email, firstName,
-					lastName, fatherName, isActive, roleId);
+					lastName, comment, isActive, roleId, phoneNumber);
 				JsonContent content = JsonContent.Create(userCreateParam);
 
 				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
@@ -141,7 +141,7 @@ namespace DiplomaWebService.Controllers
 
 		[HttpGet]
 		[Route("/searchUsers/{name}")]
-		public async Task<IActionResult> SearchUserByName(string name)
+		public async Task<IActionResult> SearchUser(string name)
 		{
 			Result<List<User>> result = new Result<List<User>>();
 			string url = _connectionString + $"searchUsers/{name}";

@@ -18,13 +18,14 @@
     <div class="block-container ">
         <span>Дата @Model.InvoiceIn.InvoiceDate</span>
         <span hidden>Sender Id @Model.InvoiceIn.SenderId</span>
+        <div class="separator"></div>
         <span>Відправник @Model.InvoiceIn.SenderName</span>
         <span hidden>Destination Id @Model.InvoiceIn.DestinationId</span>
-        <span>Отримувач @Model.InvoiceIn.DestinationId</span>
+        <div class="separator"></div>
+        <span>Отримувач @Model.InvoiceIn.DestinationName</span>
         <span hidden>Sector Id @Model.InvoiceIn.Sector.Id</span>
+        <div class="separator"></div>
         <span>Служба @Model.InvoiceIn.Sector.Name</span>
-        <div class="separator">
-        </div>
     </div>
 </div>
 <div class="container">
@@ -57,10 +58,10 @@
                 <tr>
                     <td hidden>@position.Item.ItemId</td>
                     <td>@position.Item.ItemName</td>
+                    <td>@position.SerialNumber</td>
+                    <td>@position.ProductionYear</td>
                     <td>@position.Amount</td>
                     <td>@position.Price</td>
-                    <td hidden>@position.SerialNumber</td>
-                    <td>@position.ProductionYear</td>
                     <td hidden>@position.Unit.Id</td>
                     <td>@position.Unit.Name</td>
                     <td hidden>@position.Category.Id</td>

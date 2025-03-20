@@ -19,7 +19,7 @@
 			<img src="img/reevaluation.svg">Коефіціент
 		</button>		
 		<div class="right-actions">
-			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук...">
+			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук..." onkeydown="searchStockItem(event)">
 			<img src="img/filtr.svg">
 		</div>
 	</nav>
@@ -43,30 +43,9 @@
 				<th></th>
 			</tr>
 		<thead>
-		<tbody class="scroll">
-			@for (int i = 0; i < @Model.StockItems.Count(); i++)
-			{
-				<tr>
-					<td id="stockItemId" hidden>@Model.StockItems[i].StockItemId</td>
-					<td id="ItemId" hidden><label>@Model.StockItems[i].Item.ItemId</label></td>
-					<td id="ItemName">@Model.StockItems[i].Item.ItemName</td>
-					<td id="ItemName">@Model.StockItems[i].Item.NomenclatureNumber</td>
-					<td id="ItemName">@Model.StockItems[i].ProductionYear</td>
-					<td id="UnitId" hidden>@Model.StockItems[i].Unit.Id</td>
-					<td id="UnitName">@Model.StockItems[i].Unit.Name</td>
-					<td id="CategoryId" hidden>@Model.StockItems[i].Category.Id</td>
-					<td id="CategoryName">@Model.StockItems[i].Category.Name</td>
-					<td id="Price">@Model.StockItems[i].Price</td>
-					<td id="Amount">@Model.StockItems[i].AllAmount</td>
-					<td id="ContragentName">@Model.StockItems[i].ContragentName</td>
-					<td class="td-image">
-						<button type="add-user" class="btn" onclick="ReassessmentWithoutCoeffOpen('@Model.StockItems[i].StockItemId','@Model.StockItems[i].Item.ItemName, @Model.StockItems[i].Unit.Name, @Model.StockItems[i].Category.Name, @Model.StockItems[i].Price')">
-							<img src="img/reevaluation1.svg">
-						</button>
-					</td>
-				</tr>
-			}
-		</tbody>			
+		<tbody id="stockItemList" class="scroll">
+				@Html.Partial("/Views/StockItems/_StockItemList.cshtml", @Model.StockItems)
+		</tbody>
 	</table>
 </div>
 @Html.Partial("/Views/Forms/StockItemForm/ReassessmentWithCoefForm.cshtml", @Model)

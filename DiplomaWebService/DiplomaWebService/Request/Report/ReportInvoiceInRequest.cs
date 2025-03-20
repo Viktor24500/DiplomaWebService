@@ -1,4 +1,4 @@
-﻿namespace DiplomaWebService.Request
+﻿namespace DiplomaWebService.Request.Report
 {
 	public class ReportInvoiceInRequest
 	{

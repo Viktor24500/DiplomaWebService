@@ -93,3 +93,20 @@ function searchUsers(event) {
 		};
 	}
 }
+
+function searchStockItem(event) {
+	if (event.key === 'Enter') {
+		let searchValue = document.getElementById("search").value;
+		let Http = new XMLHttpRequest();
+		let url = "/searchStockItems/" + encodeURIComponent(searchValue);
+		Http.open("GET", url);
+		Http.send(); // No data needed for GET request
+
+		Http.onreadystatechange = function () {
+			if (Http.readyState === 4 && Http.status === 200) {
+				document.getElementById("stockItemList").innerHTML = Http.responseText;
+			}
+		};
+	}
+}
+

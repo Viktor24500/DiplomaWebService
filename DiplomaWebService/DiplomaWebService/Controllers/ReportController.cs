@@ -3,7 +3,7 @@ using DiplomaWebService.Common.Results;
 using DiplomaWebService.Constants;
 using DiplomaWebService.Models;
 using DiplomaWebService.Parametrs.Reports;
-using DiplomaWebService.Request;
+using DiplomaWebService.Request.Report;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DiplomaWebService.Controllers

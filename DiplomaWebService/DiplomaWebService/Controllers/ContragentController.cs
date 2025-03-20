@@ -87,7 +87,7 @@ namespace DiplomaWebService.Controllers
 
 		[HttpGet]
 		[Route("/searchContragents/{name}")]
-		public async Task<IActionResult> SearchContragentsByContragentName(string name)
+		public async Task<IActionResult> SearchContragents(string name)
 		{
 			Result<List<Contragent>> result = new Result<List<Contragent>>();
 			Result<string> resToken = GetTokenFromCookies();

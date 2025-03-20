@@ -157,7 +157,7 @@ body {
 .separator {
     border: 1px solid var(--gray1);
     border-radius: 200px;
-    margin: 10px 0;
+    margin: 5px 0;
     width: 100%;
 }
 
@@ -647,7 +647,7 @@ td img {
     align-items: center;
     width: 100%;
     gap: 40px;
-    margin-top: 20px;
+    margin-top: 10px;
     padding-right: 20px;
     font-style: normal;
 }
@@ -765,3 +765,17 @@ thead {
     font-size: 18px;
 }
 /* == /Contragents ==*/
+
+#addInvoice{
+    color:white;
+    text-decoration: none;
+}
+
+.main-logo-container{
+    display:flex;
+    justify-content:center;
+}
+
+.comment{
+    height: 50px;
+}

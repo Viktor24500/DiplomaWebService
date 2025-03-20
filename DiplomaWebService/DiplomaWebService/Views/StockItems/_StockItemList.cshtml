@@ -1,0 +1,24 @@
+﻿@model List<StockItem>
+
+@for (int i = 0; i < @Model.Count(); i++)
+{
+    <tr>
+        <td id="stockItemId" hidden>@Model[i].StockItemId</td>
+        <td id="ItemId" hidden>@Model[i].Item.ItemId</td>
+        <td id="ItemName">@Model[i].Item.ItemName</td>
+        <td id="ItemNomenclatureNumber">@Model[i].Item.NomenclatureNumber</td>
+        <td id="ItemProductionYear">@Model[i].ProductionYear</td>
+        <td id="UnitId" hidden>@Model[i].Unit.Id</td>
+        <td id="UnitName">@Model[i].Unit.Name</td>
+        <td id="CategoryId" hidden>@Model[i].Category.Id</td>
+        <td id="CategoryName">@Model[i].Category.Name</td>
+        <td id="Price">@Model[i].Price</td>
+        <td id="Amount">@Model[i].AllAmount</td>
+        <td id="ContragentName">@Model[i].ContragentName</td>
+        <td class="td-image">
+            <button type="add-user" class="btn" onclick="ReassessmentWithoutCoeffOpen('@Model[i].StockItemId','@Model[i].Item.ItemName, @Model[i].Unit.Name, @Model[i].Category.Name, @Model[i].Price')">
+                <img src="img/reevaluation1.svg">
+            </button>
+        </td>
+    </tr>
+}

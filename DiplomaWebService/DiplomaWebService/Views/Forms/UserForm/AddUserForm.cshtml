@@ -65,13 +65,6 @@
 			</div>
 		</div>
 		<div class="user-modal-block">
-			<div class="user-modal-label">По батькові:</div>
-			<div class="input-field-wrapper">
-				<input type="text" class="input-field" name="fatherName" id="fatherName" value="" placeholder="По батькові">
-				<div class="separator"></div>
-			</div>
-		</div>
-		<div class="user-modal-block">
 			<div class="user-modal-label">Логін: *</div>
 			<div class="input-field-wrapper">
 				<input type="text" class="input-field" name="username" id="username" value="" placeholder="Логін" required>
@@ -93,6 +86,13 @@
 			</div>
 		</div>
 		<div class="user-modal-block">
+			<div class="user-modal-label">Телефон: *</div>
+			<div class="input-field-wrapper">
+				<input type="tel" class="input-field" name="phoneNumber" id="phoneNumber" value="" placeholder="Телефон" pattern="+380993452453" required>
+				<div class="separator"></div>
+			</div>
+		</div>
+		<div class="user-modal-block">
 			<div class="user-modal-label">Роль: *</div>
 			<div class="input-field-wrapper">
 				<select class="input-field dropdown" name="roleId" id="roleId">
@@ -101,6 +101,13 @@
 						<option value="@Model[i].Id"> @Model[i].Name</option>
 					}
 				</select>
+				<div class="separator"></div>
+			</div>
+		</div>
+		<div class="user-modal-block">
+			<div class="user-modal-label">Комент:</div>
+			<div class="input-field-wrapper">
+				<input type="text" class="input-field comment" name="comment" id="comment" value="" placeholder="Комент">
 				<div class="separator"></div>
 			</div>
 		</div>

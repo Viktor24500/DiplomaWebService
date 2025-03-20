@@ -161,7 +161,7 @@ namespace DiplomaWebService.Controllers.Invoice
 
 		[HttpGet]
 		[Route("/searchInvoicesOut/{number}")]
-		public async Task<IActionResult> SearchInvoiceOutByNumber(string number)
+		public async Task<IActionResult> SearchInvoiceOut(string number)
 		{
 			Result<List<InvoiceOut>> result = new Result<List<InvoiceOut>>();
 			Result<string> resToken = GetTokenFromCookies();
