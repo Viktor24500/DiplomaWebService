@@ -1,12 +1,20 @@
-﻿<!DOCTYPE html>
+﻿@using DiplomaWebService.Models.ViewModel
+@using DiplomaWebService.Common.Enum
+@model BaseViewModel;
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title></title>
 
-	<link rel="stylesheet" href="css/styles.css" />
-	<link rel="stylesheet" href="css/normalize.css" />
+	<link rel="stylesheet" href="../css/styles.css" />
+	<link rel="stylesheet" href="../css/normalize.css" />
+	<script src="../js/search.js"></script>
+	<script src="../js/report.js"></script>
+	<script src="../js/reassessment.js"></script>
+	<script src="../js/form.js"></script>
+	<script src="../js/invoiceIn.js"></script>
 </head>
 <body>
 	<div class="sidebar-page">
@@ -14,14 +22,15 @@
 		<section class="sidebar-outer">
 			<div class="sidebar-wrapper">
 				<div class="logo-container">
-					<h1>LOGO</h1>
+					@* <h1>LOGO</h1> *@
+					<img src="../img/logo.svg">
 				</div>
 				<nav>
 					<ul class="nav-wrapper">
 						<li class="nav-ul-item nav-ul-item--active">
 							<a title="Invoice" class="sidebar-link" href="/invoicesIn">
 								<div class="small-icon-container">
-									<img src="img/admin.svg">
+									<img src="../img/admin.svg">
 								</div>
 								<div class="sidebar-link-text">Накладні прихід</div>
 							</a>
@@ -29,7 +38,7 @@
 						<li class="nav-ul-item nav-ul-item--active">
 							<a title="Invoice" class="sidebar-link" href="/invoicesOut">
 								<div class="small-icon-container">
-									<img src="img/admin.svg">
+									<img src="../img/admin.svg">
 								</div>
 								<div class="sidebar-link-text">Накладні видача</div>
 							</a>
@@ -37,15 +46,15 @@
 						<li class="nav-ul-item nav-ul-item--active">
 							<a title="Depot" class="sidebar-link" href="/stockItems">
 								<div class="small-icon-container">
-									<img src="img/admin.svg">
+									<img src="../img/warehouse.svg">
 								</div>
-								<div class="sidebar-link-text">Склад</div>
+								<div class="sidebar-link-text">Майно на обліку</div>
 							</a>
 						</li>
 						<li class="nav-ul-item nav-ul-item--active">
 							<a title="Reports" class="sidebar-link" href="reports.html">
 								<div class="small-icon-container">
-									<img src="img/admin.svg">
+									<img src="../img/reports.svg">
 								</div>
 								<div class="sidebar-link-text">Звіти</div>
 							</a>
@@ -53,26 +62,46 @@
 						<li class="accordion-item">
 							<input class="accordion-item-input" type="checkbox" id="accordion-dictionary">
 							<label class="accordion-trigger" for="accordion-dictionary">
-								<img src="img/dictionary.svg">
+								<img src="../img/dictionary.svg">
 								<span class="sidebar-link-text">Довідники</span>
 							</label>
-							<a title="Agents" class="accordion-content sidebar-menu-text" href="/contragents">Контрагенти</a>
+							<a title="Agents" class="accordion-content sidebar-menu-text" href="/contragents">Підрозділи</a>
 							<a title="Property" class="accordion-content sidebar-menu-text" href="/items">Майно</a>
 							<a title="Units" class="accordion-content sidebar-menu-text" href="/units">Одиниці виміру</a>
 						</li>
-						<li class="nav-ul-item nav-ul-item--active">
-							<a title="Administration" class="sidebar-link" href="/users">
-								<div class="small-icon-container">
-									<img src="img/admin.svg">
-								</div>
-								<div class="sidebar-link-text">Адміністрування</div>
-							</a>
-						</li>
+						@if(@Model.RoleId==(int)Roles.Admin)
+						{
+							<li class="nav-ul-item nav-ul-item--active">
+								<a title="Administration" class="sidebar-link" href="/users">
+									<div class="small-icon-container">
+										<img src="../img/admin.svg">
+									</div>
+									<div class="sidebar-link-text">Адміністрування</div>
+								</a>
+							</li>
+						}						
 					</ul>
-				</nav>
+                </nav>
 				<div class="user-info-wrapper">
-					<div class="user-info"></div>
-					<div class="user-name">Копійка</div>
+					<div class="user-info">T</div>
+					<div class="user-name">
+						<a href="#" class="sidebar-link" onclick="openLogOutForm(); return false;">
+							<div class="sidebar-link-text">Test</div>
+						</a>
+					</div>
+					<div class="logout-popup" id="logout">
+						<div class="version">
+							<img src="../img/logo_small.svg">
+							Будяк v: 1.2.1
+						</div>
+						<div class="separator"></div>
+						<div class="logout">
+							<a href="/logout">
+								Вийти
+								<img src="../img/logout.svg" alt="Logout Icon">
+							</a>
+						</div>
+					</div>
 				</div>
 			</div>
 		</section>
@@ -85,150 +114,179 @@
 
 	</div>
 	<script type="text/javascript">
-		function closeModalForm() {
-			document.getElementsByClassName('modal')[0].style.display = "none";
-		}
-		function openModalForm() {
-			document.getElementsByClassName('modal')[0].style.display = "block";
-		}		
-		function ReassessmentWithCoeffOpen() {
-			document.getElementById('reassessmentWithCoefForm').style.display = "block";
-		}
-		function ReassessmentWithCoeffClose() {
-			document.getElementById('reassessmentWithCoefForm').style.display = "none";
-		}
-		function ReassessmentWithoutCoeffOpen() {
-			document.getElementById('reassessmentWithoutCoefForm').style.display = "block";
-		}
-		function ReassessmentWithoutCoeffClose() {
-			document.getElementById('reassessmentWithoutCoefForm').style.display = "none";
-		}
-		function removeRow(button) {
-			button.parentElement.remove();
-		}
+				var invoiceOutRowCounter = -1;
+				var invoiceInRowCounter = -1;
 
-		var invoiceOutRowCounter = -1;
-		function addInvoiceOutPosition() {
-			let container = document.getElementById("itemRow");
-			invoiceOutRowCounter++;
+				//  document.addEventListener("DOMContentLoaded", function () {
+				// 	let logout = document.getElementById("logout");
 
-			var stockOptions = "";
-			var stockSelect =  document.querySelector("select[name^='StockItemId']"); // Try to get from an existing row or fallback
+				// 	document.addEventListener('click', function (e) {
+				// 		if (logout.style.display === "block" && !logout.contains(e.target)) {
+				// 			logout.style.display = "none";
+				// 		}
+				// 	});
+				// });
 
-			if (stockSelect) {
-				stockOptions = stockSelect.innerHTML; // Copy dropdown options
-			} else {
-				console.warn("StockItemId dropdown not found! Ensure it's available in the initial form.");
-			}
+				function openMenu(id) {
+					//document.getElementById("modal-popup-hidden"+id).style.display = "block";
+					document.getElementsByClassName("modal-popup-container")[id].style.display = "block";
+				}				
+				function AddInvoiceOutFormClose() {
+					document.getElementById("invoiceNumber").value="";
 
-			let newRow = document.createElement("div");
-			newRow.classList.add("row-item");
+					let itemRowContainer = document.getElementById("itemRow");
+					if (itemRowContainer) {
+						itemRowContainer.innerHTML = ""; // Remove dynamically added rows
+					}
 
-			newRow.innerHTML = `
-						<div class="user-modal-block">
-							<div class="user-modal-label">Майно:</div>
-							<div class="input-field-wrapper">
-								<select class="input-field dropdown" name="invoicePositions[${invoiceOutRowCounter}].StockItemId" required>
-									${stockOptions}
-								</select>
-								<div class="separator"></div>
-							</div>
-						</div>
-						<div class="user-modal-block">
-							<div class="user-modal-label">Кількість</div>
-							<div class="input-field-wrapper">
-								<input type="text" class="input-field" name="invoicePositions[${invoiceOutRowCounter}].Amount" placeholder="Кількість" required>
-								<div class="separator"></div>
-							</div>
-						</div>
-						<button type="button" class="remove-btn" onclick="removeRow(this)">❌</button>
-					`;
+					invoiceOutRowCounter = -1;
+					invoiceInRowCounter = -1;
 
-			container.appendChild(newRow);
-		}
+					document.getElementById("addInvoiceOutForm").style.display = "none"; // Hide the modal
+				}
 
-		var invoiceInRowCounter = -1;
-		function addInvoiceInPosition() {
-			let container = document.getElementById("itemRow");
-			invoiceInRowCounter++;
+				function AddInvoiceInFormClose() {
+					document.getElementById("invoiceNumber").value="";
 
-			var itemOptions = "";
-			var itemSelect =  document.querySelector("select[name^='getItemId']"); // Try to get from an existing row or fallback
+					let itemRowContainer = document.getElementById("itemRow");
+					if (itemRowContainer) {
+						itemRowContainer.innerHTML = ""; // Remove dynamically added rows
+					}
 
-			if (itemSelect) {
-				itemOptions = itemSelect.innerHTML; // Copy dropdown options
-			} else {
-				console.warn("getItemId dropdown not found! Ensure it's available in the initial form.");
-			}
+					invoiceOutRowCounter = -1;
+					invoiceInRowCounter = -1;
 
-			var unitOptions = "";
-			var unitSelect =  document.querySelector("select[name^='getUnitId']"); // Try to get from an existing row or fallback
+					document.getElementById("addInvoiceInForm").style.display = "none"; // Hide the modal
+				}				
+				function removeRow(button) {
+					button.parentElement.remove();
+				}
 
-			if (unitSelect) {
-				unitOptions = unitSelect.innerHTML; // Copy dropdown options
-			} else {
-				console.warn("getUnitId dropdown not found! Ensure it's available in the initial form.");
-			}
+				function addInvoiceOutPosition() {
+					let container = document.getElementById("itemRow");
+					invoiceOutRowCounter++;
 
-			var categoryOptions = "";
-			var categorySelect = document.querySelector("select[name^='getCategoryId']"); // Try to get from an existing row or fallback
+					var stockOptions = "";
+					var stockSelect =  document.querySelector("select[name^='StockItemId']");
 
-			if (categorySelect) {
-				categoryOptions = categorySelect.innerHTML; // Copy dropdown options
-			} else {
-				console.warn("getItemId dropdown not found! Ensure it's available in the initial form.");
-			}
+					if (stockSelect) {
+						stockOptions = stockSelect.innerHTML;
+					} else {
+						console.warn("StockItemId dropdown not found! Ensure it's available in the initial form.");
+					}
 
-			let newRow = document.createElement("div");
-			newRow.classList.add("row-item");
+					let newRow = document.createElement("div");
+					newRow.classList.add("row-item");
 
-			newRow.innerHTML = `
+					newRow.innerHTML = `
 								<div class="user-modal-block">
-									<div class="user-modal-label">Майно:</div>
-									<div class="input-field-wrapper">
-										<select class="input-field dropdown" name="positions[${invoiceInRowCounter}].ItemId" required>
-											${itemOptions}
+									<div class="user-modal-label">Майно: *</div>
+									<div class="input-field-wrapper input-field-wrapper-invoice-in-out">
+										<select class="input-field dropdown" name="invoicePositions[${invoiceOutRowCounter}].StockItemId" required>
+											${stockOptions}
 										</select>
 										<div class="separator"></div>
 									</div>
 								</div>
 								<div class="user-modal-block">
-									<div class="user-modal-label">Кількість</div>
-									<div class="input-field-wrapper">
-										<input type="text" class="input-field" name="positions[${invoiceInRowCounter}].Amount" placeholder="Кількість" required>
-										<div class="separator"></div>
-									</div>
-								</div>
-								<div class="user-modal-block">
-									<div class="user-modal-label">Ціна</div>
-									<div class="input-field-wrapper">
-										<input type="text" class="input-field" name="positions[${invoiceInRowCounter}].Price" placeholder="Ціна" required>
-										<div class="separator"></div>
-									</div>
-								</div>
-								<div class="user-modal-block">
-									<div class="user-modal-label">Одиниці виміру:</div>
-									<div class="input-field-wrapper">
-										<select class="input-field dropdown" name="positions[${invoiceInRowCounter}].UnitId" required>
-											${unitOptions}
-										</select>
-										<div class="separator"></div>
-									</div>
-								</div>
-								<div class="user-modal-block">
-									<div class="user-modal-label">Категорія:</div>
-									<div class="input-field-wrapper">
-										<select class="input-field dropdown" name="positions[${invoiceInRowCounter}].CategoryId" required>
-											${categoryOptions}
-										</select>
+									<div class="user-modal-label">Кількість: *</div>
+									<div class="input-field-wrapper input-field-wrapper-invoice-in-out">
+										<input type="text" class="input-field" name="invoicePositions[${invoiceOutRowCounter}].Amount" placeholder="Кількість" required>
 										<div class="separator"></div>
 									</div>
 								</div>
 								<button type="button" class="remove-btn" onclick="removeRow(this)">❌</button>
 							`;
 
-			container.appendChild(newRow);
-		}
+					container.appendChild(newRow);
+				}
+
+				function addInvoiceInPosition() {
+					let container = document.getElementById("itemRow");
+					invoiceInRowCounter++;
+
+					var itemOptions = "";
+					var itemSelect =  document.querySelector("select[name^='getItemId']");
+
+					if (itemSelect) {
+						itemOptions = itemSelect.innerHTML;
+					} else {
+						console.warn("getItemId dropdown not found! Ensure it's available in the initial form.");
+					}
+
+					var unitOptions = "";
+					var unitSelect =  document.querySelector("select[name^='getUnitId']");
+
+					if (unitSelect) {
+						unitOptions = unitSelect.innerHTML;
+					} else {
+						console.warn("getUnitId dropdown not found! Ensure it's available in the initial form.");
+					}
+
+					var categoryOptions = "";
+					var categorySelect = document.querySelector("select[name^='getCategoryId']");
+
+					if (categorySelect) {
+						categoryOptions = categorySelect.innerHTML;
+					} else {
+						console.warn("getItemId dropdown not found! Ensure it's available in the initial form.");
+					}
+
+					let newRow = document.createElement("div");
+					newRow.classList.add("row-item");
+
+					newRow.innerHTML = `
+										<div class="user-modal-block">
+											<div class="user-modal-label">Майно: *</div>
+											<div class="input-field-wrapper input-field-wrapper-invoice-in-out">
+												<select class="input-field dropdown" name="positions[${invoiceInRowCounter}].ItemId" required>
+													${itemOptions}
+												</select>
+												<div class="separator"></div>
+											</div>
+										</div>
+										<div class="user-modal-block">
+											<div class="user-modal-label">Кількість: *</div>
+											<div class="input-field-wrapper input-field-wrapper-invoice-in-out">
+												<input type="number" class="input-field" name="positions[${invoiceInRowCounter}].Amount" placeholder="Кількість" required>
+												<div class="separator"></div>
+											</div>
+										</div>
+										<div class="user-modal-block">
+											<div class="user-modal-label">Ціна: *</div>
+											<div class="input-field-wrapper input-field-wrapper-invoice-in-out">
+												<input type="number" class="input-field" name="positions[${invoiceInRowCounter}].Price" placeholder="Ціна" required>
+												<div class="separator"></div>
+											</div>
+										</div>
+										<div class="user-modal-block">
+											<div class="user-modal-label">Категорія: *</div>
+											<div class="input-field-wrapper input-field-wrapper-invoice-in-out">
+												<select class="input-field dropdown" name="positions[${invoiceInRowCounter}].CategoryId" required>
+													${categoryOptions}
+												</select>
+												<div class="separator"></div>
+											</div>
+										</div>
+										<div class="user-modal-block">
+										<div class="user-modal-label">Серійний номер:</div>
+											<div class="input-field-wrapper input-field-wrapper-invoice-in-out">
+												<input type="text" class="input-field" name="positions[${invoiceInRowCounter}].SerialNumber" placeholder="Серійний номер">
+												<div class="separator"></div>
+											</div>
+										</div>
+										<div class="user-modal-block">
+											<div class="user-modal-label">Рік випуску:</div>
+											<div class="input-field-wrapper input-field-wrapper-invoice-in-out">
+												<input type="number" class="input-field" name="positions[${invoiceInRowCounter}].ProductionYear" placeholder="Рік випуску" min="1900">
+												<div class="separator"></div>
+											</div>
+										</div>
+										<button type="button" class="remove-btn" onclick="removeRow(this)">❌</button>
+									`;
+
+					container.appendChild(newRow);
+				}
 	</script>
 </body>
 </html>

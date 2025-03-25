@@ -1,5 +1,6 @@
-﻿@using DiplomaWebService.Models;
-@model List<Sector>
+﻿@using DiplomaWebService.Common.Enum
+@using DiplomaWebService.Models.ViewModel
+@model SectorViewModel
 
 @{
 }
@@ -23,16 +24,25 @@
 <div class="app-content">
     <div class="main-header">
         <div class="top-header">
-            <h2>Сектори</h2>
+            <h2>Служби</h2>
         </div>
         <div class="btn-header">
             <button type="button" class="btn btn-header btn-header-disable" disabled>Зберегти</button>
         </div>
     </div>
     <nav class="nav">
-        <button type="add-sector" class="btn btn-add-user" onclick="openModalForm('addSectorForm')">
-            <img src="img/admin.svg">Додати
-        </button>
+        @if (Model.RoleId == (int)Roles.Viewer)
+        {
+            <button type="button" class="btn btn-add-user" onclick="openModalForm('addSectorForm')" disabled>
+                <img src="img/plus.svg">Додати
+            </button>
+        }
+        else
+        {
+            <button type="button" class="btn btn-add-user" onclick="openModalForm('addSectorForm')">
+                <img src="img/plus.svg">Додати
+            </button>
+        }
         <div class="right-actions">
             <input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук...">
             <img src="img/filtr.svg">
@@ -40,20 +50,17 @@
     </nav>
 </div>
 <div class="users-table-content">
-    <table>
-        <tr>
-            <th hidden>sectorId</th>
-            <th>Назва</th>
-            <th>Скорочена назва</th>
-        </tr>
-        @for (int i = 0; i < Model.Count(); i++)
-        {
-            <tr>
-                <td id="sectorId" hidden>@Model[i].Id</td>
-                <td id="Name">@Model[i].Name</td>
-                <td id="ShortName">@Model[i].ShortSectorName</td>
+    <table class="data-table">
+        <thead class="data-table-thead">
+            <tr class="data-table-tr">
+                <th class="data-table-th" hidden>sectorId</th>
+                <th class="data-table-th">Назва</th>
+                <th class="data-table-th">Скорочена назва</th>
             </tr>
-        }
+        </thead>
+        <tbody id="sectorsList" >
+            @Html.Partial("/Views/Dictionaries/Sectors/_SectorsList.cshtml", @Model.Sectors)
+        </tbody>
     </table>
 </div>
 @Html.Partial("/Views/Forms/SectorForm/AddSector.cshtml")

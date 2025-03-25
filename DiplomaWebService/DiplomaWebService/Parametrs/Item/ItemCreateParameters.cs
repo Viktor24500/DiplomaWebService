@@ -1,16 +1,30 @@
 ﻿namespace DiplomaWebService.Parametrs.Item
 {
-    public class ItemCreateParameters
-    {
-        public ItemCreateParameters(string itemName, int sectorId, int? inventoryNumber)
-        {
-            ItemName = itemName;
-            SectorId = sectorId;
-            InventoryNumber = inventoryNumber;
-        }
-        public string ItemName { get; set; }
+	public class ItemCreateParameters
+	{
+		public ItemCreateParameters(string itemName, int sectorId, string? nomenclatureNumber, decimal? weight,
+							decimal? requiredQuantity, int unitId, string? description)
+		{
+			ItemName = itemName;
+			SectorId = sectorId;
+			NomenclatureNumber = nomenclatureNumber;
+			Weight = weight;
+			RequiredQuantity = requiredQuantity;
+			UnitId = unitId;
+			Description = description;
+		}
+		public string ItemName { get; set; }
 
-        public int? InventoryNumber { get; set; }
-        public int SectorId { get; set; }
-    }
+		public string? NomenclatureNumber { get; set; }
+
+		public int SectorId { get; set; }
+
+		public decimal? Weight { get; set; }
+
+		public decimal? RequiredQuantity { get; set; }
+
+		public int UnitId { get; set; }
+
+		public string? Description { get; set; }
+	}
 }

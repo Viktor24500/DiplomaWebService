@@ -1,0 +1,63 @@
+﻿@using DiplomaWebService.Models.ViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model UserViewModel
+
+<div class="app-content">
+	<div class="main-header">
+		<div class="top-header">
+			<h2>Адміністрування</h2>
+		</div>
+		<div class="btn-header">
+			<button type="button" class="btn btn-header btn-header-disable" disabled>Зберегти</button>
+		</div>
+	</div>
+	<nav class="nav">
+		<button type="button" class="btn btn-add-user" onclick="openModalForm()">
+			<img src="img/plus.svg">Додати
+		</button>
+		<div class="right-actions">
+			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук..." onkeydown="searchUsers(event)">
+			<div class="modal-popup">
+				<button onclick="openMenu(0)">
+					@* <img src="img/filtr.svg"> *@
+				</button>
+			</div>	
+				<div class="modal-popup-container" id="modal-popup-hidden">
+					<div class="menu-item-container">
+						Редагувати 
+						<button class="small-icon-container" id="createExelInvoiceIn@i" onclick="createReportInvoiceIn(0)"><img src="img/edit.svg"></button>								
+					</div>
+					<div class="separator">
+					</div>	
+					<div class="menu-item-container">
+						Блокувати 
+						<button class="small-icon-container" id="createExelInvoiceIn@i" onclick="createReportInvoiceIn(0)"><img src="img/archive.svg"></button>								
+					</div>
+				</div>													
+		</div>
+	</nav>
+</div>
+<div class="users-table-content">
+	<table class="data-table">
+		<thead class="data-table-thead">
+			<tr class="data-table-tr">
+				<th class="data-table-th" hidden>Id</th>
+				<th class="data-table-th">Логін</th>
+				<th class="data-table-th">ПІБ</th>
+				<th class="data-table-th">Телефон</th>
+				<th class="data-table-th">Статус</th>
+				<th class="data-table-th">Роль</th>
+				<th class="data-table-th">Коментар</th>
+				<th class="data-table-th"></th>
+            </tr>
+        </thead>
+		<tbody id="usersList" class="scroll">
+            @Html.Partial("/Views/Users/_UsersList.cshtml", @Model.Users)
+        </tbody>
+    </table>
+</div>
+@Html.Partial("/Views/Forms/UserForm/AddUserForm.cshtml", Model.Roles)

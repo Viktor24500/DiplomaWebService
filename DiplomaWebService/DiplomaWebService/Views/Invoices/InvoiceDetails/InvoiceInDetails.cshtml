@@ -1,0 +1,73 @@
+﻿@using DiplomaWebService.Models.Invoice.In
+@using DiplomaWebService.Models.ViewModel.Invoice.In
+@model InvoiceInViewModelInvoice
+<div class="main-header">
+    <div class="top-header">
+        <h2>Накладні прихід @Model.InvoiceIn.Number</h2>
+    </div>
+    <div class="btn-header">
+        <button type="button" class="btn btn-header btn-header-disable" disabled>Зберегти</button>
+    </div>
+</div>
+<nav class="nav">
+    <a href="/invoicesIn" class="btn btn-add-user">
+        <img src="../img/back.svg">
+    </a>
+</nav>
+<div class="container">
+    <div class="block-container ">
+        <span>Дата @Model.InvoiceIn.InvoiceDate</span>
+        <span hidden>Sender Id @Model.InvoiceIn.SenderId</span>
+        <div class="separator"></div>
+        <span>Відправник @Model.InvoiceIn.SenderName</span>
+        <span hidden>Destination Id @Model.InvoiceIn.DestinationId</span>
+        <div class="separator"></div>
+        <span>Отримувач @Model.InvoiceIn.DestinationName</span>
+        <span hidden>Sector Id @Model.InvoiceIn.Sector.Id</span>
+        <div class="separator"></div>
+        <span>Служба @Model.InvoiceIn.Sector.Name</span>
+    </div>
+</div>
+<div class="container">
+    <div class="block-container ">
+        Позиції
+        <button type="button" class="btn btn-add-user" onclick="openModalForm()" disabled>
+            <img src="../img/plus.svg">Додати
+        </button>
+    </div>
+</div>
+<div class="users-table-content">
+    <table class="data-table">
+        <thead class="data-table-thead">
+            <tr class="data-table-tr">
+                <th class="data-table-th" hidden>Item Id</th>
+                <th class="data-table-th">Назва</th>
+                <th class="data-table-th">Серійний номер</th>
+                <th class="data-table-th">Рік випуску</th>
+                <th class="data-table-th">Кількість</th>
+                <th class="data-table-th">Ціна</th>
+                <th class="data-table-th" hidden>Unit Id</th>
+                <th class="data-table-th">Одиниці виміру</th>
+                <th class="data-table-th" hidden>Category Id</th>
+                <th class="data-table-th">Категорія</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (InvoicePositionIn position in Model.InvoiceIn.InvoicePositions)
+            {
+                <tr class="data-table-tr">
+                    <td class="data-table-td" hidden>@position.Item.ItemId</td>
+                    <td class="data-table-td">@position.Item.ItemName</td>
+                    <td class="data-table-td">@position.SerialNumber</td>
+                    <td class="data-table-td">@position.ProductionYear</td>
+                    <td class="data-table-td">@position.Amount</td>
+                    <td class="data-table-td">@position.Price</td>
+                    <td class="data-table-td" hidden>@position.Unit.Id</td>
+                    <td class="data-table-td">@position.Unit.Name</td>
+                    <td class="data-table-td" hidden>@position.Category.Id</td>
+                    <td class="data-table-td">@position.Category.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

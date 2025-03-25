@@ -1,5 +1,6 @@
-﻿@using DiplomaWebService.Models;
-@model List<Unit>
+﻿@using DiplomaWebService.Common.Enum
+@using DiplomaWebService.Models.ViewModel
+@model UnitViewModel
 @{
 }
 
@@ -13,29 +14,36 @@
 		</div>
 	</div>
 	<nav class="nav">
-		<button type="add-user" class="btn btn-add-user" onclick="openModalForm('addUnitForm')">
-			<img src="img/admin.svg">Додати
-		</button>
+		@if (Model.RoleId == (int)Roles.Viewer)
+		{
+			<button type="add-user" class="btn btn-add-user" onclick="openModalForm('addUnitForm')" disabled>
+				<img src="img/plus.svg">Додати
+			</button>
+		}
+		else
+		{
+			<button type="add-user" class="btn btn-add-user" onclick="openModalForm('addUnitForm')">
+				<img src="img/plus.svg">Додати
+			</button>
+		}
 		<div class="right-actions">
-			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук...">
-			<img src="img/filtr.svg">
+			<input type="text" class="input-field search-field" name="search" id="search" placeholder="Пошук..." onkeydown="searchUnits(event)">
+			@* <img src="img/filtr.svg"> *@
 		</div>
 	</nav>
 </div>
 <div class="users-table-content">
-    <table>
-        <tr>
-            <th hidden>UnitId</th>
-            <th>Назва</th>
-        </tr>
-
-        @for (int i = 0; i < Model.Count; i++)
-        {
-            <tr>
-                <td id="unitId" hidden>@Model[i].Id</td>
-                <td id="unitName">@Model[i].Name</td>
-            </tr>
-        }
-    </table>
+	<table class="data-table">
+		<thead class="data-table-thead">
+			<tr class="data-table-tr">
+				<th class="data-table-th" hidden>UnitId</th>
+				<th class="data-table-th">Назва</th>
+				<th class="data-table-th">Опис</th>
+			</tr>
+		</thead>
+		<tbody id="unitsList" class="scroll">
+			@Html.Partial("/Views/Dictionaries/Units/_UnitsList.cshtml", @Model.Units)
+		</tbody>
+	</table>
 </div>
 @Html.Partial("/Views/Forms/UnitForm/AddUnit.cshtml")

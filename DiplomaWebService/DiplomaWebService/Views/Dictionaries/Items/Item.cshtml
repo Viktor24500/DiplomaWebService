@@ -1,4 +1,5 @@
-﻿@using DiplomaWebService.Models.Items
+﻿@using DiplomaWebService.Common.Enum
+@using DiplomaWebService.Models.ViewModel;
 @model ItemViewModel
 @{
 }
@@ -13,35 +14,43 @@
 		</div>
 	</div>
 	<nav class="nav">
-		<button type="add-user" class="btn btn-add-user" onclick="openModalForm('addItemForm')">
-			<img src="img/admin.svg">Додати
-		</button>
+		@if (Model.RoleId == (int)Roles.Viewer)
+		{
+			<button type="button" class="btn btn-add-user" onclick="openModalForm('addItemForm')" disabled>
+				<img src="img/plus.svg">Додати
+			</button>
+		}
+		else
+		{
+			<button type="button" class="btn btn-add-user" onclick="openModalForm('addItemForm')">
+				<img src="img/plus.svg">Додати
+			</button>
+		}
 		<div class="right-actions">
-			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук...">
+			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук..." onkeydown="searchItems(event)">
 			<img src="img/filtr.svg">
 		</div>
 	</nav>
 </div>
 <div class="users-table-content">
-	<table>
-		<tr>
-			<th hidden>itemId</th>
-			<th>Назва</th>
-			<th>Інвентарний номер</th>
-			<th hidden>sectorId</th>
-			<th>Назва служби</th>
-			<th></th>
-		</tr>
-		@for (int i = 0; i < Model.Items.Count(); i++)
-		{
-			<tr>
-				<td id="itemId" hidden>@Model.Items[i].ItemId</td>
-				<td id="Name">@Model.Items[i].ItemName</td>
-				<td id="InventoryNumber">@Model.Items[i].InventoryNumber</td>
-				<td id="sectorId" hidden>@Model.Items[i].Sector.Id</td>
-				<td id="SectorName">@Model.Items[i].Sector.Name</td>
+	<table class="data-table">
+		<thead class="data-table-thead">
+			<tr class="data-table-tr">
+				<th class="data-table-th" hidden>itemId</th>
+				<th class="data-table-th">Назва</th>
+				<th class="data-table-th">Номенклатурний номер</th>
+				<th class="data-table-th" hidden>unitId</th>
+				<th class="data-table-th">Одиниці виміру</th>
+				<th class="data-table-th">Штат</th>
+				<th class="data-table-th">Вага</th>
+				<th class="data-table-th">Опис</th>
+				<th class="data-table-th" hidden>sectorId</th>
+				<th class="data-table-th">Назва служби</th>
 			</tr>
-		}
+		</thead>
+		<tbody id="itemsList" class="scroll">
+			@Html.Partial("/Views/Dictionaries/Items/_ItemsList.cshtml", @Model.Items)
+		</tbody>
 	</table>
 </div>
-@Html.Partial("/Views/Forms/ItemForm/AddItem.cshtml", @Model.Sectors)
+@Html.Partial("/Views/Forms/ItemForm/AddItem.cshtml", @Model)

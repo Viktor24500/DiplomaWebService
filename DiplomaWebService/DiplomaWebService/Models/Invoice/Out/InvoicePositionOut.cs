@@ -2,26 +2,30 @@
 
 namespace DiplomaWebService.Models.Invoice.Out
 {
-    public class InvoicePositionOut
-    {
-        public InvoicePositionOut(int id, int invoiceId, Item item, decimal amount,
-            decimal price, Unit unit, Category category)
-        {
-            Id = id;
-            InvoiceId = invoiceId;
-            Item = item;
-            Amount = amount;
-            Price = price;
-            Unit = unit;
-            Category = category;
-        }
+	public class InvoicePositionOut
+	{
+		public InvoicePositionOut(int id, int invoiceId, Item item, decimal amount,
+			decimal price, Unit unit, Category category, string? serialNumber, int? productionYear)
+		{
+			Id = id;
+			InvoiceId = invoiceId;
+			Item = item;
+			Amount = amount;
+			Price = price;
+			Unit = unit;
+			Category = category;
+			SerialNumber = serialNumber;
+			ProductionYear = productionYear;
+		}
 
-        public int Id { get; set; }
-        public int InvoiceId { get; set; }
-        public Item Item { get; set; }
-        public decimal Amount { get; set; }
-        public decimal Price { get; set; }
-        public Unit Unit { get; set; }
-        public Category Category { get; set; }
-    }
+		public int Id { get; set; }
+		public int InvoiceId { get; set; }
+		public Item Item { get; set; }
+		public decimal Amount { get; set; }
+		public decimal Price { get; set; }
+		public Unit Unit { get; set; }
+		public Category Category { get; set; }
+		public string? SerialNumber { get; set; }
+		public int? ProductionYear { get; set; }
+	}
 }

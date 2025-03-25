@@ -1,0 +1,52 @@
+﻿@using DiplomaWebService.Models.ViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model StockItemViewModel
+<div class="app-content">
+	<div class="main-header">
+		<div class="top-header">
+			<h2>Майно на обліку</h2>
+		</div>
+		<div class="btn-header">
+			<button type="button" class="btn btn-header btn-header-disable" disabled>Зберегти</button>
+		</div>
+	</div>
+	<nav class="nav">
+		<button type="add-user" class="btn btn-add-user" onclick="ReassessmentWithCoeffOpen()">
+			<img src="img/reevaluation.svg">Коефіціент
+		</button>		
+		<div class="right-actions">
+			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук..." onkeydown="searchStockItem(event)">
+			<img src="img/filtr.svg">
+		</div>
+	</nav>
+</div>
+<div class="users-table-content">
+	<table class="data-table">
+		<thead class="data-table-thead">
+			<tr class="data-table-tr">
+				<th class="data-table-th" hidden>stockItemId</th>
+				<th class="data-table-th" hidden>ItemId</th>
+				<th class="data-table-th">Майно</th>
+				<th class="data-table-th">Номенклатурний номер</th>
+				<th class="data-table-th">Рік випуску</th>
+				<th class="data-table-th" hidden>UnitId</th>
+				<th class="data-table-th">Одиниця виміру</th>
+				<th class="data-table-th" hidden>CategoryId</th>
+				<th class="data-table-th">Категорія</th>
+				<th class="data-table-th">Ціна</th>
+				<th class="data-table-th">Кількість</th>
+				<th class="data-table-th">Підрозділ</th>
+				<th class="data-table-th"></th>
+			</tr>
+		<thead>
+		<tbody id="stockItemList" class="scroll">
+				@Html.Partial("/Views/StockItems/_StockItemList.cshtml", @Model.StockItems)
+		</tbody>
+	</table>
+</div>
+@Html.Partial("/Views/Forms/StockItemForm/ReassessmentWithCoefForm.cshtml", @Model)
+@Html.Partial("/Views/Forms/StockItemForm/ReassessmentWithoutCoefForm.cshtml", @Model)
