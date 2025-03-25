@@ -37,35 +37,35 @@
     </div>
 </div>
 <div class="users-table-content">
-    <table>
-        <thead>
-            <tr>
-                <th hidden>Item Id</th>
-                <th>Назва</th>
-                <th>Серійний номер</th>
-                <th>Рік випуску</th>
-                <th>Кількість</th>
-                <th>Ціна</th>
-                <th hidden>Unit Id</th>
-                <th>Одиниці виміру</th>
-                <th hidden>Category Id</th>
-                <th>Категорія</th>
+    <table class="data-table">
+        <thead class="data-table-thead">
+            <tr class="data-table-tr">
+                <th class="data-table-th" hidden>Item Id</th>
+                <th class="data-table-th">Назва</th>
+                <th class="data-table-th">Серійний номер</th>
+                <th class="data-table-th">Рік випуску</th>
+                <th class="data-table-th">Кількість</th>
+                <th class="data-table-th">Ціна</th>
+                <th class="data-table-th" hidden>Unit Id</th>
+                <th class="data-table-th">Одиниці виміру</th>
+                <th class="data-table-th" hidden>Category Id</th>
+                <th class="data-table-th">Категорія</th>
             </tr>
         </thead>
         <tbody>
             @foreach (InvoicePositionIn position in Model.InvoiceIn.InvoicePositions)
             {
-                <tr>
-                    <td hidden>@position.Item.ItemId</td>
-                    <td>@position.Item.ItemName</td>
-                    <td>@position.SerialNumber</td>
-                    <td>@position.ProductionYear</td>
-                    <td>@position.Amount</td>
-                    <td>@position.Price</td>
-                    <td hidden>@position.Unit.Id</td>
-                    <td>@position.Unit.Name</td>
-                    <td hidden>@position.Category.Id</td>
-                    <td>@position.Category.Name</td>
+                <tr class="data-table-tr">
+                    <td class="data-table-td" hidden>@position.Item.ItemId</td>
+                    <td class="data-table-td">@position.Item.ItemName</td>
+                    <td class="data-table-td">@position.SerialNumber</td>
+                    <td class="data-table-td">@position.ProductionYear</td>
+                    <td class="data-table-td">@position.Amount</td>
+                    <td class="data-table-td">@position.Price</td>
+                    <td class="data-table-td" hidden>@position.Unit.Id</td>
+                    <td class="data-table-td">@position.Unit.Name</td>
+                    <td class="data-table-td" hidden>@position.Category.Id</td>
+                    <td class="data-table-td">@position.Category.Name</td>
                 </tr>
             }
         </tbody>

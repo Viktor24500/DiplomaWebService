@@ -9,16 +9,16 @@
 
 @for (int i = 0; i < Model.Count(); i++)
 {
-	<tr>
-		<td id="itemId" hidden>@Model[i].ItemId</td>
-		<td id="name">@Model[i].ItemName</td>
-		<td id="inventoryNumber">@Model[i].NomenclatureNumber</td>
-		<td id="unitId" hidden>@Model[i].Unit.Id</td>
-		<td id="unitName">@Model[i].Unit.Name</td>
-		<td id="reuiredQuantity">@Model[i].RequiredQuantity</td>
-		<td id="weight">@Model[i].Weight</td>
-		<td id="description">@Model[i].Description</td>
-		<td id="sectorId" hidden>@Model[i].Sector.Id</td>
-		<td id="sectorName">@Model[i].Sector.Name</td>
+	<tr class="data-table-tr">
+		<td id="itemId" class="data-table-td" hidden>@Model[i].ItemId</td>
+		<td id="name" class="data-table-td">@Model[i].ItemName</td>
+		<td id="inventoryNumber" class="data-table-td">@Model[i].NomenclatureNumber</td>
+		<td id="unitId" class="data-table-td" hidden>@Model[i].Unit.Id</td>
+		<td id="unitName" class="data-table-td">@Model[i].Unit.Name</td>
+		<td id="reuiredQuantity" class="data-table-td">@Model[i].RequiredQuantity</td>
+		<td id="weight" class="data-table-td">@Model[i].Weight</td>
+		<td id="description" class="data-table-td">@Model[i].Description</td>
+		<td id="sectorId" class="data-table-td" hidden>@Model[i].Sector.Id</td>
+		<td id="sectorName" class="data-table-td">@Model[i].Sector.Name</td>
 	</tr>
 }

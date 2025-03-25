@@ -8,9 +8,9 @@
 
 @for (int i = 0; i < Model.Count(); i++)
 {
-    <tr>
-        <td id="sectorId" hidden>@Model[i].Id</td>
-        <td id="Name">@Model[i].Name</td>
-        <td id="ShortName">@Model[i].ShortSectorName</td>
+    <tr class="data-table-tr">
+        <td class="data-table-td" id="sectorId" hidden>@Model[i].Id</td>
+        <td class="data-table-td" id="Name">@Model[i].Name</td>
+        <td class="data-table-td" id="ShortName">@Model[i].ShortSectorName</td>
     </tr>
 }

@@ -9,13 +9,13 @@
 {
 	@if (Model[i].WhoAmI==false) 
 	{
-		<tr>
-			<td id="contragentIdInTable" hidden>@Model[i].ContragentId</td>
-			<td id="contragentNameInTable">@Model[i].ContragentName</td>
-			<td id="parentIdInTable" hidden>@Model[i].ParentId</td>
-			<td id="parentNameInTable">@Model[i].ParentName</td>
-			<td id="contragentDescriptionInTable">@Model[i].ContragentDescription</td>
-			<td id="IsActiveContragnetInTable" class="status-@Model[i].StatusDescription">@Model[i].StatusDescription</td>
+		<tr class="data-table-tr">
+			<td id="contragentIdInTable" class="data-table-td"  hidden>@Model[i].ContragentId</td>
+			<td id="contragentNameInTable" class="data-table-td">@Model[i].ContragentName</td>
+			<td id="parentIdInTable" class="data-table-td" hidden>@Model[i].ParentId</td>
+			<td id="parentNameInTable" class="data-table-td">@Model[i].ParentName</td>
+			<td id="contragentDescriptionInTable" class="data-table-td">@Model[i].ContragentDescription</td>
+			<td id="IsActiveContragnetInTable" class="data-table-td status-@Model[i].StatusDescription">@Model[i].StatusDescription</td>
 			@* 					<td>
 						<button type="button" onclick="/contragents/disable/{@Model[i].ContragentId}">
 							<img src="img/trash.svg">

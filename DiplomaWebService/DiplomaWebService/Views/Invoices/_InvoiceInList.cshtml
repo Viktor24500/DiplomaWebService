@@ -8,21 +8,21 @@
 
 @for (int i = 0; i < Model.Count(); i++)
 {
-    <tr>
-        <td hidden>@Model[i].Id</td>
-        <td>@Model[i].InvoiceDate.ToString("yyyy-MM-dd")</td>
-        <td>@Model[i].Number</td>
-        <td hidden>@Model[i].DestinationId</td>
-        <td>@Model[i].DestinationName</td>
-        <td hidden>@Model[i].SenderId</td>
-        <td>@Model[i].SenderName</td>
-        <td hidden>@Model[i].InvoiceType.Id</td>
-        @* <td>@Model[i].InvoiceType.Name</td> *@
-        <td hidden>@Model[i].Sector.Id</td>
-        <td>@Model[i].Sector.Name</td>
-        <td hidden>@Model[i].DocumentType.Id</td>
-        <td>@Model[i].DocumentType.Name</td>
-        <td class="td-image">
+    <tr class="data-table-tr">
+        <td class="data-table-td" hidden>@Model[i].Id</td>
+        <td class="data-table-td">@Model[i].InvoiceDate.ToString("yyyy-MM-dd")</td>
+        <td class="data-table-td">@Model[i].Number</td>
+        <td class="data-table-td" hidden>@Model[i].DestinationId</td>
+        <td class="data-table-td">@Model[i].DestinationName</td>
+        <td class="data-table-td" hidden>@Model[i].SenderId</td>
+        <td class="data-table-td">@Model[i].SenderName</td>
+        <td class="data-table-td" hidden>@Model[i].InvoiceType.Id</td>
+        @* <td class="data-table-td">@Model[i].InvoiceType.Name</td> *@
+        <td class="data-table-td" hidden>@Model[i].Sector.Id</td>
+        <td class="data-table-td">@Model[i].Sector.Name</td>
+        <td class="data-table-td" hidden>@Model[i].DocumentType.Id</td>
+        <td class="data-table-td">@Model[i].DocumentType.Name</td>
+        <td class="data-table-td td-image">
             <div class="modal-popup">
                 <div class="three-dots-button-container">
                     <button onclick="openMenu(@i)">
