@@ -1,5 +1,4 @@
 ﻿function createReportInvoiceOut(invoiceId) {
-	debugger;
 	let Http = new XMLHttpRequest();
 	let url = "/reportInvoiceOut/";
 	Http.open("POST", url);
@@ -14,7 +13,6 @@
 }
 
 function createReportInvoiceIn(invoiceId) {
-	debugger;
 	let Http = new XMLHttpRequest();
 	let url = "/reportInvoiceIn/";
 	Http.open("POST", url);

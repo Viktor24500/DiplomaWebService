@@ -5,6 +5,7 @@ using DiplomaWebService.Models;
 using DiplomaWebService.Models.Items;
 using DiplomaWebService.Models.ViewModel;
 using DiplomaWebService.Parametrs.Item;
+using DiplomaWebService.Request.Items;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DiplomaWebService.Controllers
@@ -143,8 +144,7 @@ namespace DiplomaWebService.Controllers
 
 		[HttpPut]
 		[Route("/items/{id}")]
-		public async Task<IActionResult> UpdateItem(int id, string name, string inventoryNumber, int sectorId, decimal? weight,
-			decimal? requiredQuantity, int unitId, string? description)
+		public async Task<IActionResult> UpdateItem(int id, [FromBody] ItemUpdateRequest item)
 		{
 			Result<Item> result = new Result<Item>();
 			Result<string> resToken = GetTokenFromCookies();
@@ -157,11 +157,11 @@ namespace DiplomaWebService.Controllers
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
-			string url = _connectionString + $"/items/{id}";
+			string url = _connectionString + $"items/{id}";
 			using (HttpClient client = new HttpClient())
 			{
-				ItemUpdateParameters itemUpdateParam = new ItemUpdateParameters(id, name, sectorId, inventoryNumber, weight, requiredQuantity,
-					unitId, description);
+				ItemUpdateParameters itemUpdateParam = new ItemUpdateParameters(id, item.ItemName, item.SectorId, item.NomenclatureNumber, item.Weight, item.RequiredQuantity,
+					item.UnitId, item.Description);
 				JsonContent content = JsonContent.Create(itemUpdateParam);
 
 				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);

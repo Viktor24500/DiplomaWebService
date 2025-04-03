@@ -8,8 +8,23 @@
 @for (int i = 0; i < Model.Count; i++)
 {
 	<tr class="data-table-tr">
-		<td class="data-table-td" id="unitId" hidden>@Model[i].Id</td>
-		<td class="data-table-td" id="unitName">@Model[i].Name</td>
-		<td class="data-table-td" id="unitDescription">@Model[i].Description</td>
+		<td class="unitId data-table-td" id="unitId" hidden>@Model[i].Id</td>
+		<td class="unitName data-table-td" id="unitName">@Model[i].Name</td>
+		<td class="unitDescription data-table-td" id="unitDescription">@Model[i].Description</td>
+		<td class="data-table-td td-image">
+			<div class="modal-popup">
+				<div class="three-dots-button-container">
+					<button onclick="openMenu(@i)">
+						<img src="img/3dots.svg">
+					</button>
+				</div>
+				<div class="modal-popup-container" id="modal-popup-hidden">
+					<div class="menu-item-container">
+						Редагувати
+						<button class="small-icon-container" id="updateUnit@i" onclick="FillUnitForm(@i)"><img src="img/edit.svg"></button>
+					</div>
+				</div>
+			</div>
+		</td>
 	</tr>
 }

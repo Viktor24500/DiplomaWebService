@@ -4,6 +4,7 @@ using DiplomaWebService.Constants;
 using DiplomaWebService.Models;
 using DiplomaWebService.Models.ViewModel;
 using DiplomaWebService.Parametrs.Units;
+using DiplomaWebService.Request.Unit;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DiplomaWebService.Controllers
@@ -132,8 +133,8 @@ namespace DiplomaWebService.Controllers
 		}
 
 		[HttpPut]
-		[Route("/units")]
-		public async Task<IActionResult> UpdateUnit(int id, string name, string? description)
+		[Route("/units/{id}")]
+		public async Task<IActionResult> UpdateUnit(int id, [FromBody] UnitUpdateRequest unit)
 		{
 			Result<Unit> result = new Result<Unit>();
 			Result<string> resToken = GetTokenFromCookies();
@@ -149,7 +150,7 @@ namespace DiplomaWebService.Controllers
 			string url = _connectionString + $"units/{id}";
 			using (HttpClient client = new HttpClient())
 			{
-				UnitUpdateParameters unitUpdateParam = new UnitUpdateParameters(id, name, description);
+				UnitUpdateParameters unitUpdateParam = new UnitUpdateParameters(id, unit.Name, unit.Description);
 				JsonContent content = JsonContent.Create(unitUpdateParam);
 
 				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);

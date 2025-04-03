@@ -4,6 +4,7 @@ using DiplomaWebService.Constants;
 using DiplomaWebService.Models;
 using DiplomaWebService.Models.ViewModel;
 using DiplomaWebService.Parametrs.Contagents;
+using DiplomaWebService.Request.Contragent;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DiplomaWebService.Controllers
@@ -197,7 +198,7 @@ namespace DiplomaWebService.Controllers
 
 		[HttpPut]
 		[Route("/contragents/{id}")]
-		public async Task<IActionResult> UpdateContragent(int id, string name, int? parentId, bool isActive, string? contragentDescription)
+		public async Task<IActionResult> UpdateContragent(int id, [FromBody] ContragentUpdateRequest contragent)
 		{
 			Result<Contragent> result = new Result<Contragent>();
 			Result<string> resToken = GetTokenFromCookies();
@@ -210,10 +211,11 @@ namespace DiplomaWebService.Controllers
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
-			string url = _connectionString + $"/contragents/{id}";
+			string url = _connectionString + $"contragents/{id}";
 			using (HttpClient client = new HttpClient())
 			{
-				ContragentUpdateParameters contragentUpdateParam = new ContragentUpdateParameters(id, parentId, name, isActive, contragentDescription);
+				ContragentUpdateParameters contragentUpdateParam = new ContragentUpdateParameters(id, contragent.ParentId, contragent.ContragentName, contragent.IsActive,
+					contragent.ContragentDescription);
 				JsonContent content = JsonContent.Create(contragentUpdateParam);
 
 				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
