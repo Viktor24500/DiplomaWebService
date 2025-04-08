@@ -174,7 +174,21 @@ namespace DiplomaWebService.Controllers
 					return View("/Views/Shared/Error.cshtml", errorModel);
 				}
 
-				return RedirectToAction("GetAllUnits");
+				switch (result.ErrorCode)
+				{
+					case (int)ErrorCodes.Success:
+						return Ok(result);
+					case (int)ErrorCodes.BadRequest:
+						return BadRequest(result.ErrorMessage);
+
+					case (int)ErrorCodes.Forbidden:
+						return StatusCode(403, result.ErrorMessage);
+
+					case (int)ErrorCodes.Unauthorized:
+						return StatusCode(401, result.ErrorMessage);
+					default:
+						return StatusCode(500, result.ErrorMessage);
+				}
 			}
 		}
 

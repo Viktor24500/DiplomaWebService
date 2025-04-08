@@ -47,56 +47,56 @@
 		<div class="user-modal-block">
 			<div class="user-modal-label" hidden>Id:</div>
 			<div class="input-field-wrapper">
-				<input type="text" class="input-field hidden" id="userId" value="" name="Id" placeholder="Id" hidden>
+				<input type="text" class="input-field hidden" id="userIdForm" value="" name="Id" placeholder="Id" hidden>
 				<div class="separator" hidden></div>
 			</div>
 		</div>
 		<div class="user-modal-block">
 			<div class="user-modal-label">Прізвище: *</div>
 			<div class="input-field-wrapper">
-				<input type="text" class="input-field" name="lastName" id="lastName" value="" placeholder="Прізвище" required>
+				<input type="text" class="input-field" name="lastName" id="lastNameForm" value="" placeholder="Прізвище" required>
 				<div class="separator"></div>
 			</div>
 		</div>
 		<div class="user-modal-block">
 			<div class="user-modal-label">Ім'я: *</div>
 			<div class="input-field-wrapper">
-				<input type="text" class="input-field" name="firstName" id="firstName" value="" placeholder="Ім'я" required>
+				<input type="text" class="input-field" name="firstName" id="firstNameForm" value="" placeholder="Ім'я" required>
 				<div class="separator"></div>
 			</div>
 		</div>
 		<div class="user-modal-block">
 			<div class="user-modal-label">Логін: *</div>
 			<div class="input-field-wrapper">
-				<input type="text" class="input-field" name="username" id="username" value="" placeholder="Логін" required>
+				<input type="text" class="input-field" name="username" id="usernameForm" value="" placeholder="Логін" required>
 				<div class="separator"></div>
 			</div>
 		</div>
 		<div class="user-modal-block">
 			<div class="user-modal-label">Пароль: *</div>
 			<div class="input-field-wrapper">
-				<input type="password" class="input-field" name="userPassword" id="userPassword" value="" placeholder="Пароль" required>
+				<input type="password" class="input-field" name="userPassword" id="userPasswordForm" value="" placeholder="Пароль" required>
 				<div class="separator"></div>
 			</div>
 		</div>
 		<div class="user-modal-block">
 			<div class="user-modal-label">Пошта: *</div>
 			<div class="input-field-wrapper">
-				<input type="text" class="input-field" name="email" id="email" value="" placeholder="Пошта" required>
+				<input type="text" class="input-field" name="email" id="emailForm" value="" placeholder="Пошта" required>
 				<div class="separator"></div>
 			</div>
 		</div>
 		<div class="user-modal-block">
 			<div class="user-modal-label">Телефон: *</div>
 			<div class="input-field-wrapper">
-				<input type="tel" class="input-field" name="phoneNumber" id="phoneNumber" value="" placeholder="Телефон: +380993452453" pattern="\+380\d{9}" required>
+				<input type="tel" class="input-field" name="phoneNumber" id="phoneNumberForm" value="" placeholder="Телефон: +380993452453" pattern="\+380\d{9}" required>
 				<div class="separator"></div>
 			</div>
 		</div>
 		<div class="user-modal-block">
 			<div class="user-modal-label">Роль: *</div>
 			<div class="input-field-wrapper">
-				<select class="input-field dropdown" name="roleId" id="roleId">
+				<select class="input-field dropdown" name="roleId" id="roleIdForm">
 					@for (int i = 0; i < @Model.Count(); i++)
 					{
 						<option value="@Model[i].Id"> @Model[i].Name</option>
@@ -108,14 +108,14 @@
 		<div class="user-modal-block">
 			<div class="user-modal-label">Комент:</div>
 			<div class="input-field-wrapper">
-				<input type="text" class="input-field comment" name="comment" id="comment" value="" placeholder="Комент">
+				<input type="text" class="input-field comment" name="comment" id="commentForm" value="" placeholder="Комент">
 				<div class="separator"></div>
 			</div>
 		</div>
 		<div class="user-modal-block">
 			<div class="user-modal-label">Статус:*</div>
 			<div class="input-field-wrapper">
-				<select class="input-field dropdown" name="isActive" id="isActive">
+				<select class="input-field dropdown" name="isActive" id="isActiveForm">
 					<option value="true"> Активний</option>
 					<option value="false"> Неактивний</option>
 				</select>

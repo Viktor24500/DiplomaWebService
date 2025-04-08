@@ -546,6 +546,7 @@ body {
     background-color: var(--cta-background-color);
     color: var(--cta-text-color);
     border-radius: 16px;
+    padding: 5px;
     /*    gap: 10px;
     padding: 5px 12px 5px 9px;
     position: relative;

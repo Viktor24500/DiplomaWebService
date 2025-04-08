@@ -16,38 +16,38 @@ function FillUserForm(id)
     document.getElementById("submitButton").setAttribute('type', 'button');
     document.getElementById("submitButton").onclick = UpdateUser;
 
-    document.getElementById("userId").value = userId;
-    document.getElementById("lastName").value = lastName;
-    document.getElementById("firstName").value = firstName;
-    document.getElementById("username").value = username;
-    document.getElementById("email").value = email;
-    document.getElementById("phoneNumber").value = phone;
-    document.getElementById("roleId").value = roleId;
+    document.getElementById("userIdForm").value = userId;
+    document.getElementById("lastNameForm").value = lastName;
+    document.getElementById("firstNameForm").value = firstName;
+    document.getElementById("usernameForm").value = username;
+    document.getElementById("emailForm").value = email;
+    document.getElementById("phoneNumberForm").value = phone;
+    document.getElementById("roleIdForm").value = roleId;
     if (isActive == "True") {
-        document.getElementById("isActive").value = "true";
+        document.getElementById("isActiveForm").value = "true";
     }
     else
     {
-        document.getElementById("isActive").value = "false";
+        document.getElementById("isActiveForm").value = "false";
     }
-    document.getElementById("comment").value = comment;
+    document.getElementById("commentForm").value = comment;
 
-    document.getElementById("userPassword").readOnly = true;
-    document.getElementById("username").readOnly = true;
+    document.getElementById("userPasswordForm").readOnly = true;
+    document.getElementById("usernameForm").readOnly = true;
 
     document.getElementById("addUserForm").style.display = "block";
 } 
 
 function UpdateUser() {
-    let userId = document.getElementById("userId").value;
-    let username = document.getElementById("username").value;
-    let lastName = document.getElementById("lastName").value;
-    let firstName = document.getElementById("firstName").value;
-    let phone = document.getElementById("phoneNumber").value;
-    let email = document.getElementById("email").value;
-    let isActive = document.getElementById("isActive").value;
-    let roleId = parseInt(document.getElementById("roleId").value);
-    let comment = document.getElementById("comment").value;
+    let userId = document.getElementById("userIdForm").value;
+    let username = document.getElementById("usernameForm").value;
+    let lastName = document.getElementById("lastNameForm").value;
+    let firstName = document.getElementById("firstNameForm").value;
+    let phone = document.getElementById("phoneNumberForm").value;
+    let email = document.getElementById("emailForm").value;
+    let isActive = document.getElementById("isActiveForm").value;
+    let roleId = parseInt(document.getElementById("roleIdForm").value);
+    let comment = document.getElementById("commentForm").value;
     if (isActive == "true") {
         isActive = true;
     }
@@ -72,6 +72,9 @@ function UpdateUser() {
     Http.onreadystatechange = function () {
         if (Http.readyState === 4 && Http.status === 200) {
             console.log(Http.responseText);
+            if (Http.status === 200) {
+                window.location.href = '/users';
+            }
         }
     };
 } 
@@ -104,6 +107,9 @@ function DisableUser(id) {
     Http.onreadystatechange = function () {
         if (Http.readyState === 4 && Http.status === 200) {
             console.log(Http.responseText);
+            if (Http.status === 200) {
+                window.location.href = '/users';
+            }
         }
     };
 } 
@@ -144,6 +150,9 @@ function UpdateUnit() {
     Http.onreadystatechange = function () {
         if (Http.readyState === 4 && Http.status === 200) {
             console.log(Http.responseText);
+            if (Http.status === 200) {
+                window.location.href = '/units';
+            }
         }
     };
 } 
@@ -160,16 +169,16 @@ function FillSectorForm(id) {
     document.getElementById("submitButton").setAttribute('type', 'button');
     document.getElementById("submitButton").onclick = UpdateSector;
 
-    document.getElementById("sectorId").value = sectorId;
-    document.getElementById("sectorName").value = Name;
-    document.getElementById("shortSectorName").value = ShortName;
+    document.getElementById("sectorIdForm").value = sectorId;
+    document.getElementById("sectorNameForm").value = Name;
+    document.getElementById("shortSectorNameForm").value = ShortName;
     document.getElementById("addSectorForm").style.display = "block";
 }
 
 function UpdateSector() {
-    let sectorId = document.getElementById("sectorId").value;
-    let sectorName = document.getElementById("sectorName").value;
-    let shortSectorName = document.getElementById("shortSectorName").value;
+    let sectorId = document.getElementById("sectorIdForm").value;
+    let sectorName = document.getElementById("sectorNameForm").value;
+    let shortSectorName = document.getElementById("shortSectorNameForm").value;
 
     let Http = new XMLHttpRequest();
     let url = `/sectors/${sectorId}`
@@ -184,6 +193,9 @@ function UpdateSector() {
     Http.onreadystatechange = function () {
         if (Http.readyState === 4 && Http.status === 200) {
             console.log(Http.responseText);
+            if (Http.status === 200) {
+                window.location.href = '/sectors';
+            }
         }
     };
 } 
@@ -205,26 +217,26 @@ function FillItemForm(id) {
     document.getElementById("submitButton").setAttribute('type', 'button');
     document.getElementById("submitButton").onclick = UpdateItem;
 
-    document.getElementById("itemId").value = itemId;
-    document.getElementById("itemName").value = itemName;
-    document.getElementById("nomenclatureNumber").value = nomenclatureNumber;
-    document.getElementById("sectorId").value = sectorId;
-    document.getElementById("unitId").value = unitId;
-    document.getElementById("weight").value = weight;
-    document.getElementById("requiredQuantity").value = requiredQuantity;
-    document.getElementById("description").value = description;
+    document.getElementById("itemIdForm").value = itemId;
+    document.getElementById("itemNameForm").value = itemName;
+    document.getElementById("nomenclatureNumberForm").value = nomenclatureNumber;
+    document.getElementById("sectorIdForm").value = sectorId;
+    document.getElementById("unitIdForm").value = unitId;
+    document.getElementById("weightForm").value = weight;
+    document.getElementById("requiredQuantityForm").value = requiredQuantity;
+    document.getElementById("itemDescriptionForm").value = description;
     document.getElementById("addItemForm").style.display = "block";
 }
 
 function UpdateItem() {
-    let itemId = document.getElementById("itemId").value;
-    let itemName = document.getElementById("itemName").value;
-    let nomenclatureNumber = document.getElementById("nomenclatureNumber").value;
-    let sectorId = parseInt(document.getElementById("sectorId").value);
-    let unitId = parseInt(document.getElementById("unitId").value);
-    let weight = parseFloat(document.getElementById("weight").value);
-    let requiredQuantity = parseFloat(document.getElementById("requiredQuantity").value);
-    let description = document.getElementById("description").value;
+    let itemId = document.getElementById("itemIdForm").value;
+    let itemName = document.getElementById("itemNameForm").value;
+    let nomenclatureNumber = document.getElementById("nomenclatureNumberForm").value;
+    let sectorId = parseInt(document.getElementById("sectorIdForm").value);
+    let unitId = parseInt(document.getElementById("unitIdForm").value);
+    let weight = parseFloat(document.getElementById("weightForm").value);
+    let requiredQuantity = parseFloat(document.getElementById("requiredQuantityForm").value);
+    let description = document.getElementById("itemDescriptionForm").value;
 
     if (isNaN(weight)) {
         weight = null;
@@ -252,6 +264,9 @@ function UpdateItem() {
     Http.onreadystatechange = function () {
         if (Http.readyState === 4 && Http.status === 200) {
             console.log(Http.responseText);
+            if (Http.status === 200) {
+                window.location.href = '/items';
+            }
         }
     };
 } 
@@ -269,15 +284,15 @@ function FillContragentForm(id) {
     document.getElementById("submitButton").setAttribute('type', 'button');
     document.getElementById("submitButton").onclick = UpdateContragent;
 
-    document.getElementById("contragentId").value = contragentId;
-    document.getElementById("contragentName").value = contragentName;
+    document.getElementById("contragentIdForm").value = contragentId;
+    document.getElementById("contragentNameForm").value = contragentName;
     if (isNaN(parentId)) {
-        document.getElementById("parentId").value = null;
+        document.getElementById("parentIdForm").value = null;
     }
     else {
-        document.getElementById("parentId").value = parentId;
+        document.getElementById("parentIdForm").value = parentId;
     }
-    document.getElementById("contragentDescription").value = contragentDescription;
+    document.getElementById("contragentDescriptionForm").value = contragentDescription;
     if (isActive == "True") {
         document.getElementById("isActiveForm").value = true;
     }
@@ -288,11 +303,11 @@ function FillContragentForm(id) {
 }
 
 function UpdateContragent() {
-    let contragentId = document.getElementById("contragentId").value;
-    let parentId = parseInt(document.getElementById("parentId").value);
-    let contragentName = document.getElementById("contragentName").value;
+    let contragentId = document.getElementById("contragentIdForm").value;
+    let parentId = parseInt(document.getElementById("parentIdForm").value);
+    let contragentName = document.getElementById("contragentNameForm").value;
     let isActive = document.getElementById("isActiveForm").value;
-    let contragentDescription = document.getElementById("contragentDescription").value;
+    let contragentDescription = document.getElementById("contragentDescriptionForm").value;
 
     if (isNaN(parentId)) {
         parentId = null;
@@ -320,6 +335,9 @@ function UpdateContragent() {
     Http.onreadystatechange = function () {
         if (Http.readyState === 4 && Http.status === 200) {
             console.log(Http.responseText);
+            if (Http.status === 200) {
+                window.location.href = '/contragents';
+            }
         }
     };
 } 
@@ -351,6 +369,9 @@ function DisableContragent(id) {
     Http.onreadystatechange = function () {
         if (Http.readyState === 4 && Http.status === 200) {
             console.log(Http.responseText);
+            if (Http.status === 200) {
+                window.location.href = '/contragents';
+            }
         }
     };
 } 
