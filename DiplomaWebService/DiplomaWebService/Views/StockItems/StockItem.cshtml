@@ -20,8 +20,31 @@
 		</button>		
 		<div class="right-actions">
 			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук..." onkeydown="searchStockItem(event)">
-			<img src="img/filtr.svg">
+			<button onclick="openFilter()">
+				<img src="img/filtr.svg">
+			</button>
 		</div>
+		<form action="/filterStockItems" method="get" class="modal" id="filterForm">
+			<div class="modal-popup-container-filters" id="modal-popup-hidden-filters">
+				<label>Служби</label>
+				@for (int i = 0; i < Model.Sectors.Count; i++)
+				{
+					<input type="checkbox" id="checkboxFilter@i" name="checkboxFilter@i" class="sector-checkbox" value=@Model.Sectors[i].Id />
+					<label for="checkboxFilter@i">@Model.Sectors[i].Name</label>
+
+					<br>
+				}
+				<label>Підрозділи</label>
+				@for (int i = 0; i < Model.Sectors.Count; i++)
+				{
+					<input type="checkbox" id="checkboxFilter@i" name="checkboxFilter@i" class="sector-checkbox" value=@Model.Contragents[i].ContragentId />
+					<label for="checkboxFilter@i">@Model.Contragents[i].ContragentName</label>
+
+					<br>
+				}
+			</div>
+			<button type="submit" id="submitButtonFilters" class="btn btn-modal">Примінити</button>
+		</form>
 	</nav>
 </div>
 <div class="users-table-content">

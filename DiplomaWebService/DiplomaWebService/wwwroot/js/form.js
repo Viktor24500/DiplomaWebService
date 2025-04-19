@@ -16,3 +16,6 @@ function openMenu(id) {
 	//document.getElementById("modal-popup-hidden"+id).style.display = "block";
 	document.getElementsByClassName("modal-popup-container")[id].style.display = "block";
 }
+function openFilter(id) {
+	document.getElementById("modal-popup-hidden-filters")[id].style.display = "block";
+}

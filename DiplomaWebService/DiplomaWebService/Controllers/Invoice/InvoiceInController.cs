@@ -349,7 +349,7 @@ namespace DiplomaWebService.Controllers.Invoice
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, invoiceInModelInvoiceList.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
-			return View("/Views/Forms/InvoiceForm/AddInvoiceIn.cshtml", invoiceInModelInvoiceList.Data);
+			return View("/Views/Forms/InvoiceForm/InvoiceIn/AddInvoiceIn.cshtml", invoiceInModelInvoiceList.Data);
 		}
 		private async Task<Result<InvoiceInViewModelInvoiceList>> GetInvoiceInModelListInvoice(List<InvoiceIn> invoices, string username, int roleId, char usernameFirstLetter)
 		{

@@ -16,6 +16,8 @@
 	<script src="../js/form.js"></script>
 	<script src="../js/invoiceIn.js"></script>
 	<script src="../js/update.js"></script>
+	<script src="../js/checkbox.js"></script>
+	<script src="../js/popup.js"></script>
 </head>
 <body>
 	<div class="sidebar-page">
@@ -116,17 +118,7 @@
 	</div>
 	<script type="text/javascript">
 				var invoiceOutRowCounter = -1;
-				var invoiceInRowCounter = -1;
-
-				//  document.addEventListener("DOMContentLoaded", function () {
-				// 	let logout = document.getElementById("logout");
-
-				// 	document.addEventListener('click', function (e) {
-				// 		if (logout.style.display === "block" && !logout.contains(e.target)) {
-				// 			logout.style.display = "none";
-				// 		}
-				// 	});
-				// });				
+				var invoiceInRowCounter = -1;		
 				function AddInvoiceOutFormClose() {
 					document.getElementById("invoiceNumber").value="";
 

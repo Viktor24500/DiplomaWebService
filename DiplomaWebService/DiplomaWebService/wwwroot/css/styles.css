@@ -611,6 +611,24 @@ td img {
     display: none;
 }
 
+.modal-popup-container-filters {
+    border: 1px solid var(--gray1);
+    border-radius: 16px;
+    box-shadow: var(--modal-shadow);
+    overflow-y: auto;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    right: 10px;
+    width: 190px;
+    z-index: 1;
+    display: none;
+}
+
+#modal-popup-hidden-filters {
+    display: none;
+}
+
 #menu{
     display: none;
 }

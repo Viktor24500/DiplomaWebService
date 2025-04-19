@@ -321,6 +321,75 @@ namespace DiplomaWebService.Controllers
 				return RedirectToAction("GetAllStockItems");
 			}
 		}
+
+		[HttpGet]
+		[Route("/filterStockItems")]
+		public async Task<IActionResult> FilterItems([FromQuery] List<int> sectors, [FromQuery] List<int> contragents)
+		{
+			Result<List<StockItem>> result = new Result<List<StockItem>>();
+			Result<string> resToken = GetTokenFromCookies();
+			if (resToken.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(resToken.ErrorMessage);
+				result.ErrorCode = resToken.ErrorCode;
+				result.ErrorMessage = resToken.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
+				return PartialView("/Views/Shared/Error.cshtml", errorModel);
+			}
+			Result<string> username = GetUsernameFromSession();
+			if (username.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(username.ErrorMessage);
+				result.ErrorCode = username.ErrorCode;
+				result.ErrorMessage = username.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), username.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, username.ErrorMessage);
+				return PartialView("/Views/Shared/Error.cshtml", errorModel);
+			}
+			Result<int> roleId = GetRoleIdFromSession();
+			if (roleId.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(roleId.ErrorMessage);
+				result.ErrorCode = roleId.ErrorCode;
+				result.ErrorMessage = roleId.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), roleId.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, roleId.ErrorMessage);
+				return PartialView("/Views/Shared/Error.cshtml", errorModel);
+			}
+
+			string url = _connectionString + "filterStockItems";
+			string sectorParameters = url + "?" + GetStringWithParameters("sectors", sectors);
+			string contragentParameters = url + "?" + GetStringWithParameters("contragents", contragents);
+			string urlWithParameters = url + "?" + sectorParameters + "&" + contragentParameters;
+
+			using (HttpClient client = new HttpClient())
+			{
+				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
+				HttpResponseMessage responseMessage = await client.GetAsync(urlWithParameters);
+				if (responseMessage.IsSuccessStatusCode)
+				{
+					result.Data = await responseMessage.Content.ReadFromJsonAsync<List<StockItem>>();
+				}
+				else
+				{
+					result.ErrorCode = (int)responseMessage.StatusCode;
+					result.ErrorMessage = await responseMessage.Content.ReadAsStringAsync();
+				}
+			}
+
+			if (result.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(result.ErrorMessage);
+				result.ErrorCode = (int)ErrorCodes.BadRequest;
+				//result.ErrorMessage = "Can't search units";
+				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
+				return PartialView("/Views/Shared/Error.cshtml", errorModel);
+			}
+			return PartialView("/Views/Dictionaries/Items/_ItemsList.cshtml", result.Data);
+		}
+
 		private Result<string> GetTokenFromCookies()
 		{
 			Result<string> result = new Result<string>();
@@ -367,8 +436,39 @@ namespace DiplomaWebService.Controllers
 				result.ErrorMessage = "can't get all sectors";
 				return result;
 			}
-
-			result.Data = new StockItemViewModel(usernameFirstLetter, username, roleId, stockItems, resultSector.Data);
+			//get list contragent 
+			string contragentUrl = _connectionString + "contragents";
+			Result<List<Contragent>> resultContragent = new Result<List<Contragent>>();
+			resToken = GetTokenFromCookies();
+			if (resToken.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(resToken.ErrorMessage);
+				result.ErrorCode = resToken.ErrorCode;
+				result.ErrorMessage = resToken.ErrorMessage;
+				return result;
+			}
+			using (HttpClient client = new HttpClient())
+			{
+				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
+				HttpResponseMessage responseMessage = await client.GetAsync(contragentUrl);
+				if (responseMessage.IsSuccessStatusCode)
+				{
+					resultContragent.Data = await responseMessage.Content.ReadFromJsonAsync<List<Contragent>>();
+				}
+				else
+				{
+					resultContragent.ErrorCode = (int)responseMessage.StatusCode;
+					resultContragent.ErrorMessage = await responseMessage.Content.ReadAsStringAsync();
+				}
+			}
+			if (resultContragent.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(result.ErrorMessage);
+				result.ErrorCode = (int)ErrorCodes.BadRequest;
+				result.ErrorMessage = "can't get all contragents";
+				return result;
+			}
+			result.Data = new StockItemViewModel(usernameFirstLetter, username, roleId, stockItems, resultSector.Data, resultContragent.Data);
 			return result;
 		}
 		private Result<string> GetUsernameFromSession()
@@ -402,6 +502,17 @@ namespace DiplomaWebService.Controllers
 				result.Data = roleId.Value;
 			}
 			return result;
+		}
+
+		private string GetStringWithParameters(string listName, List<int> parameters)
+		{
+			string urlWithParameters = "";
+			foreach (int sectorId in parameters)
+			{
+				urlWithParameters = urlWithParameters + $"{listName}={sectorId}&";
+			}
+			urlWithParameters = urlWithParameters.Trim('&');
+			return urlWithParameters;
 		}
 	}
 }

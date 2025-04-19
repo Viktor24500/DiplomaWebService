@@ -133,7 +133,7 @@
         <h2>Накладні прихід</h2>
     </div>
     <div class="btn-header">
-        <button type="button" class="btn btn-header" onclick="SendInvoice()">Зберегти</button>
+        <button type="button" class="btn btn-header" onclick="SendInvoiceIn()">Зберегти</button>
     </div>
 </div>
 <nav class="nav">
@@ -192,7 +192,7 @@
         <div class="user-modal-block">
             <div class="user-modal-label">Служба: *</div>
             <div class="input-field-wrapper input-field-wrapper-invoice-in-out">
-                <select class="input-field dropdown" id="sectorId" name="sectorId" required>
+                <select class="input-field dropdown" id="sectorId" name="sectorId" onchange="GetItems()" required>
                 @for (int i = 0; i < @Model.Sectors.Count; i++)
                 {
                     <option value="@Model.Sectors[i].Id">@Model.Sectors[i].Name</option>
@@ -255,3 +255,4 @@
         </tbody>
     </table>
 </div>
+@Html.Partial("/Views/Forms/InvoiceForm/InvoiceIn/AddInvoicePositionIn.cshtml", @Model)

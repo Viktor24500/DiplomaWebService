@@ -1,4 +1,4 @@
-﻿function SendInvoice() {
+﻿function SendInvoiceIn() {
 	debugger;
 	let invoiceId = document.getElementById("invoiceId").value;
 	let invoiceDate = document.getElementById("invoiceDate").value;
@@ -27,22 +27,21 @@
 		positions.push(position);
 	}
 
+	let data = {
+		InvoiceDate: invoiceDate,
+		Number: invoiceNumber,
+		DestinationId: parseInt(destinationId, 10),
+		SenderId: parseInt(senderId, 10),
+		SectorId: parseInt(sectorId, 10),
+		DocumentTypeId: parseInt(documentTypeId, 10),
+		Positions: positions
+	}
 	let Http = new XMLHttpRequest();
 	let url = "/invoiceIn/";
 	Http.open("POST", url);
 	Http.setRequestHeader("Content-Type", "application/json; charset=utf-8")
 	Http.send(
-		JSON.stringify(
-			{
-				InvoiceDate: invoiceDate,
-				Number: invoiceNumber,
-				DestinationId: parseInt(destinationId, 10),
-				SenderId: parseInt(senderId, 10),
-				SectorId: parseInt(sectorId, 10),
-				DocumentTypeId: parseInt(documentTypeId, 10),
-				Positions: positions 
-			},
-		)
+		JSON.stringify(data)
 	);
 
 	Http.onreadystatechange = function () {
@@ -50,4 +49,9 @@
 			console.log(Http.responseText);
 		}
 	};
+}
+
+function GetItems()
+{
+	let sectorId = document.getElementById("sectorId").value
 }

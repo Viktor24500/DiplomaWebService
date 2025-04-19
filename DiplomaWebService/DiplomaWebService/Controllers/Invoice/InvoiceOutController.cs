@@ -272,7 +272,7 @@ namespace DiplomaWebService.Controllers.Invoice
 		[Route("/invoiceOut")]
 		public IActionResult GetCreateInvoiceOut()
 		{
-			return View("/Views/Forms/InvoiceForm/AddInvoiceOut.cshtml");
+			return View("/Views/Forms/InvoiceForm/InvoiceOut/AddInvoiceOut.cshtml");
 		}
 		private async Task<Result<InvoiceOutViewModelInvoiceList>> GetInvoiceOutModelListInvoice(string username, char usernameFirstLetter, int roleId, List<InvoiceOut> invoices)
 		{
