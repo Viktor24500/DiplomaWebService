@@ -24,27 +24,27 @@
 				<img src="img/filtr.svg">
 			</button>
 		</div>
-		<form action="/filterStockItems" method="get" class="modal" id="filterForm">
-			<div class="modal-popup-container-filters" id="modal-popup-hidden-filters">
-				<label>Служби</label>
+		<div class="modal-popup-container-filters" id="modal-popup-hidden-filters">
+			<form action="/filterStockItems" method="get" class="modal-filters" id="filterForm">
+				<label>Служби</label><br>
 				@for (int i = 0; i < Model.Sectors.Count; i++)
 				{
-					<input type="checkbox" id="checkboxFilter@i" name="checkboxFilter@i" class="sector-checkbox" value=@Model.Sectors[i].Id />
-					<label for="checkboxFilter@i">@Model.Sectors[i].Name</label>
+					<input type="checkbox" id="checkboxFilter@i" name="sector" class="sector-checkbox" value=@Model.Sectors[i].Id />
+					<label for="sector">@Model.Sectors[i].Name</label>
 
 					<br>
 				}
-				<label>Підрозділи</label>
-				@for (int i = 0; i < Model.Sectors.Count; i++)
+				<label>Підрозділи</label><br>
+				@for (int i = 0; i < Model.Contragents.Count; i++)
 				{
-					<input type="checkbox" id="checkboxFilter@i" name="checkboxFilter@i" class="sector-checkbox" value=@Model.Contragents[i].ContragentId />
-					<label for="checkboxFilter@i">@Model.Contragents[i].ContragentName</label>
+					<input type="checkbox" id="checkboxFilter@i" name="contragent" class="sector-checkbox" value=@Model.Contragents[i].ContragentId />
+					<label for="contragent">@Model.Contragents[i].ContragentName</label>
 
 					<br>
 				}
-			</div>
-			<button type="submit" id="submitButtonFilters" class="btn btn-modal">Примінити</button>
-		</form>
+				<button type="submit" id="submitButtonFilters" class="btn btn-modal">Примінити</button>
+			</form>
+		</div>
 	</nav>
 </div>
 <div class="users-table-content">

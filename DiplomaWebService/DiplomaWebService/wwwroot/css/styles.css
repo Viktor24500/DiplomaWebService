@@ -143,6 +143,15 @@ body {
     display: none;
 }
 
+.modal-filters {
+    align-items: center;
+    background: var(--search-color);
+    cursor: pointer;
+    justify-content: space-between;
+    padding: 12px;
+    width: 100%;
+}
+
 .invoice-in-out-form {
     width: calc(100% - 270px);
 }
@@ -618,11 +627,10 @@ td img {
     overflow-y: auto;
     padding: 0;
     position: absolute;
-    top: 0;
+    top: 100px;
     right: 10px;
     width: 190px;
     z-index: 1;
-    display: none;
 }
 
 #modal-popup-hidden-filters {

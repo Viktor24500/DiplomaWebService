@@ -30,20 +30,20 @@
 			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук..." onkeydown="searchItems(event)">
 			<button onclick="openFilter()">
 				<img src="img/filtr.svg">
-			</button>			
+			</button>
 		</div>
-		<form action="/filterItems" method="get" class="modal" id="filterForm">
-			<div class="modal-popup-container-filters" id="modal-popup-hidden-filters">
+		<div class="modal-popup-container-filters" id="modal-popup-hidden-filters">
+			<form action="/filterItems" method="get" class="modal-filters" id="filterForm">
+				<label>Служби</label><br>
 				@for (int i = 0; i < Model.Sectors.Count; i++)
 				{
-					<input type="checkbox" id="checkboxFilter@i" name="checkboxFilter@i" class="sector-checkbox" value=@Model.Sectors[i].Id />
-					<label for="checkboxFilter@i">@Model.Sectors[i].Name</label>
-
+					<input type="checkbox" id="checkboxFilter@i" name="sector" class="sector-checkbox" value=@Model.Sectors[i].Id />
+					<label for="sector">@Model.Sectors[i].Name</label>
 					<br>
 				}
-			</div>
-			<button type="submit" id="submitButtonFilters" class="btn btn-modal">Примінити</button>
-		</form>		
+				<button type="submit" id="submitButtonFilters" class="btn btn-modal">Примінити</button>
+			</form>
+		</div>
 	</nav>
 </div>
 <div class="users-table-content">

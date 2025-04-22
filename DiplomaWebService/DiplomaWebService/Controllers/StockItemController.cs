@@ -324,7 +324,7 @@ namespace DiplomaWebService.Controllers
 
 		[HttpGet]
 		[Route("/filterStockItems")]
-		public async Task<IActionResult> FilterItems([FromQuery] List<int> sectors, [FromQuery] List<int> contragents)
+		public async Task<IActionResult> FilterItems([FromQuery] List<int> sector, [FromQuery] List<int> contragent)
 		{
 			Result<List<StockItem>> result = new Result<List<StockItem>>();
 			Result<string> resToken = GetTokenFromCookies();
@@ -359,8 +359,8 @@ namespace DiplomaWebService.Controllers
 			}
 
 			string url = _connectionString + "filterStockItems";
-			string sectorParameters = url + "?" + GetStringWithParameters("sectors", sectors);
-			string contragentParameters = url + "?" + GetStringWithParameters("contragents", contragents);
+			string sectorParameters = url + "?" + GetStringWithParameters("sectors", sector);
+			string contragentParameters = url + "?" + GetStringWithParameters("contragents", contragent);
 			string urlWithParameters = url + "?" + sectorParameters + "&" + contragentParameters;
 
 			using (HttpClient client = new HttpClient())

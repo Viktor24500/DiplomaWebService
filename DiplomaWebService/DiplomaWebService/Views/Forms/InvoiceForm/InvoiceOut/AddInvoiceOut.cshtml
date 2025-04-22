@@ -139,9 +139,7 @@
 </form>
  *@
 
-@using DiplomaWebService.Models.Invoice.In
-@using DiplomaWebService.Models.ViewModel.Invoice.In
-@model InvoiceInViewModelInvoiceList
+@model InvoiceOutViewModelInvoiceList
 <div class="main-header">
     <div class="top-header">
         <h2>Накладні видача</h2>
@@ -269,3 +267,4 @@
         </tbody>
     </table>
 </div>
+@Html.Partial("/Views/Forms/InvoiceForm/InvoiceOut/AddInvoicePositionOut.cshtml", @Model)
