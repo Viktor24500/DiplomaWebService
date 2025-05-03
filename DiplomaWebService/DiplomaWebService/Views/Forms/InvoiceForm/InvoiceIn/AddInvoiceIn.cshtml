@@ -167,13 +167,6 @@
                     }
                 }
                 </select>
-                @for (int i = 0; i < @Model.Contragents.Count; i++)
-                {
-                    if (@Model.Contragents[i].WhoAmI == true)
-                    {
-                        <input type="number" class="input-field" id="destinationIdInput" value="@Model.Contragents[i].ContragentId" hidden>
-                    }
-                }
             </div>
             <div class="user-modal-label">Відправник: *</div>
             <div class="input-field-wrapper input-field-wrapper-invoice-in-out">
@@ -192,7 +185,7 @@
         <div class="user-modal-block">
             <div class="user-modal-label">Служба: *</div>
             <div class="input-field-wrapper input-field-wrapper-invoice-in-out">
-                <select class="input-field dropdown" id="sectorId" name="sectorId" onchange="GetItems()" required>
+                <select class="input-field dropdown" id="sectorId" name="sectorId" onchange="GetItemBySectorId()" required>
                 @for (int i = 0; i < @Model.Sectors.Count; i++)
                 {
                     <option value="@Model.Sectors[i].Id">@Model.Sectors[i].Name</option>
@@ -221,7 +214,7 @@
     </div>
 </div>
 <div class="users-table-content">
-    <table id="inoicePositionsTable">
+    <table id="inoiceInPositionsTable">
         <thead>
             <tr>
                 <th hidden>Item Id</th>

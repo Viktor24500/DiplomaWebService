@@ -3,6 +3,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+	int visibleIndex = 0;
 }
 @model List<Contragent>
 @for (int i = 0; i < @Model.Count(); i++)
@@ -20,24 +21,25 @@
 			<td class="data-table-td td-image">
 				<div class="modal-popup">
 					<div class="three-dots-button-container">
-						<button onclick="openMenu(@i)">
+						<button onclick="openMenu(@visibleIndex)">
 							<img src="img/3dots.svg">
 						</button>
 					</div>
 					<div class="modal-popup-container" id="modal-popup-hidden">
 						<div class="menu-item-container">
 							Редагувати
-							<button class="small-icon-container" id="updateContragent@i" onclick="FillContragentForm(@i)"><img src="img/edit.svg"></button>
+							<button class="small-icon-container" id="updateContragent@i" onclick="FillContragentForm(@visibleIndex)"><img src="img/edit.svg"></button>
 						</div>
 						<div class="separator">
 						</div>
 						<div class="menu-item-container">
 							Блокувати
-							<button class="small-icon-container" id="createExelInvoiceIn@i" onclick="DisableContragent(@i)"><img src="img/archive.svg"></button>
+							<button class="small-icon-container" id="createExelInvoiceIn@i" onclick="DisableContragent(@visibleIndex)"><img src="img/archive.svg"></button>
 						</div>
 					</div>
 				</div>
 			</td>
 		</tr>
+		visibleIndex++;
 	}
 }

@@ -49,3 +49,25 @@
 		}
 	};
 }
+
+function GetStockItemBySenderAndSector()
+{
+	let sectorId = document.getElementById("sectorId").value;
+	let senderId = document.getElementById("senderId").value;
+	let Http = new XMLHttpRequest();
+	let url = "/stockItemsByContragentIdAndSectorId/?sectorId=" + sectorId + "&contragentId=" + senderId;
+	Http.open("GET", url);
+	Http.setRequestHeader("Content-Type", "application/json; charset=utf-8")
+	Http.send();
+
+	Http.onreadystatechange = function () {
+		if (Http.readyState === 4 && Http.status === 200) {
+			document.getElementById("itemsList").innerHTML = Http.responseText;
+		}
+	};
+}
+
+function addPositionOut()
+{
+	let amount = document.getElementById("amount").value;
+}

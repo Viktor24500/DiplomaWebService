@@ -32,6 +32,8 @@ function FillUserForm(id)
     }
     document.getElementById("commentForm").value = comment;
 
+    document.getElementById("userPasswordForm").disabled = true;
+    document.getElementById("usernameForm").disabled = true
     document.getElementById("userPasswordForm").readOnly = true;
     document.getElementById("usernameForm").readOnly = true;
 

@@ -173,26 +173,19 @@
                 <select class="input-field dropdown" id="destinationId" name="destinationId" disabled>
                     @for (int i = 0; i < @Model.Contragents.Count; i++)
                     {
-                        if (@Model.Contragents[i].WhoAmI == true)
+                        if (@Model.Contragents[i].WhoAmI != true)
                         {
                             <option value="@Model.Contragents[i].ContragentId">@Model.Contragents[i].ContragentName</option>
                         }
                     }
                 </select>
-                @for (int i = 0; i < @Model.Contragents.Count; i++)
-                {
-                    if (@Model.Contragents[i].WhoAmI == true)
-                    {
-                        <input type="number" class="input-field" id="destinationIdInput" value="@Model.Contragents[i].ContragentId" hidden>
-                    }
-                }
             </div>
             <div class="user-modal-label">Відправник: *</div>
             <div class="input-field-wrapper input-field-wrapper-invoice-in-out">
                 <select class="input-field dropdown" id="senderId" name="senderId" required>
                 @for (int i = 0; i < @Model.Contragents.Count; i++)
                 {
-                    if (@Model.Contragents[i].WhoAmI != true)
+                    if (@Model.Contragents[i].WhoAmI == true)
                     {
                         <option value="@Model.Contragents[i].ContragentId" readonly>@Model.Contragents[i].ContragentName</option>
                     }
@@ -204,7 +197,7 @@
         <div class="user-modal-block">
             <div class="user-modal-label">Служба: *</div>
             <div class="input-field-wrapper input-field-wrapper-invoice-in-out">
-                <select class="input-field dropdown" id="sectorId" name="sectorId" required>
+                <select class="input-field dropdown" id="sectorId" name="sectorId" onchange="GetStockItemBySenderAndSector()" required>
                     @for (int i = 0; i < @Model.Sectors.Count; i++)
                     {
                         <option value="@Model.Sectors[i].Id">@Model.Sectors[i].Name</option>
