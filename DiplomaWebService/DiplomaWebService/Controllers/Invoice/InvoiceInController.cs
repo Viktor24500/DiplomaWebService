@@ -88,7 +88,7 @@ namespace DiplomaWebService.Controllers.Invoice
 			Result<InvoiceInViewModelInvoiceList> invoiceInModelInvoiceList = await GetInvoiceInModelListInvoice(result.Data, username.Data, roleId.Data, username.Data[0]);
 			if (invoiceInModelInvoiceList.ErrorCode != (int)ErrorCodes.Success)
 			{
-				_logger.LogError(result.ErrorMessage);
+				_logger.LogError(invoiceInModelInvoiceList.ErrorMessage);
 				result.ErrorCode = (int)ErrorCodes.BadRequest;
 				//result.ErrorMessage = "can't get all invoices";
 				string errorName = Enum.GetName(typeof(ErrorCodes), invoiceInModelInvoiceList.ErrorCode);
@@ -473,6 +473,7 @@ namespace DiplomaWebService.Controllers.Invoice
 			Result<List<DocumentType>> resultDocumentType = new Result<List<DocumentType>>();
 			using (HttpClient client = new HttpClient())
 			{
+				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
 				HttpResponseMessage responseMessage = await client.GetAsync(documentTypeUrl);
 				if (responseMessage.IsSuccessStatusCode)
 				{
@@ -572,6 +573,7 @@ namespace DiplomaWebService.Controllers.Invoice
 			Result<List<Category>> resultCategory = new Result<List<Category>>();
 			using (HttpClient client = new HttpClient())
 			{
+				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
 				HttpResponseMessage responseMessage = await client.GetAsync(categoryUrl);
 				if (responseMessage.IsSuccessStatusCode)
 				{
@@ -637,6 +639,7 @@ namespace DiplomaWebService.Controllers.Invoice
 			Result<List<DocumentType>> resultDocumentType = new Result<List<DocumentType>>();
 			using (HttpClient client = new HttpClient())
 			{
+				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
 				HttpResponseMessage responseMessage = await client.GetAsync(documentTypeUrl);
 				if (responseMessage.IsSuccessStatusCode)
 				{
@@ -736,6 +739,7 @@ namespace DiplomaWebService.Controllers.Invoice
 			Result<List<Category>> resultCategory = new Result<List<Category>>();
 			using (HttpClient client = new HttpClient())
 			{
+				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
 				HttpResponseMessage responseMessage = await client.GetAsync(categoryUrl);
 				if (responseMessage.IsSuccessStatusCode)
 				{

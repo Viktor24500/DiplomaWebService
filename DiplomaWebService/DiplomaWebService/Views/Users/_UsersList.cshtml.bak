@@ -1,0 +1,44 @@
+﻿@using DiplomaWebService.Models.Users
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<User>
+
+@for (int i = 0; i < Model.Count(); i++)
+{
+    <tr>
+        <td id="UserIdInTable" hidden>@Model[i].Id</td>
+        <td id="UserNameInTable">@Model[i].UserName</td>
+        <td id="LastNameInTable">@Model[i].LastName</td>
+        <td id="FirstNameInTable">@Model[i].FirstName</td>
+        <td id="FatherNameInTable">@Model[i].FatherName</td>
+        <td id="UserNameInTable">
+			<div class="status-@Model[i].StatusDescription">@Model[i].StatusDescription>
+			</div>
+		</td> 
+		<td id="IsActiveUserInTable">@Model[i].RoleName</td>
+		<td class="td-image">
+			<div class="modal-popup">
+				<div class="three-dots-button-container">
+					<button onclick="openMenu(0)">
+						<img src="img/3dots.svg">
+					</button>
+				</div>
+				<div class="modal-popup-container" id="modal-popup-hidden">
+					<div class="menu-item-container">
+						Редагувати
+						<button class="small-icon-container" id="createExelInvoiceIn@i" onclick="createReportInvoiceIn(0)"><img src="img/edit.svg"></button>
+					</div>
+					<div class="separator">
+					</div>
+					<div class="menu-item-container">
+						Блокувати
+						<button class="small-icon-container" id="createExelInvoiceIn@i" onclick="createReportInvoiceIn(0)"><img src="img/archive.svg"></button>
+					</div>
+				</div>
+			</div>
+		</td>
+    </tr>
+}

@@ -84,6 +84,15 @@ namespace DiplomaWebService.Controllers.Invoice
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			Result<InvoiceOutViewModelInvoiceList> invoiceOutModel = await GetInvoiceOutModelListInvoice(username.Data, username.Data[0], roleId.Data, result.Data);
+			if (invoiceOutModel.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(invoiceOutModel.ErrorMessage);
+				result.ErrorCode = (int)ErrorCodes.BadRequest;
+				//result.ErrorMessage = "can't get all invoices";
+				string errorName = Enum.GetName(typeof(ErrorCodes), invoiceOutModel.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, invoiceOutModel.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
 			return View("/Views/Invoices/InvoiceOut.cshtml", invoiceOutModel.Data);
 		}
 
@@ -396,6 +405,7 @@ namespace DiplomaWebService.Controllers.Invoice
 			Result<List<DocumentType>> resultDocumentType = new Result<List<DocumentType>>();
 			using (HttpClient client = new HttpClient())
 			{
+				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
 				HttpResponseMessage responseMessage = await client.GetAsync(documentTypeUrl);
 				if (responseMessage.IsSuccessStatusCode)
 				{
@@ -512,6 +522,7 @@ namespace DiplomaWebService.Controllers.Invoice
 			Result<List<DocumentType>> resultDocumentType = new Result<List<DocumentType>>();
 			using (HttpClient client = new HttpClient())
 			{
+				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
 				HttpResponseMessage responseMessage = await client.GetAsync(documentTypeUrl);
 				if (responseMessage.IsSuccessStatusCode)
 				{

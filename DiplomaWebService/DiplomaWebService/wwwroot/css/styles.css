@@ -646,7 +646,7 @@ td img {
 .menu-item-container{
     align-items: center;
     background: var(--search-color);
-    cursor: pointer;
+    /*cursor: pointer;*/
     display: flex;
     justify-content: space-between;
     padding: 12px;

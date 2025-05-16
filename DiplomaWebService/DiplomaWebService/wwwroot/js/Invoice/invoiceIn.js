@@ -51,46 +51,79 @@
 	};
 }
 
+//function GetItemBySectorId() {
+//	let sectorId = document.getElementById("sectorId").value;
+//	let Http = new XMLHttpRequest();
+//	let url = "/itemsBySectorId/" + sectorId;
+//	Http.open("GET", url);
+//	Http.setRequestHeader("Content-Type", "application/json; charset=utf-8")
+//	Http.send();
+
+//	Http.onreadystatechange = function () {
+//		if (Http.readyState === 4 && Http.status === 200) {
+//			document.getElementById("itemsList").innerHTML = Http.responseText;
+//		}
+//	};
+//}
 function GetItemBySectorId() {
+	debugger;
 	let sectorId = document.getElementById("sectorId").value;
 	let Http = new XMLHttpRequest();
-	let url = "/itemsBySectorId/" + sectorId;
+	let url = "/itemsBySectorId/" + encodeURIComponent(sectorId);
 	Http.open("GET", url);
-	Http.setRequestHeader("Content-Type", "application/json; charset=utf-8")
-	Http.send();
+	Http.send(); // No data needed for GET request
 
 	Http.onreadystatechange = function () {
 		if (Http.readyState === 4 && Http.status === 200) {
-			document.getElementById("itemsList").innerHTML = Http.responseText;
+			document.getElementById("inoiceInPositionsTableItemsList").innerHTML = Http.responseText;
 		}
 	};
 }
+
 var invoiceOutRowCounter = 0;
 var invoiceInRowCounter = 0;
 
 function addPositionIn() {
 	let amount = document.getElementById("amount").value;
 	let price = document.getElementById("price").value;
+	let serialNumber = document.getElementById("serialNumber").value;
+	let productionYear = document.getElementById("productionYear").value;
+	let rows = document.querySelectorAll('#inoiceInPositionsTableItems tbody tr');
 
 	//get category id and name
-	let categoryId = document.getElementById("categoryId").value;
-	let categoryName = document.getElementById("categoryId").options[document.getElementById("categoryId").selectedIndex].text;
+	//let categoryId = document.getElementById("categoryId").value;
+	//let categoryName = document.getElementById("categoryId").options[document.getElementById("categoryId").selectedIndex].text;
 
-	// Create a new row
-	let table = document.getElementById("inoiceInPositionsTable").getElementsByTagName("tbody")[0];
-	let newRow = table.insertRow();
+	rows.forEach(row => {
+		let checkbox = row.querySelector('.invoice-position-item-checkbox');
+		if (checkbox && checkbox.checked) {
+			let itemId = row.querySelector('.invoice-position-table-items-item-id').textContent.trim();
+			let itemName = row.querySelector('.invoice-position-table-items-item-name').textContent.trim();
+			let unitId = row.querySelector('.invoice-position-table-items-unit-id').textContent.trim();
+			let unitName = row.querySelector('.invoice-position-table-items-unit-name').textContent.trim();
 
-	// Add cells to the row
-	newRow.innerHTML = `
-        <td hidden>${itemId}</td>
-        <td>${itemName}</td>
-        <td>${serialNumber}</td>
-        <td>${productionYear}</td>
-        <td>${amount}</td>
-        <td>${price}</td>
-        <td hidden>${unitId}</td>
-        <td>${unitName}</td>
-        <td hidden>${categoryId}</td>
-        <td>${categoryName}</td>
-    `;
+			// Assume categoryId/categoryName are optional or static for now
+			let categoryId = document.getElementById("categoryId").value; // or from a hidden field/input
+			let categoryName = document.getElementById("categoryId").options[document.getElementById("categoryId").selectedIndex].text;
+
+			let targetTable = document.getElementById("inoiceInPositionsTable").getElementsByTagName("tbody")[0];
+			let newRow = targetTable.insertRow();
+
+			newRow.innerHTML = `
+                    <td hidden>${itemId}</td>
+                    <td>${itemName}</td>
+                    <td>${serialNumber}</td>
+                    <td>${productionYear}</td>
+                    <td>${amount}</td>
+                    <td>${price}</td>
+                    <td hidden>${unitId}</td>
+                    <td>${unitName}</td>
+                    <td hidden>${categoryId}</td>
+                    <td>${categoryName}</td>
+                `;
+
+			// Optionally uncheck the checkbox after adding
+			checkbox.checked = false;
+		}
+	});
 }

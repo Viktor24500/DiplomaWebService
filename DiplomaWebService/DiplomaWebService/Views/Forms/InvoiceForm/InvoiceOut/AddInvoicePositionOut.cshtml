@@ -17,6 +17,27 @@
         </div>
     </div>
     <div class="user-modal-content">
+        <div class="users-table-content">
+            <table id="inoiceOutPositionsTableItems">
+                <thead>
+                    <tr>
+                        <th hidden>Item Id</th>
+                        <th>Назва</th>
+                        <th>Серійний номер</th>
+                        <th>Рік випуску</th>
+                        <th hidden>Unit Id</th>
+                        <th>Одиниці виміру</th>
+                        <th hidden>Category Id</th>
+                        <th>Категорія</th>
+                        <th>Ціна</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="inoiceOutPositionsTableStockItemItemsList">
+                    @Html.Partial("/Views/Forms/InvoiceForm/InvoiceIn/InvoicePositionOutStockItems.cshtml", Model.StockItems)
+                </tbody>
+            </table>
+        </div>
         <div class="user-modal-block">
             <div class="user-modal-label">Кількість: *</div>
             <div class="input-field-wrapper">

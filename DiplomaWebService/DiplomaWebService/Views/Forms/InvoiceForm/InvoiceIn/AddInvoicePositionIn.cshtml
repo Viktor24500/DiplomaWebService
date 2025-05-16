@@ -17,10 +17,25 @@
         </div>
     </div>
     <div class="user-modal-content">
+        <div class="users-table-content">
+            <table id="inoiceInPositionsTableItems">
+                <thead>
+                    <tr>
+                        <th hidden>Item Id</th>
+                        <th>Назва</th>
+                        <th hidden>Unit Id</th>
+                        <th>Одиниці виміру</th>
+                    </tr>
+                </thead>
+                <tbody id="inoiceInPositionsTableItemsList">
+                    @Html.Partial("/Views/Forms/InvoiceForm/InvoiceIn/InvoicePositionInItems.cshtml", Model.Items)
+                </tbody>
+            </table>
+        </div>
         <div class="user-modal-block">
             <div class="user-modal-label">Кількість: *</div>
             <div class="input-field-wrapper">
-                <input type="text" class="input-field" id="amount" name="amount" placeholder="Кілкьість" value="" required>
+                <input type="text" class="input-field" id="amount" name="amount" placeholder="Кількість" value="" required>
                 <div class="separator"></div>
             </div>
         </div>
@@ -40,6 +55,20 @@
                         <option value="@Model.Categories[i].Id">@Model.Categories[i].Name</option>
                     }
                 </select>
+                <div class="separator"></div>
+            </div>
+        </div>
+        <div class="user-modal-block">
+            <div class="user-modal-label">Серійний номер:</div>
+            <div class="input-field-wrapper">
+                <input type="text" class="input-field" id="serialNumber" name="serialNumber" value="" placeholder="11DEC0100943">
+                <div class="separator"></div>
+            </div>
+        </div>
+        <div class="user-modal-block">
+            <div class="user-modal-label">Рік випуску:</div>
+            <div class="input-field-wrapper">
+                <input type="number" class="input-field" id="productionYear" name="productionYear" value="" min="1900" placeholder="Рік випуску">
                 <div class="separator"></div>
             </div>
         </div>

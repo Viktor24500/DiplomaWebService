@@ -415,7 +415,7 @@ namespace DiplomaWebService.Controllers
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, resItemViewModel.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
-			return PartialView("/Views/Dictionaries/Items/Item.cshtml", result.Data);
+			return PartialView("Views/Forms/InvoiceForm/InvoiceIn/InvoicePositionInItems.cshtml", result.Data);
 		}
 
 		private async Task<Result<ItemViewModel>> GetItemViewModel(List<Item> items, string username, char usernameFirstLetter, int roleId)

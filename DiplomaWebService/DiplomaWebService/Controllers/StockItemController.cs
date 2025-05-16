@@ -156,7 +156,7 @@ namespace DiplomaWebService.Controllers
 		}
 
 		[HttpGet]
-		[Route("/stockItemsByContragentId")]
+		[Route("/stockItemsByContragentId/{contragentId}")]
 		public async Task<IActionResult> GetAllStockItemsByContragentId(int contragentId)
 		{
 			Result<List<StockItem>> result = new Result<List<StockItem>>();

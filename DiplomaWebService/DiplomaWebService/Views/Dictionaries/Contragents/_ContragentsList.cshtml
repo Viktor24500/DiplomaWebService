@@ -17,7 +17,11 @@
 			<td id="parentNameInTable" class="parentNameInTable data-table-td">@Model[i].ParentName</td>
 			<td id="contragentDescriptionInTable" class="contragentDescriptionInTable data-table-td">@Model[i].ContragentDescription</td>
 			<td id="isActiveTable" class="Status data-table-td" hidden>@Model[i].IsActive</td>
-			<td id="IsActiveContragnetInTable" class="IsActiveContragnetInTable data-table-td status-@Model[i].StatusDescription">@Model[i].StatusDescription</td>
+			<td id="IsActiveContragnetInTable" class="IsActiveContragnetInTable data-table-td">
+				<div class="status-@Model[i].StatusDescription">
+					@Model[i].StatusDescription
+				</div>
+			</td>
 			<td class="data-table-td td-image">
 				<div class="modal-popup">
 					<div class="three-dots-button-container">
