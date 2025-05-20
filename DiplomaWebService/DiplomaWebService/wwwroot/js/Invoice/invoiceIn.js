@@ -3,13 +3,13 @@
 	let invoiceId = document.getElementById("invoiceId").value;
 	let invoiceDate = document.getElementById("invoiceDate").value;
 	let invoiceNumber = document.getElementById("invoiceNumber").value;
-	let destinationId = document.getElementById("destinationIdInput").value;
+	let destinationId = document.getElementById("destinationIdHidden").value;
 	let senderId = document.getElementById("senderId").value;
 	let sectorId = document.getElementById("sectorId").value;
 	let documentTypeId = document.getElementById("documentTypeId").value;
 
 	let positions = [];
-	let table = document.getElementById("inoicePositionsTable"); // Replace with your table's actual ID
+	let table = document.getElementById("inoiceInPositionsTable");
 	let rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
 
 	for (let row of rows) {
@@ -50,21 +50,6 @@
 		}
 	};
 }
-
-//function GetItemBySectorId() {
-//	let sectorId = document.getElementById("sectorId").value;
-//	let Http = new XMLHttpRequest();
-//	let url = "/itemsBySectorId/" + sectorId;
-//	Http.open("GET", url);
-//	Http.setRequestHeader("Content-Type", "application/json; charset=utf-8")
-//	Http.send();
-
-//	Http.onreadystatechange = function () {
-//		if (Http.readyState === 4 && Http.status === 200) {
-//			document.getElementById("itemsList").innerHTML = Http.responseText;
-//		}
-//	};
-//}
 function GetItemBySectorId() {
 	debugger;
 	let sectorId = document.getElementById("sectorId").value;
@@ -108,18 +93,19 @@ function addPositionIn() {
 
 			let targetTable = document.getElementById("inoiceInPositionsTable").getElementsByTagName("tbody")[0];
 			let newRow = targetTable.insertRow();
+			newRow.classList.add("data-table-tr");
 
 			newRow.innerHTML = `
-                    <td hidden>${itemId}</td>
-                    <td>${itemName}</td>
-                    <td>${serialNumber}</td>
-                    <td>${productionYear}</td>
-                    <td>${amount}</td>
-                    <td>${price}</td>
-                    <td hidden>${unitId}</td>
-                    <td>${unitName}</td>
-                    <td hidden>${categoryId}</td>
-                    <td>${categoryName}</td>
+                    <td class="data-table-td" hidden>${itemId}</td>
+                    <td class="data-table-td">${itemName}</td>
+                    <td class="data-table-td">${serialNumber}</td>
+                    <td class="data-table-td">${productionYear}</td>
+                    <td class="data-table-td">${amount}</td>
+                    <td class="data-table-td">${price}</td>
+                    <td class="data-table-td" hidden>${unitId}</td>
+                    <td class="data-table-td">${unitName}</td>
+                    <td class="data-table-td" hidden>${categoryId}</td>
+                    <td class="data-table-td">${categoryName}</td>
                 `;
 
 			// Optionally uncheck the checkbox after adding

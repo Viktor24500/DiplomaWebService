@@ -167,6 +167,15 @@
                     }
                 }
                 </select>
+                <select class="input-field dropdown" id="destinationIdHidden" name="destinationId" hidden>
+                    @for (int i = 0; i < @Model.Contragents.Count; i++)
+                    {
+                        if (@Model.Contragents[i].WhoAmI == true)
+                        {
+                            <option value="@Model.Contragents[i].ContragentId">@Model.Contragents[i].ContragentName</option>
+                        }
+                    }
+                </select>
             </div>
             <div class="user-modal-label">Відправник: *</div>
             <div class="input-field-wrapper input-field-wrapper-invoice-in-out">
@@ -214,20 +223,19 @@
     </div>
 </div>
 <div class="users-table-content">
-    <table id="inoiceInPositionsTable">
-        <thead>
-            <tr>
-                <th hidden>Item Id</th>
-                <th>Назва</th>
-                <th>Серійний номер</th>
-                <th>Рік випуску</th>
-                <th>Кількість</th>
-                <th>Ціна</th>
-                <th hidden>Unit Id</th>
-                <th>Одиниці виміру</th>
-                <th hidden>Category Id</th>
-                <th>Категорія</th>
-                <th></th>
+    <table id="inoiceInPositionsTable" class="data-table-table">
+        <thead class="data-table-thead">
+            <tr class ="data-table-tr">
+                <th class="data-table-th" hidden>Item Id</th>
+                <th class="data-table-th">Назва</th>
+                <th class="data-table-th">Серійний номер</th>
+                <th class="data-table-th">Рік випуску</th>
+                <th class="data-table-th">Кількість</th>
+                <th class="data-table-th">Ціна</th>
+                <th class="data-table-th" hidden>Unit Id</th>
+                <th class="data-table-th">Одиниці виміру</th>
+                <th class="data-table-th" hidden>Category Id</th>
+                <th class="data-table-th">Категорія</th>
             </tr>
         </thead>
         <tbody id="inoiceInPositionsTableList">

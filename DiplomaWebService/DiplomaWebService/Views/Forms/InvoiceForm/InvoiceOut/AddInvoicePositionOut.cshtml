@@ -18,23 +18,22 @@
     </div>
     <div class="user-modal-content">
         <div class="users-table-content">
-            <table id="inoiceOutPositionsTableItems">
-                <thead>
-                    <tr>
-                        <th hidden>Item Id</th>
-                        <th>Назва</th>
-                        <th>Серійний номер</th>
-                        <th>Рік випуску</th>
-                        <th hidden>Unit Id</th>
-                        <th>Одиниці виміру</th>
-                        <th hidden>Category Id</th>
-                        <th>Категорія</th>
-                        <th>Ціна</th>
-                        <th></th>
+            <table id="inoiceOutPositionsTableItems" class="data-table">
+                <thead class="data-table-thead">
+                    <tr class="data-table-tr">
+                        <th class="data-table-th" hidden>Item Id</th>
+                        <th class="data-table-th">Назва</th>
+                        <th class="data-table-th">Серійний номер</th>
+                        <th class="data-table-th">Рік випуску</th>
+                        <th class="data-table-th" hidden>Unit Id</th>
+                        <th class="data-table-th">Одиниці виміру</th>
+                        <th class="data-table-th">Категорія</th>
+                        <th class="data-table-th">Ціна</th>
+                        <th class="data-table-th"></th>
                     </tr>
                 </thead>
                 <tbody id="inoiceOutPositionsTableStockItemItemsList">
-                    @Html.Partial("/Views/Forms/InvoiceForm/InvoiceIn/InvoicePositionOutStockItems.cshtml", Model.StockItems)
+                    @Html.Partial("/Views/Forms/InvoiceForm/InvoiceOut/InvoicePositionOutStockItems.cshtml", Model.StockItems)
                 </tbody>
             </table>
         </div>

@@ -3,13 +3,13 @@
 	let invoiceId = document.getElementById("invoiceId").value;
 	let invoiceDate = document.getElementById("invoiceDate").value;
 	let invoiceNumber = document.getElementById("invoiceNumber").value;
-	let destinationId = document.getElementById("destinationIdInput").value;
-	let senderId = document.getElementById("senderId").value;
+	let destinationId = document.getElementById("destinationId").value;
+	let senderId = document.getElementById("senderIdHidden").value;
 	let sectorId = document.getElementById("sectorId").value;
 	let documentTypeId = document.getElementById("documentTypeId").value;
 
 	let positions = [];
-	let table = document.getElementById("inoicePositionsTable"); // Replace with your table's actual ID
+	let table = document.getElementById("inoiceOutPositionsTable");
 	let rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
 
 	for (let row of rows) {
@@ -93,45 +93,23 @@ function addPositionOut()
 
 			let targetTable = document.getElementById("inoiceOutPositionsTable").getElementsByTagName("tbody")[0];
 			let newRow = targetTable.insertRow();
+			newRow.classList.add("data-table-tr");
 
 			newRow.innerHTML = `
-                    <td hidden>${itemId}</td>
-                    <td>${itemName}</td>
-                    <td>${serialNumber}</td>
-                    <td>${productionYear}</td>
-                    <td>${amount}</td>
-                    <td>${price}</td>
-                    <td hidden>${unitId}</td>
-                    <td>${unitName}</td>
-                    <td hidden>${categoryId}</td>
-                    <td>${categoryName}</td>
+                    <td class="data-table-td" hidden>${itemId}</td>
+                    <td class="data-table-td">${itemName}</td>
+                    <td class="data-table-td">${serialNumber}</td>
+                    <td class="data-table-td">${productionYear}</td>
+                    <td class="data-table-td">${amount}</td>
+                    <td class="data-table-td">${price}</td>
+                    <td class="data-table-td" hidden>${unitId}</td>
+                    <td class="data-table-td">${unitName}</td>
+                    <td class="data-table-td" hidden>${categoryId}</td>
+                    <td class="data-table-td">${categoryName}</td>
                 `;
 
 			// Optionally uncheck the checkbox after adding
 			checkbox.checked = false;
 		}
 	});
-
-
-	//// Create a new row
-	//let table = document.getElementById("inoiceOutPositionsTable").getElementsByTagName("tbody")[0];
-	//let newRow = table.insertRow();
-
-	//// Add cells to the row
-	//newRow.innerHTML = `
- //       <td hidden>${itemId}</td>
- //       <td>${itemName}</td>
- //       <td>${serialNumber}</td>
- //       <td>${productionYear}</td>
- //       <td>${amount}</td>
- //       <td>${price}</td>
- //       <td hidden>${unitId}</td>
- //       <td>${unitName}</td>
- //       <td hidden>${categoryId}</td>
- //       <td>${categoryName}</td>
- //   `;
 }
-
-		//	public int StockItemId { get; set; }
-		////public int ItemId { get; set; }
-		//public decimal Amount { get; set; }

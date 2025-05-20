@@ -170,7 +170,7 @@
         <div class="user-modal-block">
             <div class="user-modal-label">Призначення: *</div>
             <div class="input-field-wrapper input-field-wrapper-invoice-in-out">
-                <select class="input-field dropdown" id="destinationId" name="destinationId" disabled>
+                <select class="input-field dropdown" id="destinationId" name="destinationId">
                     @for (int i = 0; i < @Model.Contragents.Count; i++)
                     {
                         if (@Model.Contragents[i].WhoAmI != true)
@@ -182,7 +182,7 @@
             </div>
             <div class="user-modal-label">Відправник: *</div>
             <div class="input-field-wrapper input-field-wrapper-invoice-in-out">
-                <select class="input-field dropdown" id="senderId" name="senderId" required>
+                <select class="input-field dropdown" id="senderId" name="senderId" required disabled>
                 @for (int i = 0; i < @Model.Contragents.Count; i++)
                 {
                     if (@Model.Contragents[i].WhoAmI == true)
@@ -190,6 +190,15 @@
                         <option value="@Model.Contragents[i].ContragentId" readonly>@Model.Contragents[i].ContragentName</option>
                     }
                 }
+                </select>
+                <select class="input-field dropdown" id="senderId" name="senderIdHidden" required hidden>
+                    @for (int i = 0; i < @Model.Contragents.Count; i++)
+                    {
+                        if (@Model.Contragents[i].WhoAmI == true)
+                        {
+                            <option value="@Model.Contragents[i].ContragentId" readonly>@Model.Contragents[i].ContragentName</option>
+                        }
+                    }
                 </select>
             </div>
         </div>
@@ -226,19 +235,19 @@
     </div>
 </div>
 <div class="users-table-content">
-    <table id="inoiceOutPositionsTable">
-        <thead>
-            <tr>
-                <th hidden>Item Id</th>
-                <th>Назва</th>
-                <th>Серійний номер</th>
-                <th>Рік випуску</th>
-                <th>Кількість</th>
-                <th>Ціна</th>
-                <th hidden>Unit Id</th>
-                <th>Одиниці виміру</th>
-                <th hidden>Category Id</th>
-                <th>Категорія</th>
+    <table id="inoiceOutPositionsTable" class="data-table">
+        <thead class="data-table-thead">
+            <tr class="data-table-tr">
+                <th class="data-table-th" hidden>Item Id</th>
+                <th class="data-table-th">Назва</th>
+                <th class="data-table-th">Серійний номер</th>
+                <th class="data-table-th">Рік випуску</th>
+                <th class="data-table-th">Кількість</th>
+                <th class="data-table-th">Ціна</th>
+                <th class="data-table-th"  hidden>Unit Id</th>
+                <th class="data-table-th">Одиниці виміру</th>
+                <th class="data-table-th" hidden>Category Id</th>
+                <th class="data-table-th">Категорія</th>
             </tr>
         </thead>
         <tbody>

@@ -7,16 +7,16 @@
 @model List<StockItem>
 @for (int i=0; i<Model.Count; i++)
 {
-    <tr>
-        <td hidden class="invoice-position-table-stockitems-item-id">@Model[i].Item.ItemId</td>
-        <td class="invoice-position-table-stockitems-item-name">@Model[i].Item.ItemName</td>
-        <td class="invoice-position-table-stockitems-serial-number">@Model[i].SerialNumber</td>
-        <td class="invoice-position-table-stockitems-production-year">@Model[i].ProductionYear</td>
-        <td hidden class="invoice-position-table-stockitems-unit-id">@Model[i].Unit.Id</td>
-        <td class="invoice-position-table-stockitems-unit-name">@Model[i].Unit.Name</td>
-        <td hidden class="invoice-position-table-stockitems-category-id">@Model[i].Category.Id</td>
-        <td class="invoice-position-table-stockitems-category-name">@Model[i].Category.Name</td>
-        <td class="invoice-position-table-stockitems-price">@Model[i].Price</td>
-        <td><input type="checkbox" class="invoice-position-stockitem-checkbox" value="@i" /></td>
+    <tr class="data-table-tr">
+        <td hidden class="invoice-position-table-stockitems-item-id data-table-td">@Model[i].Item.ItemId</td>
+        <td class="invoice-position-table-stockitems-item-name data-table-td">@Model[i].Item.ItemName</td>
+        <td class="invoice-position-table-stockitems-serial-number data-table-td">@Model[i].SerialNumber</td>
+        <td class="invoice-position-table-stockitems-production-year data-table-td">@Model[i].ProductionYear</td>
+        <td hidden class="invoice-position-table-stockitems-unit-id data-table-td">@Model[i].Unit.Id</td>
+        <td class="invoice-position-table-stockitems-unit-name data-table-td">@Model[i].Unit.Name</td>
+        <td hidden class="invoice-position-table-stockitems-category-id data-table-td">@Model[i].Category.Id</td>
+        <td class="invoice-position-table-stockitems-category-name data-table-td">@Model[i].Category.Name</td>
+        <td class="invoice-position-table-stockitems-price data-table-td">@Model[i].Price</td>
+        <td class="data-table-td"><input type="checkbox" class="invoice-position-stockitem-checkbox" value="@i" /></td>
     </tr>
 }
