@@ -72,10 +72,13 @@ function UpdateUser() {
     Http.send(JSON.stringify(data));
 
     Http.onreadystatechange = function () {
-        if (Http.readyState === 4 && Http.status === 200) {
+        if (Http.readyState === 4) {
             console.log(Http.responseText);
             if (Http.status === 200) {
                 window.location.href = '/users';
+            }
+            else {
+                document.getElementsByClassName("sidebar-page")[0].innerHTML = Http.responseText;
             }
         }
     };
@@ -107,10 +110,13 @@ function DisableUser(id) {
     Http.send(JSON.stringify(data));
 
     Http.onreadystatechange = function () {
-        if (Http.readyState === 4 && Http.status === 200) {
+        if (Http.readyState === 4) {
             console.log(Http.responseText);
             if (Http.status === 200) {
                 window.location.href = '/users';
+            }
+            else {
+                document.getElementsByClassName("sidebar-page")[0].innerHTML = Http.responseText;
             }
         }
     };
@@ -150,10 +156,15 @@ function UpdateUnit() {
     Http.send(JSON.stringify(data));
 
     Http.onreadystatechange = function () {
-        if (Http.readyState === 4 && Http.status === 200) {
+        if (Http.readyState === 4 )
+        {
             console.log(Http.responseText);
             if (Http.status === 200) {
                 window.location.href = '/units';
+            }
+            else
+            {
+                document.getElementsByClassName("sidebar-page")[0].innerHTML = Http.responseText;
             }
         }
     };
@@ -193,10 +204,13 @@ function UpdateSector() {
     Http.send(JSON.stringify(data));
 
     Http.onreadystatechange = function () {
-        if (Http.readyState === 4 && Http.status === 200) {
+        if (Http.readyState === 4) {
             console.log(Http.responseText);
             if (Http.status === 200) {
                 window.location.href = '/sectors';
+            }
+            else {
+                document.getElementsByClassName("sidebar-page")[0].innerHTML = Http.responseText;
             }
         }
     };
@@ -264,10 +278,13 @@ function UpdateItem() {
     Http.send(JSON.stringify(data));
 
     Http.onreadystatechange = function () {
-        if (Http.readyState === 4 && Http.status === 200) {
+        if (Http.readyState === 4) {
             console.log(Http.responseText);
             if (Http.status === 200) {
                 window.location.href = '/items';
+            }
+            else {
+                document.getElementsByClassName("sidebar-page")[0].innerHTML = Http.responseText;
             }
         }
     };
@@ -335,10 +352,13 @@ function UpdateContragent() {
     Http.send(JSON.stringify(data));
 
     Http.onreadystatechange = function () {
-        if (Http.readyState === 4 && Http.status === 200) {
+        if (Http.readyState === 4) {
             console.log(Http.responseText);
             if (Http.status === 200) {
                 window.location.href = '/contragents';
+            }
+            else {
+                document.getElementsByClassName("sidebar-page")[0].innerHTML = Http.responseText;
             }
         }
     };
@@ -369,10 +389,13 @@ function DisableContragent(id) {
     Http.send(JSON.stringify(data));
 
     Http.onreadystatechange = function () {
-        if (Http.readyState === 4 && Http.status === 200) {
+        if (Http.readyState === 4) {
             console.log(Http.responseText);
             if (Http.status === 200) {
                 window.location.href = '/contragents';
+            }
+            else {
+                document.getElementsByClassName("sidebar-page")[0].innerHTML = Http.responseText;
             }
         }
     };

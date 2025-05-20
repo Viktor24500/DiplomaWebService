@@ -99,7 +99,8 @@ namespace DiplomaWebService.Controllers
 				result.ErrorMessage = resToken.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
-				return PartialView("/Views/Shared/Error.cshtml", errorModel);
+				Response.StatusCode = result.ErrorCode;
+				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			Result<string> username = GetUsernameFromSession();
 			if (username.ErrorCode != (int)ErrorCodes.Success)
@@ -109,7 +110,8 @@ namespace DiplomaWebService.Controllers
 				result.ErrorMessage = username.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), username.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, username.ErrorMessage);
-				return PartialView("/Views/Shared/Error.cshtml", errorModel);
+				Response.StatusCode = result.ErrorCode;
+				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			Result<int> roleId = GetRoleIdFromSession();
 			if (roleId.ErrorCode != (int)ErrorCodes.Success)
@@ -119,7 +121,8 @@ namespace DiplomaWebService.Controllers
 				result.ErrorMessage = roleId.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), roleId.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, roleId.ErrorMessage);
-				return PartialView("/Views/Shared/Error.cshtml", errorModel);
+				Response.StatusCode = result.ErrorCode;
+				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			string url = _connectionString + $"searchContragents/{name}";
 			using (HttpClient client = new HttpClient())
@@ -143,7 +146,8 @@ namespace DiplomaWebService.Controllers
 				//result.ErrorMessage = "Can't get all contragents";
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
-				return PartialView("/Views/Shared/Error.cshtml", errorModel);
+				Response.StatusCode = result.ErrorCode;
+				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			return PartialView("/Views/Dictionaries/Contragents/_ContragentsList.cshtml", result.Data);
 		}
@@ -209,6 +213,7 @@ namespace DiplomaWebService.Controllers
 				result.ErrorMessage = resToken.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
+				Response.StatusCode = result.ErrorCode;
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			string url = _connectionString + $"contragents/{id}";
@@ -236,24 +241,10 @@ namespace DiplomaWebService.Controllers
 					//result.ErrorMessage = "";
 					string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 					ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
+					Response.StatusCode = result.ErrorCode;
 					return View("/Views/Shared/Error.cshtml", errorModel);
 				}
-
-				switch (result.ErrorCode)
-				{
-					case (int)ErrorCodes.Success:
-						return Ok(result);
-					case (int)ErrorCodes.BadRequest:
-						return BadRequest(result.ErrorMessage);
-
-					case (int)ErrorCodes.Forbidden:
-						return StatusCode(403, result.ErrorMessage);
-
-					case (int)ErrorCodes.Unauthorized:
-						return StatusCode(401, result.ErrorMessage);
-					default:
-						return StatusCode(500, result.ErrorMessage);
-				}
+				return Ok();
 			}
 		}
 		[HttpGet]

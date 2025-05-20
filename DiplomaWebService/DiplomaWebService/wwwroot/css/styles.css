@@ -808,3 +808,24 @@ button {
 .comment{
     height: 50px;
 }
+
+/*Invoice*/
+.data-table-invoice {
+    border-collapse: collapse;
+    width: 100%;
+}
+.data-table-invoice-th {
+    border: 1px solid;
+    text-align: left;
+    padding: 8px;
+}
+.data-table-invoice-tr {
+    border: 1px solid;
+    text-align: left;
+    padding: 8px;
+}
+.data-table-invoice-td {
+    border: 1px solid;
+    text-align: left;
+    padding: 8px;
+}

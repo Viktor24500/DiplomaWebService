@@ -45,8 +45,14 @@
 	);
 
 	Http.onreadystatechange = function () {
-		if (Http.readyState === 4 && Http.status === 200) {
+		if (Http.readyState === 4) {
 			console.log(Http.responseText);
+			if (Http.status === 200) {
+				window.location.href = '/invoicesIn';
+			}
+			else {
+				document.getElementsByClassName("sidebar-page")[0].innerHTML = Http.responseText;
+			}
 		}
 	};
 }
@@ -59,8 +65,14 @@ function GetItemBySectorId() {
 	Http.send(); // No data needed for GET request
 
 	Http.onreadystatechange = function () {
-		if (Http.readyState === 4 && Http.status === 200) {
-			document.getElementById("inoiceInPositionsTableItemsList").innerHTML = Http.responseText;
+		if (Http.readyState === 4) {
+			console.log(Http.responseText);
+			if (Http.status === 200) {
+				document.getElementById("inoiceInPositionsTableItemsList").innerHTML = Http.responseText;
+			}
+			else {
+				document.getElementsByClassName("sidebar-page")[0].innerHTML = Http.responseText;
+			}
 		}
 	};
 }

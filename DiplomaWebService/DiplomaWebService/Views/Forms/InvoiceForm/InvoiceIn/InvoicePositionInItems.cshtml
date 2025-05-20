@@ -7,11 +7,11 @@
 @model List<Item>
 @for (int i=0; i<Model.Count; i++)
 {
-    <tr class="data-table-tr">
-        <td hidden class="invoice-position-table-items-item-id data-table-td">@Model[i].ItemId</td>
-        <td class="invoice-position-table-items-item-name data-table-td">@Model[i].ItemName</td>
-        <td hidden class="invoice-position-table-items-unit-id data-table-td">@Model[i].Unit.Id</td>
-        <td class="invoice-position-table-items-unit-name data-table-td">@Model[i].Unit.Name</td>
-        <td class="data-table-td"><input type="checkbox" class="invoice-position-item-checkbox data-table-td" value="@i" /></td>
+    <tr class="data-table-invoice-tr">
+        <td hidden class="invoice-position-table-items-item-id data-table-invoice-td">@Model[i].ItemId</td>
+        <td class="invoice-position-table-items-item-name data-table-invoice-td">@Model[i].ItemName</td>
+        <td hidden class="invoice-position-table-items-unit-id data-table-invoice-td">@Model[i].Unit.Id</td>
+        <td class="invoice-position-table-items-unit-name data-table-invoice-td">@Model[i].Unit.Name</td>
+        <td class="data-table-invoice-td"><input type="checkbox" class="invoice-position-item-checkbox" value="@i" /></td>
     </tr>
 }

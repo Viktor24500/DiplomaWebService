@@ -7,8 +7,14 @@
 		Http.send(); // No data needed for GET request
 
 		Http.onreadystatechange = function () {
-			if (Http.readyState === 4 && Http.status === 200) {
-				document.getElementById("contragentsList").innerHTML = Http.responseText;
+			if (Http.readyState === 4) {
+				console.log(Http.responseText);
+				if (Http.status === 200) {
+					document.getElementById("contragentsList").innerHTML = Http.responseText;
+				}
+				else {
+					document.getElementsByClassName("sidebar-page")[0].innerHTML = Http.responseText;
+				}
 			}
 		};
 	}
@@ -23,8 +29,14 @@ function searchItems(event) {
 		Http.send(); // No data needed for GET request
 
 		Http.onreadystatechange = function () {
-			if (Http.readyState === 4 && Http.status === 200) {
-				document.getElementById("itemsList").innerHTML = Http.responseText;
+			if (Http.readyState === 4) {
+				console.log(Http.responseText);
+				if (Http.status === 200) {
+					document.getElementById("itemsList").innerHTML = Http.responseText;
+				}
+				else {
+					document.getElementsByClassName("sidebar-page")[0].innerHTML = Http.responseText;
+				}
 			}
 		};
 	}
@@ -39,8 +51,14 @@ function searchInvoiceIn(event) {
 		Http.send();
 
 		Http.onreadystatechange = function () {
-			if (Http.readyState === 4 && Http.status === 200) {
-				document.getElementById("invoiceInList").innerHTML = Http.responseText;
+			if (Http.readyState === 4) {
+				console.log(Http.responseText);
+				if (Http.status === 200) {
+					document.getElementById("invoiceInList").innerHTML = Http.responseText;
+				}
+				else {
+					document.getElementsByClassName("sidebar-page")[0].innerHTML = Http.responseText;
+				}
 			}
 		};
 	}
@@ -55,8 +73,14 @@ function searchInvoiceOut(event) {
 		Http.send();
 
 		Http.onreadystatechange = function () {
-			if (Http.readyState === 4 && Http.status === 200) {
-				document.getElementById("invoiceOutList").innerHTML = Http.responseText;
+			if (Http.readyState === 4) {
+				console.log(Http.responseText);
+				if (Http.status === 200) {
+					document.getElementById("invoiceOutList").innerHTML = Http.responseText;
+				}
+				else {
+					document.getElementsByClassName("sidebar-page")[0].innerHTML = Http.responseText;
+				}
 			}
 		};
 	}
@@ -71,8 +95,14 @@ function searchUnits(event) {
 		Http.send(); // No data needed for GET request
 
 		Http.onreadystatechange = function () {
-			if (Http.readyState === 4 && Http.status === 200) {
-				document.getElementById("unitsList").innerHTML = Http.responseText;
+			if (Http.readyState === 4) {
+				console.log(Http.responseText);
+				if (Http.status === 200) {
+					document.getElementById("unitsList").innerHTML = Http.responseText;
+				}
+				else {
+					document.getElementsByClassName("sidebar-page")[0].innerHTML = Http.responseText;
+				}
 			}
 		};
 	}
@@ -87,8 +117,14 @@ function searchUsers(event) {
 		Http.send(); // No data needed for GET request
 
 		Http.onreadystatechange = function () {
-			if (Http.readyState === 4 && Http.status === 200) {
-				document.getElementById("usersList").innerHTML = Http.responseText;
+			if (Http.readyState === 4) {
+				console.log(Http.responseText);
+				if (Http.status === 200) {
+					document.getElementById("usersList").innerHTML = Http.responseText;
+				}
+				else {
+					document.getElementsByClassName("sidebar-page")[0].innerHTML = Http.responseText;
+				}
 			}
 		};
 	}
@@ -103,8 +139,14 @@ function searchStockItem(event) {
 		Http.send(); // No data needed for GET request
 
 		Http.onreadystatechange = function () {
-			if (Http.readyState === 4 && Http.status === 200) {
-				document.getElementById("stockItemList").innerHTML = Http.responseText;
+			if (Http.readyState === 4) {
+				console.log(Http.responseText);
+				if (Http.status === 200) {
+					document.getElementById("usersList").innerHTML = Http.responseText;
+				}
+				else {
+					document.getElementsByClassName("sidebar-page")[0].innerHTML = Http.responseText;
+				}
 			}
 		};
 	}

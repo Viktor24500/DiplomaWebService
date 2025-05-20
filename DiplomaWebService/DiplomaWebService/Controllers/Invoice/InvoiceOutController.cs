@@ -245,6 +245,7 @@ namespace DiplomaWebService.Controllers.Invoice
 				result.ErrorMessage = resToken.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
+				Response.StatusCode = result.ErrorCode;
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			string url = _connectionString + "invoicesOut";
@@ -273,9 +274,10 @@ namespace DiplomaWebService.Controllers.Invoice
 				//result.ErrorMessage = "can't get all invoices";
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
+				Response.StatusCode = result.ErrorCode;
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
-			return RedirectToAction("GetAllInvoicesOut");
+			return Ok();
 		}
 		[HttpGet]
 		[Route("/invoiceOut")]
