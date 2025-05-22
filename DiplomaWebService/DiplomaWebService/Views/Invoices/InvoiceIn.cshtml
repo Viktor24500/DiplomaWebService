@@ -19,13 +19,13 @@
     <nav class="nav">
         @if (Model.RoleId == (int)Roles.Viewer)
         {
-            <a href="invoiceIn" class="btn btn-add-user" id="addInvoice" disabled>
+            <a href="invoiceIn" class="btn btn-add-user" id="addInvoice" onclick="return false;">
                 <img src="img/plus.svg">Додати
             </a>
         }
         else
         {
-            <a href="invoiceIn" class="btn btn-add-user" id="addInvoice" disabled>
+            <a href="invoiceIn" class="btn btn-add-user" id="addInvoice">
                 <img src="img/plus.svg">Додати
             </a>
         }

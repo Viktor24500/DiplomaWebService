@@ -19,15 +19,15 @@
     <nav class="nav">
         @if (Model.RoleId == (int)Roles.Viewer)
         {
-            <button type="button" class="btn btn-add-user" onclick="openModalForm()" disabled>
+            <a href="invoiceOut" class="btn btn-add-user" id="addInvoice" onclick="return false;">
                 <img src="img/plus.svg">Додати
-            </button>
+            </a>
         }
         else
         {
-            <button type="button" class="btn btn-add-user" onclick="openModalForm()">
+            <a href="invoiceOut" class="btn btn-add-user" id="addInvoice">
                 <img src="img/plus.svg">Додати
-            </button>
+            </a>
         }
 		<div class="right-actions">
             <input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук..." onkeydown="searchInvoiceOut(event)">
@@ -61,4 +61,4 @@
         </tbody>
     </table>
 </div>
-@Html.Partial("/Views/Forms/InvoiceForm/InvoiceOut/AddInvoiceOut.cshtml", @Model)
+@* @Html.Partial("/Views/Forms/InvoiceForm/InvoiceOut/AddInvoiceOut.cshtml", @Model) *@
