@@ -328,7 +328,7 @@ namespace DiplomaWebService.Controllers
 
 		[HttpGet]
 		[Route("/filterStockItems")]
-		public async Task<IActionResult> FilterItems([FromQuery] List<int> sector, [FromQuery] List<int> contragent)
+		public async Task<IActionResult> FilterStockItems([FromQuery] List<int> sector, [FromQuery] List<int> contragent)
 		{
 			Result<List<StockItem>> result = new Result<List<StockItem>>();
 			Result<string> resToken = GetTokenFromCookies();
@@ -473,7 +473,7 @@ namespace DiplomaWebService.Controllers
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
 				return PartialView("/Views/Shared/Error.cshtml", errorModel);
 			}
-			return PartialView("/Views/Views/StockItems/_StockItemList.cshtml", result.Data);
+			return PartialView("Views/Forms/InvoiceForm/InvoiceOut/InvoicePositionOutStockItems.cshtml", result.Data);
 		}
 
 		private Result<string> GetTokenFromCookies()

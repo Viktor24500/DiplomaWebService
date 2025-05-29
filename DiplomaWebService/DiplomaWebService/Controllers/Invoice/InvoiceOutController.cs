@@ -6,6 +6,7 @@ using DiplomaWebService.Models.Invoice.Out;
 using DiplomaWebService.Models.Types;
 using DiplomaWebService.Models.ViewModel.Invoice.Out;
 using DiplomaWebService.Parametrs.Invoice.Out;
+using DiplomaWebService.Request.Invoice;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DiplomaWebService.Controllers.Invoice
@@ -232,8 +233,7 @@ namespace DiplomaWebService.Controllers.Invoice
 
 		[HttpPost]
 		[Route("/invoiceOut")]
-		public async Task<IActionResult> CreateInvoiceOut(DateTime invoiceDate, string number, int destinationId, int senderId,
-			int sectorId, int documentTypeId, List<InvoicePositionsOutCreateParameters> invoicePositions)
+		public async Task<IActionResult> CreateInvoiceOut([FromBody] InvoiceOutCreateRequest invoiceOutCreateRequest)
 		{
 			int invoiceTypeId = 2;
 			Result<InvoiceOut> result = new Result<InvoiceOut>();
@@ -251,8 +251,10 @@ namespace DiplomaWebService.Controllers.Invoice
 			string url = _connectionString + "invoicesOut";
 			using (HttpClient client = new HttpClient())
 			{
-				InvoiceOutCreateParameters invoiceCreateParam = new InvoiceOutCreateParameters(invoiceDate, number, destinationId,
-					senderId, invoiceTypeId, sectorId, documentTypeId, invoicePositions);
+				InvoiceOutCreateParameters invoiceCreateParam = new InvoiceOutCreateParameters(invoiceOutCreateRequest.InvoiceDate, invoiceOutCreateRequest.Number,
+					invoiceOutCreateRequest.DestinationId,
+					invoiceOutCreateRequest.SenderId, invoiceTypeId, invoiceOutCreateRequest.SectorId, invoiceOutCreateRequest.DocumentTypeId,
+					invoiceOutCreateRequest.Positions);
 				JsonContent content = JsonContent.Create(invoiceCreateParam);
 
 				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
@@ -352,7 +354,7 @@ namespace DiplomaWebService.Controllers.Invoice
 		}
 		[HttpGet]
 		[Route("/filterInvoiceOut")]
-		public async Task<IActionResult> FilterInvoiceIn([FromQuery] List<int> sector, [FromQuery] List<int> sender, [FromQuery] string number,
+		public async Task<IActionResult> FilterInvoiceOut([FromQuery] List<int> sector, [FromQuery] List<int> sender, [FromQuery] string number,
 			[FromQuery] DateTime dateFrom, [FromQuery] DateTime dateTo)
 		{
 			Result<List<InvoiceOut>> result = new Result<List<InvoiceOut>>();

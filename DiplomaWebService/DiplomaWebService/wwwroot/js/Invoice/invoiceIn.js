@@ -9,7 +9,7 @@
 	let documentTypeId = document.getElementById("documentTypeId").value;
 
 	let positions = [];
-	let table = document.getElementById("inoiceInPositionsTable");
+	let table = document.getElementById("invoiceInPositionsTable");
 	let rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
 
 	for (let row of rows) {
@@ -85,7 +85,7 @@ function addPositionIn() {
 	let price = document.getElementById("price").value;
 	let serialNumber = document.getElementById("serialNumber").value;
 	let productionYear = document.getElementById("productionYear").value;
-	let rows = document.querySelectorAll('#inoiceInPositionsTableItems tbody tr');
+	let rows = document.querySelectorAll('#invoiceInPositionsTableItems tbody tr');
 
 	//get category id and name
 	//let categoryId = document.getElementById("categoryId").value;
@@ -103,7 +103,7 @@ function addPositionIn() {
 			let categoryId = document.getElementById("categoryId").value; // or from a hidden field/input
 			let categoryName = document.getElementById("categoryId").options[document.getElementById("categoryId").selectedIndex].text;
 
-			let targetTable = document.getElementById("inoiceInPositionsTable").getElementsByTagName("tbody")[0];
+			let targetTable = document.getElementById("invoiceInPositionsTable").getElementsByTagName("tbody")[0];
 			let newRow = targetTable.insertRow();
 			newRow.classList.add("data-table-tr");
 
@@ -120,7 +120,6 @@ function addPositionIn() {
                     <td class="data-table-td">${categoryName}</td>
                 `;
 
-			// Optionally uncheck the checkbox after adding
 			checkbox.checked = false;
 		}
 	});

@@ -8,6 +8,7 @@
 @for (int i=0; i<Model.Count; i++)
 {
     <tr class="data-table-invoice-tr">
+        <td hidden class="invoice-position-table-stockitems-stockitem-id data-table-invoice-td">@Model[i].StockItemId</td>
         <td hidden class="invoice-position-table-stockitems-item-id data-table-invoice-td">@Model[i].Item.ItemId</td>
         <td class="invoice-position-table-stockitems-item-name data-table-invoice-td">@Model[i].Item.ItemName</td>
         <td class="invoice-position-table-stockitems-serial-number data-table-invoice-td">@Model[i].SerialNumber</td>
@@ -17,6 +18,7 @@
         <td hidden class="invoice-position-table-stockitems-category-id data-table-invoice-td">@Model[i].Category.Id</td>
         <td class="invoice-position-table-stockitems-category-name data-table-invoice-td">@Model[i].Category.Name</td>
         <td class="invoice-position-table-stockitems-price data-table-invoice-td">@Model[i].Price</td>
+        @* <td class="invoice-position-table-stockitems-allAmount data-table-invoice-td">@Model[i].AllAmount</td> *@
         <td class="data-table-invoice-td"><input type="checkbox" class="invoice-position-stockitem-checkbox" value="@i" /></td>
     </tr>
 }

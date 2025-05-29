@@ -18,7 +18,7 @@
     </div>
     <div class="user-modal-content">
         <div class="users-table-content">
-            <table id="inoiceInPositionsTableItems" class="data-table-invoice">
+            <table id="invoiceInPositionsTableItems" class="data-table-invoice">
                 <thead>
                     <tr class="data-table-invoice-tr">
                         <th class="data-table-invoice-th" hidden>Item Id</th>
@@ -28,7 +28,7 @@
                         <th class="data-table-invoice-th"></th>
                     </tr>
                 </thead>
-                <tbody id="inoiceInPositionsTableItemsList">
+                <tbody id="invoiceInPositionsTableItemsList">
                     @Html.Partial("/Views/Forms/InvoiceForm/InvoiceIn/InvoicePositionInItems.cshtml", Model.Items)
                 </tbody>
             </table>

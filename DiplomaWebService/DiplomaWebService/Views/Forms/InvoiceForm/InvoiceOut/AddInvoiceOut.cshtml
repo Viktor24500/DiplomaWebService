@@ -58,7 +58,7 @@
                     }
                 }
                 </select>
-                <select class="input-field dropdown" id="senderId" name="senderIdHidden" required hidden>
+                <select class="input-field dropdown" id="senderIdHidden" name="senderIdHidden" required hidden>
                     @for (int i = 0; i < @Model.Contragents.Count; i++)
                     {
                         if (@Model.Contragents[i].WhoAmI == true)
@@ -104,9 +104,10 @@
     </div>
 </div>
 <div class="users-table-content">
-    <table id="inoiceOutPositionsTable" class="data-table">
+    <table id="invoiceOutPositionsTable" class="data-table">
         <thead class="data-table-thead">
             <tr class="data-table-tr">
+                <th class="data-table-invoice-th" hidden>StockItem Id</th>
                 <th class="data-table-th" hidden>Item Id</th>
                 <th class="data-table-th">Назва</th>
                 <th class="data-table-th">Серійний номер</th>

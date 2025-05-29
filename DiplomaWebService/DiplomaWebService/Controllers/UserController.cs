@@ -106,6 +106,7 @@ namespace DiplomaWebService.Controllers
 			if (result.ErrorCode != (int)ErrorCodes.Success)
 			{
 				_logger.LogError(result.ErrorMessage);
+				//result.ErrorMessage = GetErrorMessageForUser(result.ErrorMessage);
 				result.ErrorCode = (int)ErrorCodes.BadRequest;
 				//result.ErrorMessage = "";
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
@@ -404,5 +405,19 @@ namespace DiplomaWebService.Controllers
 			BaseViewModel model = new BaseViewModel(usernameFirstLetter, username, roleId);
 			return model;
 		}
+
+		//private string GetErrorMessageForUser(string error)
+		//{
+		//	if (error.Contains("Unexpected error"))
+		//	{
+		//		int index = error.IndexOf("at");
+		//		if (index != -1)
+		//		{
+		//			string errorSubstring = error.Substring(0, index);
+		//			return errorSubstring;
+		//		}
+		//	}
+		//	return error;
+		//}
 	}
 }

@@ -9,19 +9,21 @@
 	let documentTypeId = document.getElementById("documentTypeId").value;
 
 	let positions = [];
-	let table = document.getElementById("inoiceOutPositionsTable");
+	let table = document.getElementById("invoiceOutPositionsTable");
 	let rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
 
 	for (let row of rows) {
 		let cells = row.getElementsByTagName("td");
 
 		let position = {
-			ItemId: parseInt(cells[0].textContent, 10), // Hidden column
-			SerialNumber: cells[2].textContent.trim(),
-			ProductionYear: parseInt(cells[3].textContent, 10),
-			Amount: parseFloat(cells[4].textContent.replace(",", ".")),
-			Price: parseFloat(cells[5].textContent.replace(",", ".")),
-			CategoryId: parseInt(cells[8].textContent, 10) // Hidden column
+			StockItemId: parseInt(cells[0].textContent, 10), // Hidden column
+			Amount: parseFloat(cells[5].textContent.replace(",", ".")),
+			//ItemId: parseInt(cells[1].textContent, 10), // Hidden column
+			//SerialNumber: cells[3].textContent.trim(),
+			//ProductionYear: parseInt(cells[4].textContent, 10),
+			//Amount: parseFloat(cells[5].textContent.replace(",", ".")),
+			//Price: parseFloat(cells[6].textContent.replace(",", ".")),
+			//CategoryId: parseInt(cells[9].textContent, 10) // Hidden column
 		};
 
 		positions.push(position);
@@ -83,7 +85,7 @@ function addPositionOut()
 {
 	//let stockItemId = document.getElementById("stockItemId").value;
 	let amount = document.getElementById("amount").value;
-	let rows = document.querySelectorAll('#inoiceOutPositionsTableStockItems tbody tr');
+	let rows = document.querySelectorAll('#invoiceOutPositionsTableStockItem tbody tr');
 
 	//get category id and name
 	//let categoryId = document.getElementById("categoryId").value;
@@ -92,6 +94,7 @@ function addPositionOut()
 	rows.forEach(row => {
 		let checkbox = row.querySelector('.invoice-position-stockitem-checkbox');
 		if (checkbox && checkbox.checked) {
+			let stockitemId = row.querySelector('.invoice-position-table-stockitems-stockitem-id').textContent.trim();
 			let itemId = row.querySelector('.invoice-position-table-stockitems-item-id').textContent.trim();
 			let itemName = row.querySelector('.invoice-position-table-stockitems-item-name').textContent.trim();
 			let serialNumber = row.querySelector('.invoice-position-table-stockitems-serial-number').textContent.trim();
@@ -99,15 +102,16 @@ function addPositionOut()
 			let price = row.querySelector('.invoice-position-table-stockitems-price').textContent.trim();
 			let unitId = row.querySelector('.invoice-position-table-stockitems-unit-id').textContent.trim();
 			let unitName = row.querySelector('.invoice-position-table-stockitems-unit-name').textContent.trim();
-			let categoryId = document.getElementById(".invoice-position-table-stockitems-category-id").textContent.trim();
-			let categoryName = document.getElementById(".invoice-position-table-stockitems-category-name").textContent.trim();
+			let categoryId = document.querySelector(".invoice-position-table-stockitems-category-id").textContent.trim();
+			let categoryName = document.querySelector(".invoice-position-table-stockitems-category-name").textContent.trim();
 			
 
-			let targetTable = document.getElementById("inoiceOutPositionsTable").getElementsByTagName("tbody")[0];
+			let targetTable = document.getElementById("invoiceOutPositionsTable").getElementsByTagName("tbody")[0];
 			let newRow = targetTable.insertRow();
 			newRow.classList.add("data-table-tr");
 
 			newRow.innerHTML = `
+					<td class="data-table-td" hidden>${stockitemId}</td>
                     <td class="data-table-td" hidden>${itemId}</td>
                     <td class="data-table-td">${itemName}</td>
                     <td class="data-table-td">${serialNumber}</td>
@@ -120,7 +124,6 @@ function addPositionOut()
                     <td class="data-table-td">${categoryName}</td>
                 `;
 
-			// Optionally uncheck the checkbox after adding
 			checkbox.checked = false;
 		}
 	});

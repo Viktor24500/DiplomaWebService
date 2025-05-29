@@ -79,6 +79,7 @@
             <div class="user-modal-label">Тип документа: *</div>
             <div class="input-field-wrapper input-field-wrapper-invoice-in-out">
                 <select class="input-field dropdown" id="documentTypeId" name="documentTypeId" required>
+                    <option>Немає</option>
                 @for (int i = 0; i < @Model.DocumentTypes.Count; i++)
                 {
                     <option value="@Model.DocumentTypes[i].Id">@Model.DocumentTypes[i].Name</option>
@@ -98,7 +99,7 @@
     </div>
 </div>
 <div class="users-table-content">
-    <table id="inoiceInPositionsTable" class="data-table">
+    <table id="invoiceInPositionsTable" class="data-table">
         <thead class="data-table-thead">
             <tr class ="data-table-tr">
                 <th class="data-table-th" hidden>Item Id</th>
@@ -113,7 +114,7 @@
                 <th class="data-table-th">Категорія</th>
             </tr>
         </thead>
-        <tbody id="inoiceInPositionsTableList">
+        <tbody id="invoiceInPositionsTableList">
             @* @foreach (InvoicePositionIn position in Model.InvoiceIn.InvoicePositions)
             {
                 <tr>

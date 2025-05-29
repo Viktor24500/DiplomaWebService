@@ -18,9 +18,10 @@
     </div>
     <div class="user-modal-content">
         <div class="users-table-content">
-            <table id="inoiceOutPositionsTableItems" class="data-table-invoice">
+            <table id="invoiceOutPositionsTableStockItem" class="data-table-invoice">
                 <thead>
                     <tr class="data-table-invoice-tr">
+                        <th class="data-table-invoice-th" hidden>StockItem Id</th>
                         <th class="data-table-invoice-th" hidden>Item Id</th>
                         <th class="data-table-invoice-th">Назва</th>
                         <th class="data-table-invoice-th">Серійний номер</th>
@@ -29,10 +30,11 @@
                         <th class="data-table-invoice-th">Одиниці виміру</th>
                         <th class="data-table-invoice-th">Категорія</th>
                         <th class="data-table-invoice-th">Ціна</th>
+                        @* <th class="data-table-invoice-th">Кількість на складі</th> *@
                         <th class="data-table-th"></th>
                     </tr>
                 </thead>
-                <tbody id="inoiceOutPositionsTableStockItemItemsList">
+                <tbody id="invoiceOutPositionsTableStockItemItemsList">
                     @Html.Partial("/Views/Forms/InvoiceForm/InvoiceOut/InvoicePositionOutStockItems.cshtml", Model.StockItems)
                 </tbody>
             </table>
