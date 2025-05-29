@@ -68,7 +68,7 @@ function GetItemBySectorId() {
 		if (Http.readyState === 4) {
 			console.log(Http.responseText);
 			if (Http.status === 200) {
-				document.getElementById("inoiceInPositionsTableItemsList").innerHTML = Http.responseText;
+				document.getElementById("invoiceInPositionsTableItemsList").innerHTML = Http.responseText;
 			}
 			else {
 				document.getElementsByClassName("sidebar-page")[0].innerHTML = Http.responseText;
