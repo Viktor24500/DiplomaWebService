@@ -354,8 +354,8 @@ namespace DiplomaWebService.Controllers.Invoice
 		}
 		[HttpGet]
 		[Route("/filterInvoiceOut")]
-		public async Task<IActionResult> FilterInvoiceOut([FromQuery] List<int> sector, [FromQuery] List<int> sender, [FromQuery] string number,
-			[FromQuery] DateTime dateFrom, [FromQuery] DateTime dateTo)
+		public async Task<IActionResult> FilterInvoiceOut([FromQuery] List<int> sector, [FromQuery] List<int> destination, [FromQuery] string? number,
+			[FromQuery] DateTime? dateFrom, [FromQuery] DateTime? dateTo)
 		{
 			Result<List<InvoiceOut>> result = new Result<List<InvoiceOut>>();
 			Result<string> resToken = GetTokenFromCookies();
@@ -391,7 +391,7 @@ namespace DiplomaWebService.Controllers.Invoice
 
 			string url = _connectionString + "filterInvoiceOut";
 			string sectorParameters = url + "?" + GetStringWithParameters("sectors", sector);
-			string senderParameters = url + "?" + GetStringWithParameters("senders", sender);
+			string senderParameters = url + "?" + GetStringWithParameters("senders", destination);
 			string urlWithParameters = url + "?" + sectorParameters + "&" + senderParameters + "&" + $"number={number}" + "&" + $"dateFrom={dateFrom}"
 				+ "&" + $"dateTo={dateTo}";
 

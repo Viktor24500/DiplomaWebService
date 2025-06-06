@@ -356,8 +356,8 @@ namespace DiplomaWebService.Controllers.Invoice
 
 		[HttpGet]
 		[Route("/filterInvoiceIn")]
-		public async Task<IActionResult> FilterInvoiceIn([FromQuery] List<int> sector, [FromQuery] List<int> sender, [FromQuery] string number,
-			[FromQuery] DateTime dateFrom, [FromQuery] DateTime dateTo)
+		public async Task<IActionResult> FilterInvoiceIn([FromQuery] List<int> sector, [FromQuery] List<int> sender, [FromQuery] string? number,
+			[FromQuery] DateTime? dateFrom, [FromQuery] DateTime? dateTo)
 		{
 			Result<List<InvoiceIn>> result = new Result<List<InvoiceIn>>();
 			Result<string> resToken = GetTokenFromCookies();
