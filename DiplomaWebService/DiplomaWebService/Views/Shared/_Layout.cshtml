@@ -54,14 +54,14 @@
 								<div class="sidebar-link-text">Майно на обліку</div>
 							</a>
 						</li>
-						<li class="nav-ul-item nav-ul-item--active">
+@* 						<li class="nav-ul-item nav-ul-item--active">
 							<a title="Reports" class="sidebar-link" href="reports.html">
 								<div class="small-icon-container">
 									<img src="../img/reports.svg">
 								</div>
 								<div class="sidebar-link-text">Звіти</div>
 							</a>
-						</li>
+						</li> *@
 						<li class="accordion-item">
 							<input class="accordion-item-input" type="checkbox" id="accordion-dictionary">
 							<label class="accordion-trigger" for="accordion-dictionary">
@@ -71,6 +71,7 @@
 							<a title="Agents" class="accordion-content sidebar-menu-text" href="/contragents">Підрозділи</a>
 							<a title="Property" class="accordion-content sidebar-menu-text" href="/items">Майно</a>
 							<a title="Units" class="accordion-content sidebar-menu-text" href="/units">Одиниці виміру</a>
+							<a title="Sectors" class="accordion-content sidebar-menu-text" href="/sectors">Служби</a>
 						</li>
 						@if(@Model.RoleId==(int)Roles.Admin)
 						{
