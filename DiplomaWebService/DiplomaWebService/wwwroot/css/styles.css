@@ -492,10 +492,14 @@ body {
     }
 /* == /Navigation==*/
 /* == Table==*/
-/*.users-table-content {
-    margin-top: 60px;
+.users-table-content {
+    /*margin-top: 60px;*/
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    /*border: 2px solid #ddd;*/
 }
-*/
+/**/
 .my-agent-table{
     margin-bottom: 20px;
 }
@@ -507,12 +511,22 @@ body {
     background: var(--search-color);
     border: 16px solid var(--search-color);
     width: 100%;
+    height: auto;
+    flex-shrink: 0;
 }
 
-.scroll{
+.scroll {
     overflow-y: scroll;
-    height: calc(100vh - 319px);
-    width:100%
+    /*height: calc(100vh - 319px);*/
+    max-height: calc(100vh - 319px);
+    width: 100%
+}
+
+.table-flex-test {
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    border: 2px solid #ddd;
 }
 
 .data-table-th {
@@ -532,7 +546,7 @@ body {
     height: 50px;
     box-shadow: var(--table-shadow);
     width: 100%;
-    display: table;
+    /*display: table;*/
 }
 
 .data-table-td {

@@ -64,9 +64,9 @@
 				<th class="data-table-th">Кількість</th>
 				<th class="data-table-th">Підрозділ</th>
 				<th class="data-table-th"></th>
-			</tr>
+			</tr>	
 		<thead>
-		<tbody id="stockItemList" class="scroll">
+		<tbody id="stockItemList" @* class="scroll" *@>
 				@Html.Partial("/Views/StockItems/_StockItemList.cshtml", @Model.StockItems)
 		</tbody>
 	</table>
