@@ -60,7 +60,11 @@
             </tr>
         </thead>
         <tbody id="sectorsList" >
-            @Html.Partial("/Views/Dictionaries/Sectors/_SectorList.cshtml", @Model.Sectors)
+            @{
+                ViewDataDictionary viewData = new ViewDataDictionary(ViewData);
+                viewData.Add("RoleId", Model.RoleId);
+            }
+            @Html.Partial("/Views/Dictionaries/Sectors/_SectorList.cshtml", @Model.Sectors, viewData)
         </tbody>
     </table>
 </div>

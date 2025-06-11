@@ -64,7 +64,11 @@
 			</tr>
 		</thead>
 		<tbody id="itemsList" class="scroll">
-			@Html.Partial("/Views/Dictionaries/Items/_ItemsList.cshtml", @Model.Items)
+			@{
+				ViewDataDictionary viewData = new ViewDataDictionary(ViewData);
+				viewData.Add("RoleId", Model.RoleId);
+			}
+			@Html.Partial("/Views/Dictionaries/Items/_ItemsList.cshtml", @Model.Items, viewData)
 		</tbody>
 	</table>
 </div>

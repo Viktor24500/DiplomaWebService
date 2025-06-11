@@ -71,7 +71,7 @@
 							<a title="Agents" class="accordion-content sidebar-menu-text" href="/contragents">Підрозділи</a>
 							<a title="Property" class="accordion-content sidebar-menu-text" href="/items">Майно</a>
 							<a title="Units" class="accordion-content sidebar-menu-text" href="/units">Одиниці виміру</a>
-							<a title="Sectors" class="accordion-content sidebar-menu-text" href="/sectors">Служби</a>
+							@* <a title="Sectors" class="accordion-content sidebar-menu-text" href="/sectors">Служби</a> *@
 						</li>
 						@if(@Model.RoleId==(int)Roles.Admin)
 						{
@@ -87,10 +87,10 @@
 					</ul>
                 </nav>
 				<div class="user-info-wrapper">
-					<div class="user-info">T</div>
+					<div class="user-info">@Model.Username[0]</div>
 					<div class="user-name">
 						<a href="#" class="sidebar-link" onclick="openLogOutForm(); return false;">
-							<div class="sidebar-link-text">Test</div>
+							<div class="sidebar-link-text">@Model.Username</div>
 						</a>
 					</div>
 					<div class="logout-popup" id="logout">

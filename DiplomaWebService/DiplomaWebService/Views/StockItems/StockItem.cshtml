@@ -1,4 +1,5 @@
-﻿@using DiplomaWebService.Models.ViewModel
+﻿@using DiplomaWebService.Common.Enum
+@using DiplomaWebService.Models.ViewModel
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -15,9 +16,18 @@
 		</div>
 	</div>
 	<nav class="nav">
-		<button type="add-user" class="btn btn-add-user" onclick="ReassessmentWithCoeffOpen()">
-			<img src="img/reevaluation.svg">Коефіціент
-		</button>		
+		@if (@Model.RoleId == (int)Roles.Viewer)
+		{
+			<button type="add-user" class="btn btn-add-user" onclick="ReassessmentWithCoeffOpen()" disabled>
+				<img src="img/reevaluation.svg">Коефіціент
+			</button>
+		}
+		else
+		{
+			<button type="add-user" class="btn btn-add-user" onclick="ReassessmentWithCoeffOpen()">
+				<img src="img/reevaluation.svg">Коефіціент
+			</button>
+		}	
 		<div class="right-actions">
 			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук..." onkeydown="searchStockItem(event)">
 			<button onclick="openFilter()">
@@ -65,9 +75,13 @@
 				<th class="data-table-th">Підрозділ</th>
 				<th class="data-table-th"></th>
 			</tr>	
-		<thead>
+		</thead>
 		<tbody id="stockItemList" @* class="scroll" *@>
-				@Html.Partial("/Views/StockItems/_StockItemList.cshtml", @Model.StockItems)
+				@{
+					ViewDataDictionary viewData = new ViewDataDictionary(ViewData);
+					viewData.Add("RoleId", Model.RoleId);
+				}
+				@Html.Partial("/Views/StockItems/_StockItemList.cshtml", @Model.StockItems, viewData)
 		</tbody>
 	</table>
 </div>

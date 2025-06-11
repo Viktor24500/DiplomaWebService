@@ -1,10 +1,13 @@
-﻿@*
+﻿@using DiplomaWebService.Common.Enum
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
 @model List<Unit>
-
+@{
+	int roleId = (int)ViewData["RoleId"];
+}
 @for (int i = 0; i < Model.Count; i++)
 {
 	<tr class="data-table-tr">
@@ -14,9 +17,18 @@
 		<td class="data-table-td td-image">
 			<div class="modal-popup">
 				<div class="three-dots-button-container">
-					<button onclick="openMenu(@i)">
-						<img src="img/3dots.svg">
-					</button>
+					@if (roleId == (int)Roles.Viewer)
+					{
+						<button onclick="openMenu(@i)" disabled>
+							<img src="img/3dots.svg">
+						</button>
+					}
+					else
+					{
+						<button onclick="openMenu(@i)">
+							<img src="img/3dots.svg">
+						</button>
+					}
 				</div>
 				<div class="modal-popup-container" id="modal-popup-hidden">
 					<div class="menu-item-container">
