@@ -149,6 +149,7 @@ namespace DiplomaWebService.Controllers
 				Response.StatusCode = result.ErrorCode;
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
+			ViewData["RoleId"] = roleId.Data;
 			return PartialView("/Views/Dictionaries/Contragents/_ContragentsList.cshtml", result.Data);
 		}
 

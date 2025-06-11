@@ -156,7 +156,8 @@ namespace DiplomaWebService.Controllers
 				Response.StatusCode = result.ErrorCode;
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
-			return PartialView("/Views/Views/StockItems/_StockItemList.cshtml", result.Data);
+			ViewData["RoleId"] = roleId.Data;
+			return PartialView("/Views/StockItems/_StockItemList.cshtml", result.Data);
 		}
 
 		[HttpGet]
@@ -363,8 +364,8 @@ namespace DiplomaWebService.Controllers
 			}
 
 			string url = _connectionString + "filterStockItems";
-			string sectorParameters = url + "?" + GetStringWithParameters("sectors", sector);
-			string contragentParameters = url + "?" + GetStringWithParameters("contragents", contragent);
+			string sectorParameters = GetStringWithParameters("sectors", sector);
+			string contragentParameters = GetStringWithParameters("contragents", contragent);
 			string urlWithParameters = url + "?" + sectorParameters + "&" + contragentParameters;
 
 			using (HttpClient client = new HttpClient())
@@ -473,6 +474,7 @@ namespace DiplomaWebService.Controllers
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
 				return PartialView("/Views/Shared/Error.cshtml", errorModel);
 			}
+			ViewData["RoleId"] = roleId.Data;
 			return PartialView("Views/Forms/InvoiceForm/InvoiceOut/InvoicePositionOutStockItems.cshtml", result.Data);
 		}
 

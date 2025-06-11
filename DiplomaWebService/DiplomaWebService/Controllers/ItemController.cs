@@ -252,6 +252,7 @@ namespace DiplomaWebService.Controllers
 				Response.StatusCode = result.ErrorCode;
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
+			ViewData["RoleId"] = roleId.Data;
 			return PartialView("/Views/Dictionaries/Items/_ItemsList.cshtml", result.Data);
 		}
 
@@ -406,6 +407,7 @@ namespace DiplomaWebService.Controllers
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, resItemViewModel.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
+			ViewData["RoleId"] = roleId.Data;
 			return PartialView("Views/Forms/InvoiceForm/InvoiceIn/InvoicePositionInItems.cshtml", result.Data);
 		}
 

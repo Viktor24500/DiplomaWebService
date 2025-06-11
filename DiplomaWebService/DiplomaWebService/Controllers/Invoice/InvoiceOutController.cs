@@ -390,8 +390,8 @@ namespace DiplomaWebService.Controllers.Invoice
 			}
 
 			string url = _connectionString + "filterInvoiceOut";
-			string sectorParameters = url + "?" + GetStringWithParameters("sectors", sector);
-			string senderParameters = url + "?" + GetStringWithParameters("senders", destination);
+			string sectorParameters = GetStringWithParameters("sectors", sector);
+			string senderParameters = GetStringWithParameters("destinations", destination);
 			string urlWithParameters = url + "?" + sectorParameters + "&" + senderParameters + "&" + $"number={number}" + "&" + $"dateFrom={dateFrom}"
 				+ "&" + $"dateTo={dateTo}";
 
