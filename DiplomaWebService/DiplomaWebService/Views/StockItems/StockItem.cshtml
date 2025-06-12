@@ -76,7 +76,7 @@
 				<th class="data-table-th"></th>
 			</tr>	
 		</thead>
-		<tbody id="stockItemList" class="scroll">
+		<tbody id="stockItemList" @* class="scroll" *@>
 				@{
 					ViewDataDictionary viewData = new ViewDataDictionary(ViewData);
 					viewData.Add("RoleId", Model.RoleId);
