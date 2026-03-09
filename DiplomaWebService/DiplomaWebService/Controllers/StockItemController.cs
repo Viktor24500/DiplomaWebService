@@ -227,7 +227,8 @@ namespace DiplomaWebService.Controllers
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, resStockItemViewModel.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
-			return View("/Views/StockItem.cshtml", resStockItemViewModel.Data);
+			ViewData["RoleId"] = roleId.Data;
+			return PartialView("Views/Forms/InvoiceForm/InvoiceOut/InvoicePositionOutStockItems.cshtml", result.Data);
 		}
 
 		[HttpPost]
