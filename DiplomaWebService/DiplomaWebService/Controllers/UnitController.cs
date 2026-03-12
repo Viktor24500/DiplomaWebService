@@ -4,6 +4,7 @@ using DiplomaWebService.Constants;
 using DiplomaWebService.Models;
 using DiplomaWebService.Models.ViewModel;
 using DiplomaWebService.Parametrs.Units;
+using DiplomaWebService.Request.Unit;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DiplomaWebService.Controllers
@@ -132,8 +133,8 @@ namespace DiplomaWebService.Controllers
 		}
 
 		[HttpPut]
-		[Route("/units")]
-		public async Task<IActionResult> UpdateUnit(int id, string name, string? description)
+		[Route("/units/{id}")]
+		public async Task<IActionResult> UpdateUnit(int id, [FromBody] UnitUpdateRequest unit)
 		{
 			Result<Unit> result = new Result<Unit>();
 			Result<string> resToken = GetTokenFromCookies();
@@ -144,12 +145,13 @@ namespace DiplomaWebService.Controllers
 				result.ErrorMessage = resToken.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
+				Response.StatusCode = result.ErrorCode;
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			string url = _connectionString + $"units/{id}";
 			using (HttpClient client = new HttpClient())
 			{
-				UnitUpdateParameters unitUpdateParam = new UnitUpdateParameters(id, name, description);
+				UnitUpdateParameters unitUpdateParam = new UnitUpdateParameters(id, unit.Name, unit.Description);
 				JsonContent content = JsonContent.Create(unitUpdateParam);
 
 				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
@@ -170,10 +172,10 @@ namespace DiplomaWebService.Controllers
 					//result.ErrorMessage = "";
 					string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 					ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
+					Response.StatusCode = result.ErrorCode;
 					return View("/Views/Shared/Error.cshtml", errorModel);
 				}
-
-				return RedirectToAction("GetAllUnits");
+				return Ok();
 			}
 		}
 
@@ -200,7 +202,8 @@ namespace DiplomaWebService.Controllers
 				result.ErrorMessage = username.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), username.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, username.ErrorMessage);
-				return PartialView("/Views/Shared/Error.cshtml", errorModel);
+				Response.StatusCode = result.ErrorCode;
+				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			Result<int> roleId = GetRoleIdFromSession();
 			if (roleId.ErrorCode != (int)ErrorCodes.Success)
@@ -210,7 +213,8 @@ namespace DiplomaWebService.Controllers
 				result.ErrorMessage = roleId.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), roleId.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, roleId.ErrorMessage);
-				return PartialView("/Views/Shared/Error.cshtml", errorModel);
+				Response.StatusCode = result.ErrorCode;
+				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			string url = _connectionString + $"searchUnits/{name}";
 			using (HttpClient client = new HttpClient())
@@ -234,8 +238,10 @@ namespace DiplomaWebService.Controllers
 				//result.ErrorMessage = "Can't search units";
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
-				return PartialView("/Views/Shared/Error.cshtml", errorModel);
+				Response.StatusCode = result.ErrorCode;
+				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
+			ViewData["RoleId"] = roleId.Data;
 			return PartialView("/Views/Dictionaries/Units/_UnitsList.cshtml", result.Data);
 		}
 

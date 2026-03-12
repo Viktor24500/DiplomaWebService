@@ -21,21 +21,21 @@
         <div class="user-modal-block">
             <div class="user-modal-label" hidden>Id:</div>
             <div class="input-field-wrapper">
-                <input type="text" class="input-field hidden" id="contragentId" name="Id" placeholder="Id" hidden>
+                <input type="text" class="input-field hidden" id="contragentIdForm" name="Id" placeholder="Id" hidden>
                 <div class="separator" hidden></div>
             </div>
         </div>
         <div class="user-modal-block">
             <div class="user-modal-label">Назва: *</div>
             <div class="input-field-wrapper">
-                <input type="text" class="input-field" id="contragentName" name="name" placeholder="Назва" required>
+                <input type="text" class="input-field" id="contragentNameForm" name="name" placeholder="Назва" required>
                 <div class="separator"></div>
             </div>
         </div>
         <div class="user-modal-block">
             <div class="user-modal-label">Вище формування</div>
             <div class="input-field-wrapper">
-                <select class="input-field dropdown" id="parentId" name="parentId">
+                <select class="input-field dropdown" id="parentIdForm" name="parentId">
                     <option value="null">Немає</option>
                     @for (int i = 0; i < @Model.Contragents.Count; i++)
                     {
@@ -48,14 +48,14 @@
         <div class="user-modal-block">
             <div class="user-modal-label">Опис:</div>
             <div class="input-field-wrapper">
-                <input type="text" class="input-field comment" id="contragentDescription" name="contragentDescription" placeholder="Опис">
+                <input type="text" class="input-field comment" id="contragentDescriptionForm" name="contragentDescription" placeholder="Опис">
                 <div class="separator"></div>
             </div>
         </div>
         <div class="user-modal-block">
             <div class="user-modal-label">Статус: *</div>
             <div class="input-field-wrapper">
-                <select class="input-field dropdown" name="isActive" id="isActive">
+                <select class="input-field dropdown" name="isActive" id="isActiveForm">
                     <option value="true"> Активний</option>
                     <option value="false"> Неактивний</option>
                 </select>
@@ -64,6 +64,6 @@
         </div>
     </div>
     <div class="user-modal-footer">
-        <button type="submit" class="btn btn-modal">Зберегти</button>
+        <button type="submit" id="submitButton" class="btn btn-modal">Зберегти</button>
     </div>
 </form>

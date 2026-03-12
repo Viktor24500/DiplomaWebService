@@ -1,0 +1,24 @@
+﻿@using DiplomaWebService.Models.Items
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<StockItem>
+@for (int i=0; i<Model.Count; i++)
+{
+    <tr class="data-table-invoice-tr">
+        <td hidden class="invoice-position-table-stockitems-stockitem-id data-table-invoice-td">@Model[i].StockItemId</td>
+        <td hidden class="invoice-position-table-stockitems-item-id data-table-invoice-td">@Model[i].Item.ItemId</td>
+        <td class="invoice-position-table-stockitems-item-name data-table-invoice-td">@Model[i].Item.ItemName</td>
+        <td class="invoice-position-table-stockitems-serial-number data-table-invoice-td">@Model[i].SerialNumber</td>
+        <td class="invoice-position-table-stockitems-production-year data-table-invoice-td">@Model[i].ProductionYear</td>
+        <td hidden class="invoice-position-table-stockitems-unit-id data-table-invoice-td">@Model[i].Unit.Id</td>
+        <td class="invoice-position-table-stockitems-unit-name data-table-invoice-td">@Model[i].Unit.Name</td>
+        <td hidden class="invoice-position-table-stockitems-category-id data-table-invoice-td">@Model[i].Category.Id</td>
+        <td class="invoice-position-table-stockitems-category-name data-table-invoice-td">@Model[i].Category.Name</td>
+        <td class="invoice-position-table-stockitems-price data-table-invoice-td">@Model[i].Price</td>
+        @* <td class="invoice-position-table-stockitems-allAmount data-table-invoice-td">@Model[i].AllAmount</td> *@
+        <td class="data-table-invoice-td"><input type="checkbox" class="invoice-position-stockitem-checkbox" value="@i" /></td>
+    </tr>
+}

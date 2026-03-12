@@ -108,7 +108,8 @@ namespace DiplomaWebService.Controllers
 				result.ErrorMessage = username.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), username.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, username.ErrorMessage);
-				return PartialView("/Views/Shared/Error.cshtml", errorModel);
+				Response.StatusCode = result.ErrorCode;
+				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			if (resToken.ErrorCode != (int)ErrorCodes.Success)
 			{
@@ -117,7 +118,8 @@ namespace DiplomaWebService.Controllers
 				result.ErrorMessage = resToken.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
-				return PartialView("/Views/Shared/Error.cshtml", errorModel);
+				Response.StatusCode = result.ErrorCode;
+				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			Result<int> roleId = GetRoleIdFromSession();
 			if (roleId.ErrorCode != (int)ErrorCodes.Success)
@@ -127,7 +129,8 @@ namespace DiplomaWebService.Controllers
 				result.ErrorMessage = roleId.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), roleId.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, roleId.ErrorMessage);
-				return PartialView("/Views/Shared/Error.cshtml", errorModel);
+				Response.StatusCode = result.ErrorCode;
+				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			using (HttpClient client = new HttpClient())
 			{
@@ -150,13 +153,15 @@ namespace DiplomaWebService.Controllers
 				//result.ErrorMessage = "invalid username or password";
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
-				return PartialView("/Views/Shared/Error.cshtml", errorModel);
+				Response.StatusCode = result.ErrorCode;
+				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
-			return PartialView("/Views/Views/StockItems/_StockItemList.cshtml", result.Data);
+			ViewData["RoleId"] = roleId.Data;
+			return PartialView("/Views/StockItems/_StockItemList.cshtml", result.Data);
 		}
 
 		[HttpGet]
-		[Route("/stockItemsByContragentId")]
+		[Route("/stockItemsByContragentId/{contragentId}")]
 		public async Task<IActionResult> GetAllStockItemsByContragentId(int contragentId)
 		{
 			Result<List<StockItem>> result = new Result<List<StockItem>>();
@@ -222,7 +227,8 @@ namespace DiplomaWebService.Controllers
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, resStockItemViewModel.ErrorMessage);
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
-			return View("/Views/StockItem.cshtml", resStockItemViewModel.Data);
+			ViewData["RoleId"] = roleId.Data;
+			return PartialView("Views/Forms/InvoiceForm/InvoiceOut/InvoicePositionOutStockItems.cshtml", result.Data);
 		}
 
 		[HttpPost]
@@ -321,6 +327,158 @@ namespace DiplomaWebService.Controllers
 				return RedirectToAction("GetAllStockItems");
 			}
 		}
+
+		[HttpGet]
+		[Route("/filterStockItems")]
+		public async Task<IActionResult> FilterStockItems([FromQuery] List<int> sector, [FromQuery] List<int> contragent)
+		{
+			Result<List<StockItem>> result = new Result<List<StockItem>>();
+			Result<string> resToken = GetTokenFromCookies();
+			if (resToken.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(resToken.ErrorMessage);
+				result.ErrorCode = resToken.ErrorCode;
+				result.ErrorMessage = resToken.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			Result<string> username = GetUsernameFromSession();
+			if (username.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(username.ErrorMessage);
+				result.ErrorCode = username.ErrorCode;
+				result.ErrorMessage = username.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), username.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, username.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			Result<int> roleId = GetRoleIdFromSession();
+			if (roleId.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(roleId.ErrorMessage);
+				result.ErrorCode = roleId.ErrorCode;
+				result.ErrorMessage = roleId.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), roleId.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, roleId.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+
+			string url = _connectionString + "filterStockItems";
+			string sectorParameters = GetStringWithParameters("sectors", sector);
+			string contragentParameters = GetStringWithParameters("contragents", contragent);
+			string urlWithParameters = url + "?" + sectorParameters + "&" + contragentParameters;
+
+			using (HttpClient client = new HttpClient())
+			{
+				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
+				HttpResponseMessage responseMessage = await client.GetAsync(urlWithParameters);
+				if (responseMessage.IsSuccessStatusCode)
+				{
+					result.Data = await responseMessage.Content.ReadFromJsonAsync<List<StockItem>>();
+				}
+				else
+				{
+					result.ErrorCode = (int)responseMessage.StatusCode;
+					result.ErrorMessage = await responseMessage.Content.ReadAsStringAsync();
+				}
+			}
+
+			if (result.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(result.ErrorMessage);
+				result.ErrorCode = (int)ErrorCodes.BadRequest;
+				//result.ErrorMessage = "Can't search units";
+				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			Result<StockItemViewModel> resStockItemViewModel = await CreateViewModel(username.Data, username.Data[0], roleId.Data, result.Data);
+			if (resStockItemViewModel.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(resStockItemViewModel.ErrorMessage);
+				string errorName = Enum.GetName(typeof(ErrorCodes), resStockItemViewModel.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, resStockItemViewModel.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			return View("/Views/StockItems/StockItem.cshtml", resStockItemViewModel.Data);
+		}
+
+		[HttpGet]
+		[Route("/stockItemsByContragentIdAndSectorId")]
+		public async Task<IActionResult> GetStockItemsByContragentIdAndSectorId([FromQuery] int contragentId, [FromQuery] int sectorId)
+		{
+			Result<List<StockItem>> result = new Result<List<StockItem>>();
+			Result<string> resToken = GetTokenFromCookies();
+			if (resToken.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(resToken.ErrorMessage);
+				result.ErrorCode = resToken.ErrorCode;
+				result.ErrorMessage = resToken.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			Result<string> username = GetUsernameFromSession();
+			if (username.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(username.ErrorMessage);
+				result.ErrorCode = username.ErrorCode;
+				result.ErrorMessage = username.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), username.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, username.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			Result<int> roleId = GetRoleIdFromSession();
+			if (roleId.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(roleId.ErrorMessage);
+				result.ErrorCode = roleId.ErrorCode;
+				result.ErrorMessage = roleId.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), roleId.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, roleId.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+
+			string urlWithParameters = _connectionString + "stockItemsByContragentIdAndSectorId" + "?" + $"contragentId={contragentId}" + "&" + $"sectorId={sectorId}";
+
+			using (HttpClient client = new HttpClient())
+			{
+				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
+				HttpResponseMessage responseMessage = await client.GetAsync(urlWithParameters);
+				if (responseMessage.IsSuccessStatusCode)
+				{
+					result.Data = await responseMessage.Content.ReadFromJsonAsync<List<StockItem>>();
+				}
+				else
+				{
+					result.ErrorCode = (int)responseMessage.StatusCode;
+					result.ErrorMessage = await responseMessage.Content.ReadAsStringAsync();
+				}
+			}
+
+			if (result.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(result.ErrorMessage);
+				result.ErrorCode = (int)ErrorCodes.BadRequest;
+				//result.ErrorMessage = "Can't search units";
+				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			if (result.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(result.ErrorMessage);
+				result.ErrorCode = (int)ErrorCodes.BadRequest;
+				//result.ErrorMessage = "invalid username or password";
+				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
+				return PartialView("/Views/Shared/Error.cshtml", errorModel);
+			}
+			ViewData["RoleId"] = roleId.Data;
+			return PartialView("Views/Forms/InvoiceForm/InvoiceOut/InvoicePositionOutStockItems.cshtml", result.Data);
+		}
+
 		private Result<string> GetTokenFromCookies()
 		{
 			Result<string> result = new Result<string>();
@@ -367,8 +525,39 @@ namespace DiplomaWebService.Controllers
 				result.ErrorMessage = "can't get all sectors";
 				return result;
 			}
-
-			result.Data = new StockItemViewModel(usernameFirstLetter, username, roleId, stockItems, resultSector.Data);
+			//get list contragent 
+			string contragentUrl = _connectionString + "contragents";
+			Result<List<Contragent>> resultContragent = new Result<List<Contragent>>();
+			resToken = GetTokenFromCookies();
+			if (resToken.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(resToken.ErrorMessage);
+				result.ErrorCode = resToken.ErrorCode;
+				result.ErrorMessage = resToken.ErrorMessage;
+				return result;
+			}
+			using (HttpClient client = new HttpClient())
+			{
+				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
+				HttpResponseMessage responseMessage = await client.GetAsync(contragentUrl);
+				if (responseMessage.IsSuccessStatusCode)
+				{
+					resultContragent.Data = await responseMessage.Content.ReadFromJsonAsync<List<Contragent>>();
+				}
+				else
+				{
+					resultContragent.ErrorCode = (int)responseMessage.StatusCode;
+					resultContragent.ErrorMessage = await responseMessage.Content.ReadAsStringAsync();
+				}
+			}
+			if (resultContragent.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(result.ErrorMessage);
+				result.ErrorCode = (int)ErrorCodes.BadRequest;
+				result.ErrorMessage = "can't get all contragents";
+				return result;
+			}
+			result.Data = new StockItemViewModel(usernameFirstLetter, username, roleId, stockItems, resultSector.Data, resultContragent.Data);
 			return result;
 		}
 		private Result<string> GetUsernameFromSession()
@@ -402,6 +591,17 @@ namespace DiplomaWebService.Controllers
 				result.Data = roleId.Value;
 			}
 			return result;
+		}
+
+		private string GetStringWithParameters(string listName, List<int> parameters)
+		{
+			string urlWithParameters = "";
+			foreach (int sectorId in parameters)
+			{
+				urlWithParameters = urlWithParameters + $"{listName}={sectorId}&";
+			}
+			urlWithParameters = urlWithParameters.Trim('&');
+			return urlWithParameters;
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿@using DiplomaWebService.Models.ViewModel
+﻿@using DiplomaWebService.Common.Enum
+@using DiplomaWebService.Models.ViewModel
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -15,12 +16,44 @@
 		</div>
 	</div>
 	<nav class="nav">
-		<button type="add-user" class="btn btn-add-user" onclick="ReassessmentWithCoeffOpen()">
-			<img src="img/reevaluation.svg">Коефіціент
-		</button>		
+		@if (@Model.RoleId == (int)Roles.Viewer)
+		{
+			<button type="add-user" class="btn btn-add-user" onclick="ReassessmentWithCoeffOpen()" disabled>
+				<img src="img/reevaluation.svg">Коефіціент
+			</button>
+		}
+		else
+		{
+			<button type="add-user" class="btn btn-add-user" onclick="ReassessmentWithCoeffOpen()">
+				<img src="img/reevaluation.svg">Коефіціент
+			</button>
+		}	
 		<div class="right-actions">
 			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук..." onkeydown="searchStockItem(event)">
-			<img src="img/filtr.svg">
+			<button onclick="openFilter()">
+				<img src="img/filtr.svg">
+			</button>
+		</div>
+		<div class="modal-popup-container-filters" id="modal-popup-hidden-filters">
+			<form action="/filterStockItems" method="get" class="modal-filters" id="filterForm">
+				<label>Служби</label><br>
+				@for (int i = 0; i < Model.Sectors.Count; i++)
+				{
+					<input type="checkbox" id="checkboxFilter@i" name="sector" class="sector-checkbox" value=@Model.Sectors[i].Id />
+					<label for="sector">@Model.Sectors[i].Name</label>
+
+					<br>
+				}
+				<label>Підрозділи</label><br>
+				@for (int i = 0; i < Model.Contragents.Count; i++)
+				{
+					<input type="checkbox" id="checkboxFilter@i" name="contragent" class="sector-checkbox" value=@Model.Contragents[i].ContragentId />
+					<label for="contragent">@Model.Contragents[i].ContragentName</label>
+
+					<br>
+				}
+				<button type="submit" id="submitButtonFilters" class="btn btn-modal">Застосувати</button>
+			</form>
 		</div>
 	</nav>
 </div>
@@ -41,10 +74,14 @@
 				<th class="data-table-th">Кількість</th>
 				<th class="data-table-th">Підрозділ</th>
 				<th class="data-table-th"></th>
-			</tr>
-		<thead>
-		<tbody id="stockItemList" class="scroll">
-				@Html.Partial("/Views/StockItems/_StockItemList.cshtml", @Model.StockItems)
+			</tr>	
+		</thead>
+		<tbody id="stockItemList" @* class="scroll" *@>
+				@{
+					ViewDataDictionary viewData = new ViewDataDictionary(ViewData);
+					viewData.Add("RoleId", Model.RoleId);
+				}
+				@Html.Partial("/Views/StockItems/_StockItemList.cshtml", @Model.StockItems, viewData)
 		</tbody>
 	</table>
 </div>

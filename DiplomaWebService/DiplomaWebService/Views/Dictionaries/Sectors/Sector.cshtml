@@ -45,7 +45,7 @@
         }
         <div class="right-actions">
             <input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук...">
-            <img src="img/filtr.svg">
+            @* <img src="img/filtr.svg"> *@
         </div>
     </nav>
 </div>
@@ -56,10 +56,15 @@
                 <th class="data-table-th" hidden>sectorId</th>
                 <th class="data-table-th">Назва</th>
                 <th class="data-table-th">Скорочена назва</th>
+                <th class="data-table-th"></th>
             </tr>
         </thead>
         <tbody id="sectorsList" >
-            @Html.Partial("/Views/Dictionaries/Sectors/_SectorsList.cshtml", @Model.Sectors)
+            @{
+                ViewDataDictionary viewData = new ViewDataDictionary(ViewData);
+                viewData.Add("RoleId", Model.RoleId);
+            }
+            @Html.Partial("/Views/Dictionaries/Sectors/_SectorList.cshtml", @Model.Sectors, viewData)
         </tbody>
     </table>
 </div>

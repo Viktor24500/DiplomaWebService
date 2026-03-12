@@ -42,28 +42,28 @@
         <div class="user-modal-block">
             <div class="user-modal-label" hidden>Id:</div>
             <div class="input-field-wrapper">
-                <input type="text" class="input-field hidden" id="itemId" name="Id" placeholder="Id" hidden>
+                <input type="text" class="input-field hidden" id="itemIdForm" name="Id" placeholder="Id" hidden>
                 <div class="separator" hidden></div>
             </div>
         </div>
         <div class="user-modal-block">
             <div class="user-modal-label">Назва: *</div>
             <div class="input-field-wrapper">
-                <input type="text" class="input-field" id="itemName" name="name" placeholder="Назва" value="" required>
+                <input type="text" class="input-field" id="itemNameForm" name="name" placeholder="Назва" value="" required>
                 <div class="separator"></div>
             </div>
         </div>
         <div class="user-modal-block">
             <div class="user-modal-label">Номенклатурний номер:</div>
             <div class="input-field-wrapper">
-                <input type="text" class="input-field" id="nomenclatureNumber" name="nomenclatureNumber" placeholder="Номенклатурний номер" value="">
+                <input type="text" class="input-field" id="nomenclatureNumberForm" name="nomenclatureNumber" placeholder="Номенклатурний номер" value="">
                 <div class="separator"></div>
             </div>
         </div>
         <div class="user-modal-block">
             <div class="user-modal-label">Служба: *</div>
             <div class="input-field-wrapper">
-                <select class="input-field dropdown" id="sectorId" name="sectorId" required>
+                <select class="input-field dropdown" id="sectorIdForm" name="sectorId" required>
                     @for (int i = 0; i < @Model.Sectors.Count; i++)
                     {
                         <option value="@Model.Sectors[i].Id">@Model.Sectors[i].Name</option>
@@ -75,7 +75,7 @@
         <div class="user-modal-block">
             <div class="user-modal-label">Одиниці виміру: *</div>
             <div class="input-field-wrapper">
-                <select class="input-field dropdown" id="unitId" name="unitId" required>
+                <select class="input-field dropdown" id="unitIdForm" name="unitId" required>
                     @for (int i = 0; i < @Model.Units.Count; i++)
                     {
                         <option value="@Model.Units[i].Id">@Model.Units[i].Name</option>
@@ -87,26 +87,26 @@
         <div class="user-modal-block">
             <div class="user-modal-label">Вага:</div>
             <div class="input-field-wrapper">
-                <input type="number" class="input-field" id="weight" name="weight" placeholder="Вага" value="" min="0">
+                <input type="number" class="input-field" id="weightForm" name="weight" placeholder="Вага" value="" min="0">
                 <div class="separator"></div>
             </div>
         </div>
         <div class="user-modal-block">
             <div class="user-modal-label">Штат:</div>
             <div class="input-field-wrapper">
-                <input type="number" class="input-field" id="requiredQuantity" name="requiredQuantity" placeholder="Штат" value="" min="0">
+                <input type="number" class="input-field" id="requiredQuantityForm" name="requiredQuantity" placeholder="Штат" value="" min="0">
                 <div class="separator"></div>
             </div>
         </div>
         <div class="user-modal-block">
             <div class="user-modal-label">Опис</div>
             <div class="input-field-wrapper">
-                <input type="text" class="input-field comment" id="description" name="description" placeholder="Опис" value="">
+                <input type="text" class="input-field comment" id="itemDescriptionForm" name="description" placeholder="Опис" value="">
                 <div class="separator"></div>
             </div>
         </div>
     </div>
     <div class="user-modal-footer">
-        <button type="submit" class="btn btn-modal">Зберегти</button>
+        <button type="submit" id="submitButton" class="btn btn-modal">Зберегти</button>
     </div>
 </form>

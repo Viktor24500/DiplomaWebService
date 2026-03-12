@@ -18,7 +18,7 @@ services:
   bffservice:
     container_name: bffservice
     build:
-      context: ./DiplomaBFF
+      context: ./DiplomaBFFService
       dockerfile: DiplomaBFF/DiplomaBFF/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -57,6 +57,9 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:5001
       - ConnectionStrings__Main=Data Source=sqlserver,1433; User ID=sa;Password=Your123Strong123Password; Initial Catalog=DiplomaInventoryServiceDB
+      - SaveReportPath=./Report/
+    volumes:
+      - ./Report:/app/Report
     depends_on:
       - sqlserver
     ports:

@@ -28,7 +28,21 @@
 		}
 		<div class="right-actions">
 			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук..." onkeydown="searchItems(event)">
-			<img src="img/filtr.svg">
+			<button onclick="openFilter()">
+				<img src="img/filtr.svg">
+			</button>
+		</div>
+		<div class="modal-popup-container-filters" id="modal-popup-hidden-filters">
+			<form action="/filterItems" method="get" class="modal-filters" id="filterForm">
+				<label>Служби</label><br>
+				@for (int i = 0; i < Model.Sectors.Count; i++)
+				{
+					<input type="checkbox" id="checkboxFilter@i" name="sector" class="sector-checkbox" value=@Model.Sectors[i].Id />
+					<label for="sector">@Model.Sectors[i].Name</label>
+					<br>
+				}
+				<button type="submit" id="submitButtonFilters" class="btn btn-modal">Застосувати</button>
+			</form>
 		</div>
 	</nav>
 </div>
@@ -46,10 +60,15 @@
 				<th class="data-table-th">Опис</th>
 				<th class="data-table-th" hidden>sectorId</th>
 				<th class="data-table-th">Назва служби</th>
+				<th class="data-table-th"></th>
 			</tr>
 		</thead>
 		<tbody id="itemsList" class="scroll">
-			@Html.Partial("/Views/Dictionaries/Items/_ItemsList.cshtml", @Model.Items)
+			@{
+				ViewDataDictionary viewData = new ViewDataDictionary(ViewData);
+				viewData.Add("RoleId", Model.RoleId);
+			}
+			@Html.Partial("/Views/Dictionaries/Items/_ItemsList.cshtml", @Model.Items, viewData)
 		</tbody>
 	</table>
 </div>

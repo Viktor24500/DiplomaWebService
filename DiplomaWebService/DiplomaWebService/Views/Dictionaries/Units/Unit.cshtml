@@ -39,10 +39,15 @@
 				<th class="data-table-th" hidden>UnitId</th>
 				<th class="data-table-th">Назва</th>
 				<th class="data-table-th">Опис</th>
+				<th class="data-table-th"></th>
 			</tr>
 		</thead>
 		<tbody id="unitsList" class="scroll">
-			@Html.Partial("/Views/Dictionaries/Units/_UnitsList.cshtml", @Model.Units)
+			@{
+				ViewDataDictionary viewData = new ViewDataDictionary(ViewData);
+				viewData.Add("RoleId", Model.RoleId);
+			}
+			@Html.Partial("/Views/Dictionaries/Units/_UnitsList.cshtml", @Model.Units, viewData)
 		</tbody>
 	</table>
 </div>

@@ -19,20 +19,51 @@
     <nav class="nav">
         @if (Model.RoleId == (int)Roles.Viewer)
         {
-            <button type="button" class="btn btn-add-user" onclick="openModalForm()" disabled>
+            <a href="invoiceOut" class="btn btn-add-user" id="addInvoice" onclick="return false;">
                 <img src="img/plus.svg">Додати
-            </button>
+            </a>
         }
         else
         {
-            <button type="button" class="btn btn-add-user" onclick="openModalForm()">
+            <a href="invoiceOut" class="btn btn-add-user" id="addInvoice">
                 <img src="img/plus.svg">Додати
-            </button>
+            </a>
         }
 		<div class="right-actions">
             <input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук..." onkeydown="searchInvoiceOut(event)">
-			<img src="img/filtr.svg">
-		</div>
+            <button onclick="openFilter()">
+                <img src="img/filtr.svg">
+            </button>
+        </div>
+        <div class="modal-popup-container-filters" id="modal-popup-hidden-filters">
+            <form action="/filterInvoiceOut" method="get" class="modal-filters" id="filterForm">
+                <label>Дата з</label><br>
+                <input type="datetime-local" class="input-field" id="invoiceDateFrom" name="dateFrom" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" min="2018-06-07T00:00" max="2026-06-14T00:00" />
+                <label>Дата до</label><br>
+                <input type="datetime-local" class="input-field" id="invoiceDateTo" name="dateTo" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" min="2018-06-07T00:00" max="2026-06-14T00:00" />
+                <label>Номер</label><br>
+                <input type="text" class="input-field" id="invoiceNumber" name="number" placeholder="Номер">
+                <label>Призначення</label><br>
+                @for (int i = 0; i < Model.Contragents.Count; i++)
+                {
+                    if (@Model.Contragents[i].WhoAmI != true)
+                    {
+                        <input type="checkbox" id="checkboxFilter@i" name="destination" class="sector-checkbox" value=@Model.Contragents[i].ContragentId />
+                        <label for="sender">@Model.Contragents[i].ContragentName</label>
+
+                        <br>
+                    }
+                }
+                <label>Служби</label><br>
+                @for (int i = 0; i < Model.Sectors.Count; i++)
+                {
+                    <input type="checkbox" id="checkboxFilter@i" name="sector" class="sector-checkbox" value=@Model.Sectors[i].Id />
+                    <label for="sector">@Model.Sectors[i].Name</label>
+                    <br>
+                }
+                <button type="submit" id="submitButtonFilters" class="btn btn-modal">Застосувати</button>
+            </form>
+        </div>
 	</nav>
 </div>
 <div class="users-table-content">
@@ -42,9 +73,9 @@
                 <th class="data-table-th" hidden>Invoice Id</th>
                 <th class="data-table-th">Дата</th>
                 <th class="data-table-th">Номер</th>
-                <th class="data-table-th" hidden>Destination Id</th>
-                <th class="data-table-th">Відправник</th>
                 <th class="data-table-th" hidden>Sender Id</th>
+                <th class="data-table-th">Відправник</th>
+                <th class="data-table-th" hidden>Desitnation Id</th>
                 <th class="data-table-th">Отримувач</th>
                 <th class="data-table-th" hidden>Invoice Type Id</th>
                 @* <th class="data-table-th">Тип накладної</th> *@
@@ -61,4 +92,4 @@
         </tbody>
     </table>
 </div>
-@Html.Partial("/Views/Forms/InvoiceForm/AddInvoiceOut.cshtml", Model)
+@* @Html.Partial("/Views/Forms/InvoiceForm/InvoiceOut/AddInvoiceOut.cshtml", @Model) *@

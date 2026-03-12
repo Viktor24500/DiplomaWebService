@@ -1,5 +1,8 @@
-﻿@model List<StockItem>
-
+﻿@using DiplomaWebService.Common.Enum
+@model List<StockItem>
+@{
+    int roleId = (int)ViewData["RoleId"];
+}
 @for (int i = 0; i < @Model.Count(); i++)
 {
     <tr class="data-table-tr">
@@ -16,9 +19,18 @@
         <td id="Amount" class="data-table-td">@Model[i].AllAmount</td>
         <td id="ContragentName" class="data-table-td">@Model[i].ContragentName</td>
         <td class="data-table-td td-image">
-            <button type="add-user" class="btn" onclick="ReassessmentWithoutCoeffOpen('@Model[i].StockItemId','@Model[i].Item.ItemName, @Model[i].Unit.Name, @Model[i].Category.Name, @Model[i].Price')">
-                <img src="img/reevaluation1.svg">
-            </button>
+            @if (roleId == (int)Roles.Viewer)
+            {
+                <button type="add-user" class="btn" onclick="ReassessmentWithoutCoeffOpen('@Model[i].StockItemId','@Model[i].Item.ItemName, @Model[i].Unit.Name, @Model[i].Category.Name, @Model[i].Price')" disabled>
+                    <img src="img/reevaluation1.svg">
+                </button>
+            }
+            else
+            {
+                <button type="add-user" class="btn" onclick="ReassessmentWithoutCoeffOpen('@Model[i].StockItemId','@Model[i].Item.ItemName, @Model[i].Unit.Name, @Model[i].Category.Name, @Model[i].Price')">
+                    <img src="img/reevaluation1.svg">
+                </button>
+            }
         </td>
     </tr>
 }

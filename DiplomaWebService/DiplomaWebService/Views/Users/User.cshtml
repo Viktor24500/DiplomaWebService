@@ -22,14 +22,14 @@
 		<div class="right-actions">
 			<input type="text" class="input-field search-field" name="search" id="search" value="" placeholder="Пошук..." onkeydown="searchUsers(event)">
 			<div class="modal-popup">
-				<button onclick="openMenu(0)">
+				<button onclick="openMenu()">
 					@* <img src="img/filtr.svg"> *@
 				</button>
 			</div>	
-				<div class="modal-popup-container" id="modal-popup-hidden">
+@* 				<div class="modal-popup-container" id="modal-popup-hidden">
 					<div class="menu-item-container">
 						Редагувати 
-						<button class="small-icon-container" id="createExelInvoiceIn@i" onclick="createReportInvoiceIn(0)"><img src="img/edit.svg"></button>								
+						<button class="small-icon-container" id="createExelInvoiceIn@i" onclick="UpdateUser(0)"><img src="img/edit.svg"></button>								
 					</div>
 					<div class="separator">
 					</div>	
@@ -37,7 +37,7 @@
 						Блокувати 
 						<button class="small-icon-container" id="createExelInvoiceIn@i" onclick="createReportInvoiceIn(0)"><img src="img/archive.svg"></button>								
 					</div>
-				</div>													
+				</div>	 *@												
 		</div>
 	</nav>
 </div>
@@ -48,8 +48,11 @@
 				<th class="data-table-th" hidden>Id</th>
 				<th class="data-table-th">Логін</th>
 				<th class="data-table-th">ПІБ</th>
+				<td class="data-table-th" hidden>Email</td>
 				<th class="data-table-th">Телефон</th>
+				<th class="data-table-th" hidden>Status</th>
 				<th class="data-table-th">Статус</th>
+				<td class="data-table-th" hidden>RoleId</td>
 				<th class="data-table-th">Роль</th>
 				<th class="data-table-th">Коментар</th>
 				<th class="data-table-th"></th>

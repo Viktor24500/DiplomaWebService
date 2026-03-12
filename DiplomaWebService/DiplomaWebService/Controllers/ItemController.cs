@@ -5,6 +5,7 @@ using DiplomaWebService.Models;
 using DiplomaWebService.Models.Items;
 using DiplomaWebService.Models.ViewModel;
 using DiplomaWebService.Parametrs.Item;
+using DiplomaWebService.Request.Items;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DiplomaWebService.Controllers
@@ -143,8 +144,7 @@ namespace DiplomaWebService.Controllers
 
 		[HttpPut]
 		[Route("/items/{id}")]
-		public async Task<IActionResult> UpdateItem(int id, string name, string inventoryNumber, int sectorId, decimal? weight,
-			decimal? requiredQuantity, int unitId, string? description)
+		public async Task<IActionResult> UpdateItem(int id, [FromBody] ItemUpdateRequest item)
 		{
 			Result<Item> result = new Result<Item>();
 			Result<string> resToken = GetTokenFromCookies();
@@ -155,13 +155,14 @@ namespace DiplomaWebService.Controllers
 				result.ErrorMessage = resToken.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
+				Response.StatusCode = result.ErrorCode;
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
-			string url = _connectionString + $"/items/{id}";
+			string url = _connectionString + $"items/{id}";
 			using (HttpClient client = new HttpClient())
 			{
-				ItemUpdateParameters itemUpdateParam = new ItemUpdateParameters(id, name, sectorId, inventoryNumber, weight, requiredQuantity,
-					unitId, description);
+				ItemUpdateParameters itemUpdateParam = new ItemUpdateParameters(id, item.ItemName, item.SectorId, item.NomenclatureNumber, item.Weight, item.RequiredQuantity,
+					item.UnitId, item.Description);
 				JsonContent content = JsonContent.Create(itemUpdateParam);
 
 				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
@@ -182,9 +183,10 @@ namespace DiplomaWebService.Controllers
 					//result.ErrorMessage = "";
 					string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 					ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
+					Response.StatusCode = result.ErrorCode;
 					return View("/Views/Shared/Error.cshtml", errorModel);
 				}
-				return RedirectToAction("GetAllItems");
+				return Ok();
 			}
 		}
 		[HttpGet]
@@ -200,7 +202,8 @@ namespace DiplomaWebService.Controllers
 				result.ErrorMessage = resToken.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
-				return PartialView("/Views/Shared/Error.cshtml", errorModel);
+				Response.StatusCode = result.ErrorCode;
+				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			Result<string> username = GetUsernameFromSession();
 			if (username.ErrorCode != (int)ErrorCodes.Success)
@@ -210,7 +213,8 @@ namespace DiplomaWebService.Controllers
 				result.ErrorMessage = username.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), username.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, username.ErrorMessage);
-				return PartialView("/Views/Shared/Error.cshtml", errorModel);
+				Response.StatusCode = result.ErrorCode;
+				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			Result<int> roleId = GetRoleIdFromSession();
 			if (roleId.ErrorCode != (int)ErrorCodes.Success)
@@ -220,7 +224,8 @@ namespace DiplomaWebService.Controllers
 				result.ErrorMessage = roleId.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), roleId.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, roleId.ErrorMessage);
-				return PartialView("/Views/Shared/Error.cshtml", errorModel);
+				Response.StatusCode = result.ErrorCode;
+				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			string url = _connectionString + $"searchItems/{name}";
 			using (HttpClient client = new HttpClient())
@@ -244,8 +249,10 @@ namespace DiplomaWebService.Controllers
 				//result.ErrorMessage = "Can't search units";
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
-				return PartialView("/Views/Shared/Error.cshtml", errorModel);
+				Response.StatusCode = result.ErrorCode;
+				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
+			ViewData["RoleId"] = roleId.Data;
 			return PartialView("/Views/Dictionaries/Items/_ItemsList.cshtml", result.Data);
 		}
 
@@ -254,6 +261,154 @@ namespace DiplomaWebService.Controllers
 		public IActionResult GetCreateItem()
 		{
 			return View("/Views/Forms/ItemForm/AddItem.cshtml");
+		}
+
+		[HttpGet]
+		[Route("/filterItems")]
+		public async Task<IActionResult> FilterItems([FromQuery] List<int> sector)
+		{
+			Result<List<Item>> result = new Result<List<Item>>();
+			Result<string> resToken = GetTokenFromCookies();
+			if (resToken.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(resToken.ErrorMessage);
+				result.ErrorCode = resToken.ErrorCode;
+				result.ErrorMessage = resToken.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			Result<string> username = GetUsernameFromSession();
+			if (username.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(username.ErrorMessage);
+				result.ErrorCode = username.ErrorCode;
+				result.ErrorMessage = username.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), username.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, username.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			Result<int> roleId = GetRoleIdFromSession();
+			if (roleId.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(roleId.ErrorMessage);
+				result.ErrorCode = roleId.ErrorCode;
+				result.ErrorMessage = roleId.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), roleId.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, roleId.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+
+			string url = _connectionString + $"filterItems";
+			string urlWithParameters = url + "?" + GetStringWithParameters("sector", sector);
+
+			using (HttpClient client = new HttpClient())
+			{
+				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
+				HttpResponseMessage responseMessage = await client.GetAsync(urlWithParameters);
+				if (responseMessage.IsSuccessStatusCode)
+				{
+					result.Data = await responseMessage.Content.ReadFromJsonAsync<List<Item>>();
+				}
+				else
+				{
+					result.ErrorCode = (int)responseMessage.StatusCode;
+					result.ErrorMessage = await responseMessage.Content.ReadAsStringAsync();
+				}
+			}
+
+			if (result.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(result.ErrorMessage);
+				result.ErrorCode = (int)ErrorCodes.BadRequest;
+				//result.ErrorMessage = "Can't search units";
+				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			Result<ItemViewModel> resItemViewModel = await GetItemViewModel(result.Data, username.Data, username.Data[0], roleId.Data);
+			if (resItemViewModel.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(resItemViewModel.ErrorMessage);
+				string errorName = Enum.GetName(typeof(ErrorCodes), resItemViewModel.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, resItemViewModel.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			return View("/Views/Dictionaries/Items/Item.cshtml", resItemViewModel.Data);
+		}
+
+		[HttpGet]
+		[Route("/itemsBySectorId/{id}")]
+		public async Task<IActionResult> GetItemBySectorId(int id)
+		{
+			Result<List<Item>> result = new Result<List<Item>>();
+			Result<string> resToken = GetTokenFromCookies();
+			if (resToken.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(resToken.ErrorMessage);
+				result.ErrorCode = resToken.ErrorCode;
+				result.ErrorMessage = resToken.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			Result<string> username = GetUsernameFromSession();
+			if (username.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(username.ErrorMessage);
+				result.ErrorCode = username.ErrorCode;
+				result.ErrorMessage = username.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), username.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, username.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			Result<int> roleId = GetRoleIdFromSession();
+			if (roleId.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(roleId.ErrorMessage);
+				result.ErrorCode = roleId.ErrorCode;
+				result.ErrorMessage = roleId.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), roleId.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, roleId.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+
+			string url = _connectionString + $"itemsBySectorId/{id}";
+
+			using (HttpClient client = new HttpClient())
+			{
+				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
+				HttpResponseMessage responseMessage = await client.GetAsync(url);
+				if (responseMessage.IsSuccessStatusCode)
+				{
+					result.Data = await responseMessage.Content.ReadFromJsonAsync<List<Item>>();
+				}
+				else
+				{
+					result.ErrorCode = (int)responseMessage.StatusCode;
+					result.ErrorMessage = await responseMessage.Content.ReadAsStringAsync();
+				}
+			}
+
+			if (result.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(result.ErrorMessage);
+				result.ErrorCode = (int)ErrorCodes.BadRequest;
+				//result.ErrorMessage = "Can't search units";
+				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			Result<ItemViewModel> resItemViewModel = await GetItemViewModel(result.Data, username.Data, username.Data[0], roleId.Data);
+			if (resItemViewModel.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(resItemViewModel.ErrorMessage);
+				string errorName = Enum.GetName(typeof(ErrorCodes), resItemViewModel.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, resItemViewModel.ErrorMessage);
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			ViewData["RoleId"] = roleId.Data;
+			return PartialView("Views/Forms/InvoiceForm/InvoiceIn/InvoicePositionInItems.cshtml", result.Data);
 		}
 
 		private async Task<Result<ItemViewModel>> GetItemViewModel(List<Item> items, string username, char usernameFirstLetter, int roleId)
@@ -370,6 +525,17 @@ namespace DiplomaWebService.Controllers
 				result.Data = roleId.Value;
 			}
 			return result;
+		}
+
+		private string GetStringWithParameters(string listName, List<int> parameters)
+		{
+			string urlWithParameters = "";
+			foreach (int sectorId in parameters)
+			{
+				urlWithParameters = urlWithParameters + $"{listName}={sectorId}&";
+			}
+			urlWithParameters = urlWithParameters.Trim('&');
+			return urlWithParameters;
 		}
 	}
 }

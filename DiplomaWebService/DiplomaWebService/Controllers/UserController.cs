@@ -6,6 +6,7 @@ using DiplomaWebService.Models.Users;
 using DiplomaWebService.Models.ViewModel;
 using DiplomaWebService.Parametrs.Login;
 using DiplomaWebService.Parametrs.User;
+using DiplomaWebService.Request.User;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DiplomaWebService.Controllers
@@ -29,6 +30,54 @@ namespace DiplomaWebService.Controllers
 		public IActionResult GetLogin()
 		{
 			return View("/Views/Forms/LoginForm/Login.cshtml");
+		}
+
+		[HttpPut]
+		[Route("/users/{id}")]
+		public async Task<IActionResult> UpdateUser(int id, [FromBody] UserUpdateRequest user)
+		{
+			Result<User> result = new Result<User>();
+			Result<string> resToken = GetTokenFromCookies();
+			if (resToken.ErrorCode != (int)ErrorCodes.Success)
+			{
+				_logger.LogError(resToken.ErrorMessage);
+				result.ErrorCode = resToken.ErrorCode;
+				result.ErrorMessage = resToken.ErrorMessage;
+				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
+				Response.StatusCode = result.ErrorCode;
+				return View("/Views/Shared/Error.cshtml", errorModel);
+			}
+			string url = _connectionString + $"users/{id}";
+			using (HttpClient client = new HttpClient())
+			{
+				UserUpdateParameters userUpdateParam = new UserUpdateParameters(id, user.Email, user.FirstName, user.LastName, user.Comment, user.IsActive,
+					user.PhoneNumber);
+				JsonContent content = JsonContent.Create(userUpdateParam);
+
+				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
+				HttpResponseMessage responseMessage = await client.PutAsync(url, content);
+				if (responseMessage.IsSuccessStatusCode)
+				{
+					result.Data = await responseMessage.Content.ReadFromJsonAsync<User>();
+				}
+				else
+				{
+					result.ErrorCode = (int)responseMessage.StatusCode;
+					result.ErrorMessage = await responseMessage.Content.ReadAsStringAsync();
+				}
+				if (result.ErrorCode != (int)ErrorCodes.Success)
+				{
+					_logger.LogError(result.ErrorMessage);
+					//result.ErrorCode = (int)ErrorCodes.BadRequest;
+					//result.ErrorMessage = "";
+					string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
+					ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
+					Response.StatusCode = result.ErrorCode;
+					return View("/Views/Shared/Error.cshtml", errorModel);
+				}
+				return Ok();
+			}
 		}
 
 		[HttpPost]
@@ -57,6 +106,7 @@ namespace DiplomaWebService.Controllers
 			if (result.ErrorCode != (int)ErrorCodes.Success)
 			{
 				_logger.LogError(result.ErrorMessage);
+				//result.ErrorMessage = GetErrorMessageForUser(result.ErrorMessage);
 				result.ErrorCode = (int)ErrorCodes.BadRequest;
 				//result.ErrorMessage = "";
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
@@ -155,7 +205,8 @@ namespace DiplomaWebService.Controllers
 				result.ErrorMessage = username.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), username.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, username.ErrorMessage);
-				return PartialView("/Views/Shared/Error.cshtml", errorModel);
+				Response.StatusCode = result.ErrorCode;
+				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			if (resToken.ErrorCode != (int)ErrorCodes.Success)
 			{
@@ -164,7 +215,8 @@ namespace DiplomaWebService.Controllers
 				result.ErrorMessage = resToken.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
-				return PartialView("/Views/Shared/Error.cshtml", errorModel);
+				Response.StatusCode = result.ErrorCode;
+				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			Result<int> roleId = GetRoleIdFromSession();
 			if (roleId.ErrorCode != (int)ErrorCodes.Success)
@@ -174,7 +226,8 @@ namespace DiplomaWebService.Controllers
 				result.ErrorMessage = roleId.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), roleId.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, roleId.ErrorMessage);
-				return PartialView("/Views/Shared/Error.cshtml", errorModel);
+				Response.StatusCode = result.ErrorCode;
+				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			using (HttpClient client = new HttpClient())
 			{
@@ -197,7 +250,8 @@ namespace DiplomaWebService.Controllers
 				//result.ErrorMessage = "invalid username or password";
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
-				return PartialView("/Views/Shared/Error.cshtml", errorModel);
+				Response.StatusCode = result.ErrorCode;
+				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
 			return PartialView("/Views/Users/_UsersList.cshtml", result.Data);
 		}
@@ -351,5 +405,19 @@ namespace DiplomaWebService.Controllers
 			BaseViewModel model = new BaseViewModel(usernameFirstLetter, username, roleId);
 			return model;
 		}
+
+		//private string GetErrorMessageForUser(string error)
+		//{
+		//	if (error.Contains("Unexpected error"))
+		//	{
+		//		int index = error.IndexOf("at");
+		//		if (index != -1)
+		//		{
+		//			string errorSubstring = error.Substring(0, index);
+		//			return errorSubstring;
+		//		}
+		//	}
+		//	return error;
+		//}
 	}
 }

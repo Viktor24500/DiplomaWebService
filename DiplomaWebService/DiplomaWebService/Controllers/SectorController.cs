@@ -4,6 +4,7 @@ using DiplomaWebService.Constants;
 using DiplomaWebService.Models;
 using DiplomaWebService.Models.ViewModel;
 using DiplomaWebService.Parametrs.Sector;
+using DiplomaWebService.Request.Sector;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DiplomaWebService.Controllers
@@ -134,7 +135,7 @@ namespace DiplomaWebService.Controllers
 
 		[HttpPut]
 		[Route("/sectors/{id}")]
-		public async Task<IActionResult> UpdateSector(int id, string name, string shortSectorName)
+		public async Task<IActionResult> UpdateSector(int id, [FromBody] SectorUpdateRequest sector)
 		{
 			Result<Sector> result = new Result<Sector>();
 			Result<string> resToken = GetTokenFromCookies();
@@ -145,12 +146,13 @@ namespace DiplomaWebService.Controllers
 				result.ErrorMessage = resToken.ErrorMessage;
 				string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 				ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
+				Response.StatusCode = result.ErrorCode;
 				return View("/Views/Shared/Error.cshtml", errorModel);
 			}
-			string url = _connectionString + $"/sectors/{id}";
+			string url = _connectionString + $"sectors/{id}";
 			using (HttpClient client = new HttpClient())
 			{
-				SectorUpdateParameters sectorUpdateParam = new SectorUpdateParameters(id, name, shortSectorName);
+				SectorUpdateParameters sectorUpdateParam = new SectorUpdateParameters(id, sector.Name, sector.ShortName);
 				JsonContent content = JsonContent.Create(sectorUpdateParam);
 
 				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", resToken.Data);
@@ -171,10 +173,10 @@ namespace DiplomaWebService.Controllers
 					//result.ErrorMessage = "";
 					string errorName = Enum.GetName(typeof(ErrorCodes), result.ErrorCode);
 					ErrorViewModel errorModel = new ErrorViewModel(_usernameFirstLetter, _username, _roleId, errorName, result.ErrorMessage);
+					Response.StatusCode = result.ErrorCode;
 					return View("/Views/Shared/Error.cshtml", errorModel);
 				}
-
-				return RedirectToAction("GetAllSectors");
+				return Ok();
 			}
 		}
 

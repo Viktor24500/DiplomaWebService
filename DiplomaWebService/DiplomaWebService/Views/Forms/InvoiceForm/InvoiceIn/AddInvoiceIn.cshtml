@@ -1,0 +1,136 @@
+﻿@using DiplomaWebService.Models.Invoice.In
+@using DiplomaWebService.Models.ViewModel.Invoice.In
+@model InvoiceInViewModelInvoiceList
+<div class="main-header">
+    <div class="top-header">
+        <h2>Накладні прихід</h2>
+    </div>
+    <div class="btn-header">
+        <button type="button" class="btn btn-header" onclick="SendInvoiceIn()">Зберегти</button>
+    </div>
+</div>
+<nav class="nav">
+    <a href="/invoicesIn" class="btn btn-add-user">
+        <img src="../img/back.svg">
+    </a>
+</nav>
+<div class="container">
+    <div class="user-modal-content">
+        <label hidden>Invoice Id</label> <input type="number" class="input-field hidden" id="invoiceId" value="" "name=" Id" placeholder="Id" hidden>
+        <div class="user-modal-block">
+            <div class="user-modal-label">Дата накладної: *</div>
+            <div class="input-field-wrapper input-field-wrapper-invoice-in-out">
+                <input type="datetime-local" class="input-field" id="invoiceDate" name="invoiceDate" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" min="2018-06-07T00:00" max="2026-06-14T00:00" required>
+            </div>
+            <div class="user-modal-label">Номер: *</div>
+            <div class="input-field-wrapper input-field-wrapper-invoice-in-out">
+                <input type="text" class="input-field" id="invoiceNumber" name="number" placeholder="Номер" required>
+            </div>
+        </div>
+        <div class="separator"></div>
+        <div class="user-modal-block">
+            <div class="user-modal-label">Призначення: *</div>
+            <div class="input-field-wrapper input-field-wrapper-invoice-in-out">
+                <select class="input-field dropdown" id="destinationId" name="destinationId" disabled>
+                @for (int i = 0; i < @Model.Contragents.Count; i++)
+                {
+                    if (@Model.Contragents[i].WhoAmI == true)
+                    {
+                        <option value="@Model.Contragents[i].ContragentId">@Model.Contragents[i].ContragentName</option>
+                    }
+                }
+                </select>
+                <select class="input-field dropdown" id="destinationIdHidden" name="destinationId" hidden>
+                    @for (int i = 0; i < @Model.Contragents.Count; i++)
+                    {
+                        if (@Model.Contragents[i].WhoAmI == true)
+                        {
+                            <option value="@Model.Contragents[i].ContragentId">@Model.Contragents[i].ContragentName</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="user-modal-label">Відправник: *</div>
+            <div class="input-field-wrapper input-field-wrapper-invoice-in-out">
+                <select class="input-field dropdown" id="senderId" name="senderId" required>
+                    <option>Немає</option>
+                @for (int i = 0; i < @Model.Contragents.Count; i++)
+                {
+                    if (@Model.Contragents[i].WhoAmI != true)
+                    {
+                        <option value="@Model.Contragents[i].ContragentId" readonly>@Model.Contragents[i].ContragentName</option>
+                    }
+                }
+                </select>
+            </div>
+        </div>
+        <div class="separator"></div>
+        <div class="user-modal-block">
+            <div class="user-modal-label">Служба: *</div>
+            <div class="input-field-wrapper input-field-wrapper-invoice-in-out">
+                <select class="input-field dropdown" id="sectorId" name="sectorId" onchange="GetItemBySectorId()" required>
+                    <option>Немає</option>
+                @for (int i = 0; i < @Model.Sectors.Count; i++)
+                {
+                    <option value="@Model.Sectors[i].Id">@Model.Sectors[i].Name</option>
+                }
+                </select>
+            </div>
+            <div class="user-modal-label">Тип документа: *</div>
+            <div class="input-field-wrapper input-field-wrapper-invoice-in-out">
+                <select class="input-field dropdown" id="documentTypeId" name="documentTypeId" required>
+                    <option>Немає</option>
+                @for (int i = 0; i < @Model.DocumentTypes.Count; i++)
+                {
+                    <option value="@Model.DocumentTypes[i].Id">@Model.DocumentTypes[i].Name</option>
+                }
+                </select>
+            </div>
+        </div>
+        <div class="separator"></div>       
+    </div>
+</div>
+<div class="container">
+    <div class="block-container ">
+        Позиції
+        <button type="button" class="btn btn-add-user" onclick="openModalForm()">
+            <img src="../img/plus.svg">Додати
+        </button>
+    </div>
+</div>
+<div class="users-table-content">
+    <table id="invoiceInPositionsTable" class="data-table">
+        <thead class="data-table-thead">
+            <tr class ="data-table-tr">
+                <th class="data-table-th" hidden>Item Id</th>
+                <th class="data-table-th">Назва</th>
+                <th class="data-table-th">Серійний номер</th>
+                <th class="data-table-th">Рік випуску</th>
+                <th class="data-table-th">Кількість</th>
+                <th class="data-table-th">Ціна</th>
+                <th class="data-table-th" hidden>Unit Id</th>
+                <th class="data-table-th">Одиниці виміру</th>
+                <th class="data-table-th" hidden>Category Id</th>
+                <th class="data-table-th">Категорія</th>
+            </tr>
+        </thead>
+        <tbody id="invoiceInPositionsTableList">
+            @* @foreach (InvoicePositionIn position in Model.InvoiceIn.InvoicePositions)
+            {
+                <tr>
+                    <td hidden>@position.Item.ItemId</td>
+                    <td>@position.Item.ItemName</td>
+                    <td>@position.SerialNumber</td>
+                    <td>@position.ProductionYear</td>
+                    <td>@position.Amount</td>
+                    <td>@position.Price</td>
+                    <td hidden>@position.Unit.Id</td>
+                    <td>@position.Unit.Name</td>
+                    <td hidden>@position.Category.Id</td>
+                    <td>@position.Category.Name</td>
+                </tr>
+            } *@
+        </tbody>
+    </table>
+</div>
+@Html.Partial("/Views/Forms/InvoiceForm/InvoiceIn/AddInvoicePositionIn.cshtml", @Model)

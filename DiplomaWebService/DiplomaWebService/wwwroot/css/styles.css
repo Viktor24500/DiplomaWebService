@@ -143,6 +143,15 @@ body {
     display: none;
 }
 
+.modal-filters {
+    align-items: center;
+    background: var(--search-color);
+    cursor: pointer;
+    justify-content: space-between;
+    padding: 12px;
+    width: 100%;
+}
+
 .invoice-in-out-form {
     width: calc(100% - 270px);
 }
@@ -483,10 +492,14 @@ body {
     }
 /* == /Navigation==*/
 /* == Table==*/
-/*.users-table-content {
-    margin-top: 60px;
+.users-table-content {
+    /*margin-top: 60px;*/
+    display: flex;
+    flex-direction: column;
+    /*height: 300px;*/
+    /*border: 2px solid #ddd;*/
 }
-*/
+/**/
 .my-agent-table{
     margin-bottom: 20px;
 }
@@ -498,12 +511,15 @@ body {
     background: var(--search-color);
     border: 16px solid var(--search-color);
     width: 100%;
+    height: auto;
+    flex-shrink: 0;
 }
 
-.scroll{
+.scroll {
     overflow-y: scroll;
-    height: calc(100vh - 319px);
-    width:100%
+    /*height: calc(100vh - 319px);*/
+    max-height: calc(100vh - 319px);
+    width: 100%
 }
 
 .data-table-th {
@@ -523,7 +539,7 @@ body {
     height: 50px;
     box-shadow: var(--table-shadow);
     width: 100%;
-    display: table;
+    /*display: table;*/
 }
 
 .data-table-td {
@@ -546,6 +562,7 @@ body {
     background-color: var(--cta-background-color);
     color: var(--cta-text-color);
     border-radius: 16px;
+    padding: 5px;
     /*    gap: 10px;
     padding: 5px 12px 5px 9px;
     position: relative;
@@ -610,6 +627,23 @@ td img {
     display: none;
 }
 
+.modal-popup-container-filters {
+    border: 1px solid var(--gray1);
+    border-radius: 16px;
+    box-shadow: var(--modal-shadow);
+    overflow-y: auto;
+    padding: 0;
+    position: absolute;
+    top: 100px;
+    right: 10px;
+    width: 190px;
+    z-index: 1;
+}
+
+#modal-popup-hidden-filters {
+    display: none;
+}
+
 #menu{
     display: none;
 }
@@ -619,7 +653,7 @@ td img {
 .menu-item-container{
     align-items: center;
     background: var(--search-color);
-    cursor: pointer;
+    /*cursor: pointer;*/
     display: flex;
     justify-content: space-between;
     padding: 12px;
@@ -780,4 +814,25 @@ button {
 
 .comment{
     height: 50px;
+}
+
+/*Invoice*/
+.data-table-invoice {
+    border-collapse: collapse;
+    width: 100%;
+}
+.data-table-invoice-th {
+    border: 1px solid;
+    text-align: left;
+    padding: 8px;
+}
+.data-table-invoice-tr {
+    border: 1px solid;
+    text-align: left;
+    padding: 8px;
+}
+.data-table-invoice-td {
+    border: 1px solid;
+    text-align: left;
+    padding: 8px;
 }

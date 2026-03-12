@@ -28,26 +28,26 @@
         <div class="user-modal-block">
             <div class="user-modal-label" hidden>Id:</div>
             <div class="input-field-wrapper">
-                <input type="hidden" class="input-field hidden" id="sectorId" name="Id" placeholder="Id" value="" hidden>
+                <input type="hidden" class="input-field hidden" id="sectorIdForm" name="Id" placeholder="Id" value="" hidden>
                 <div class="separator" hidden></div>
             </div>
         </div>
         <div class="user-modal-block">
             <div class="user-modal-label">Назва: *</div>
             <div class="input-field-wrapper">
-                <input type="text" class="input-field" id="sectorName" name="name" placeholder="Назва" value="" required>
+                <input type="text" class="input-field" id="sectorNameForm" name="name" placeholder="Назва" value="" required>
                 <div class="separator"></div>
             </div>
-            <div class="user-modal-block">
-                <div class="user-modal-label">Коротка назва:</div>
-                <div class="input-field-wrapper">
-                    <input type="text" class="input-field" id="shortSectorName" name="name" value="" placeholder="Коротка назва" required>
-                    <div class="separator"></div>
-                </div>
+        </div>
+        <div class="user-modal-block">
+            <div class="user-modal-label">Коротка назва:</div>
+            <div class="input-field-wrapper">
+                <input type="text" class="input-field" id="shortSectorNameForm" name="name" value="" placeholder="Коротка назва" required>
+                <div class="separator"></div>
             </div>
         </div>
     </div>
-    <div class="user-modal-footer>
-        <button type="submit" class="btn btn-modal">Зберегти</button>
+    <div class="user-modal-footer">
+        <button type="submit" id="submitButton" class="btn btn-modal">Зберегти</button>
     </div>
 </form>
